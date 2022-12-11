@@ -1,0 +1,1842 @@
+@charset "UTF-8";
+
+/**
+ * UI styles
+ * Документацію з прикладами дивись в index.html
+ *
+ * @author <kroloburet@gmail.com>
+ */
+
+/**************************
+ * Імпорт залежностей UI
+ **************************/
+
+@import "https://use.fontawesome.com/releases/v6.2.1/css/all.css";
+
+@font-face {
+    font-family: 'Manrope-Regular';
+    src: url(fonts/Manrope/Manrope-Regular.woff2) format('woff2');
+}
+
+/**************************
+ * Технічний клас-мітка для блокування виклику
+ * методів UI.js на елементі та всіх дочірніх елементах
+ **************************/
+.UI_disabled-node {
+}
+
+/**************************
+ * UI breakpoints & variables
+ **************************/
+
+/*---------------------------------------------- Breakpoints ---*/
+/*
+@custom-media --deviceXS (max-width: 350px); !* phones *!
+@custom-media --deviceS (max-width: 576px); !* phones *!
+@custom-media --deviceM (max-width: 768px); !* tablets *!
+@custom-media --deviceL (max-width: 992px); !* laptops *!
+@custom-media --deviceXL (max-width: 1200px); !* desktops *!
+*/
+
+/*---------------------------------------------- Variables ---*/
+:root {
+    /*--- Basic ---*/
+    --UI_base-font: normal 1rem/1.5 'Manrope-Regular'; /* Use rem unit */
+    --UI_base-font-color: #2D3538;
+    --UI_base-body-bg-color: #FFFFFF;
+    --UI_base-active-bg-color: rgba(0, 0, 0, .05);
+    --UI_base-border-width: 1px;
+    --UI_base-border-radius: .75rem;
+    --UI_base-border-radius-l: 1rem;
+    --UI_base-border-radius-s: .35rem;
+    --UI_base-border-radius-xs: .18rem;
+    --UI_base-padding: calc(.7em + 1vw);
+    --UI_base-gapX: 3vw;
+    --UI_base-gapY: 2rem;
+    /*--- Color themes ---*/
+    --UI_base-color: #E5CA00;
+    --UI_primary-font-color: #FFFFFF;
+    --UI_primary-bg-color: #0A78DE;
+    --UI_primary-hover-bg-color: #14B1FC;
+    --UI_primary-active-bg-color: #035EB4;
+    --UI_primary-border-color: transparent;
+    --UI_accent-font-color: #FFFFFF;
+    --UI_accent-bg-color: #F8142F;
+    --UI_accent-hover-bg-color: #FF405A;
+    --UI_accent-active-bg-color: #D8041D;
+    --UI_accent-border-color: transparent;
+    --UI_contour-font-color: #0A78DE;
+    --UI_contour-bg-color: var(--UI_base-body-bg-color);
+    --UI_contour-hover-bg-color: var(--UI_base-body-bg-color);
+    --UI_contour-active-bg-color: var(--UI_base-body-bg-color);
+    --UI_contour-border-color: #0A78DE;
+    /*--- Typography ---*/
+    --UI_blockquote-border: 1px solid var(--UI_base-color);
+    --UI_mark-bg-color: #FFE54D;
+    --UI_mark-mute-bg-color: #D6D6D6;
+    --UI_link-color: #0764E6;
+    --UI_link-visited-color: #0764E6;
+    --UI_link-hover-color: #0764E6;
+    --UI_link-active-color: #0764E6;
+    --UI_hr-border: 1px solid var(--UI_base-color);
+    /*--- Table ---*/
+    --UI_table-font-color: var(--UI_base-font-color);
+    --UI_table-bg-color: var(--UI_base-body-bg-color);
+    --UI_table-th-font-color: var(--UI_table-font-color);
+    --UI_table-th-bg-color: var(--UI_base-color);
+    --UI_table-th-border-color: transparent;
+    --UI_table-th-padding: .5em 1em;
+    --UI_table-td-bg-color: transparent;
+    --UI_table-td-padding: .5em 1em;
+    --UI_table-td-border-color: transparent;
+    --UI_table-tr-hover-bg-color: var(--UI_base-active-bg-color);
+    /*--- Forms ---*/
+    --UI_form-font-size: .875em;
+    --UI_form-line-height: 1.572;
+    --UI_form-font-color: #2D3538;
+    --UI_form-placeholder-color: #525252;
+    --UI_form-bg-color: var(--UI_base-body-bg-color);
+    --UI_form-field-paddingY: .857em;
+    --UI_form-field-paddingX: var(--UI_base-padding);
+    --UI_form-gap-top: .3rem;
+    --UI_form-gap-right: 1rem;
+    --UI_form-gap-bottom: 1rem;
+    --UI_form-border-width: 1px;
+    --UI_form-border-color: #888F93;
+    --UI_form-border-radius: var(--UI_base-border-radius);
+    --UI_form-shadow: 0 .125rem .25rem rgba(69, 90, 100, .25);
+    --UI_form-focus-border-color: #0B3950;
+    --UI_form-focus-shadow: 0 0 0 .188rem #C6EDFF;
+    --UI_form-invalid-border-color: #FF405A;
+    --UI_form-invalid-shadow: 0 0 0 .188rem #FFD4DA;
+    --UI_form-required-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23F8142FFF' d='M208 32c0-17.7 14.3-32 32-32h32c17.7 0 32 14.3 32 32V172.9l122-70.4c15.3-8.8 34.9-3.6 43.7 11.7l16 27.7c8.8 15.3 3.6 34.9-11.7 43.7L352 256l122 70.4c15.3 8.8 20.5 28.4 11.7 43.7l-16 27.7c-8.8 15.3-28.4 20.6-43.7 11.7L304 339.1V480c0 17.7-14.3 32-32 32H240c-17.7 0-32-14.3-32-32V339.1L86 409.6c-15.3 8.8-34.9 3.6-43.7-11.7l-16-27.7c-8.8-15.3-3.6-34.9 11.7-43.7L160 256 38 185.6c-15.3-8.8-20.5-28.4-11.7-43.7l16-27.7C51.1 98.8 70.7 93.6 86 102.4l122 70.4V32z'/%3E%3C/svg%3E");
+    --UI_form-required-image-size: .5rem;
+    --UI_checmark-size: 1.5rem;
+    --UI_range-track-height: 1px;
+    --UI_range-thumb-width: 1.5em;
+    --UI_range-thumb-height: 1.5em;
+    --UI_button-font-color: var(--UI_primary-font-color);
+    --UI_button-font-size: 1.0625em;
+    --UI_button-line-height: 1.412;
+    --UI_button-paddingY: .647em;
+    --UI_button-paddingX: var(--UI_base-padding);
+    --UI_button-border-color: var(--UI_primary-border-color);
+    --UI_button-border-radius: var(--UI_base-border-radius);
+    --UI_button-bg-color: var(--UI_primary-bg-color);
+    --UI_button-shadow: 0 .125rem .25rem rgba(69, 90, 100, .25);
+    --UI_button-hover-bg-color: var(--UI_primary-hover-bg-color);
+    --UI_button-active-bg-color: var(--UI_primary-active-bg-color);
+    /*--- UI methods ---*/
+    --UI_Tabs-border-width: 1px;
+    --UI_Tabs-border-color: var(--UI_base-color);
+    --UI_Tabs-control-font-size: 1.0625em;
+    --UI_Tabs-control-font-color: var(--UI_base-font-color);
+    --UI_Tabs-control-padding: .5em 1em;
+    --UI_Tabs-control-bg-color: var(--UI_base-color);
+    --UI_Tabs-control-border-color: transparent;
+    --UI_Tabs-content-paddingY: var(--UI_base-padding);
+    --UI_Tabs-content-paddingX: var(--UI_base-padding);
+    --UI_Tabs-content-bg-color: var(--UI_base-body-bg-color);
+    --UI_Hint-font-color: #585E61;
+    --UI_Hint-bg-color: #BCF0FC;
+    --UI_Hint-padding: .5em .8em;
+    --UI_Hint-max-width: 350px;
+    --UI_Hint-border: 1px solid var(--UI_base-body-bg-color);
+    --UI_Hint-border-radius: var(--UI_base-border-radius-s);
+    --UI_Hint-shadow: 0 .125rem .25rem rgba(69, 90, 100, .25);
+    --UI_Notice-font-color: #000000;
+    --UI_Notice-border-color: var(--UI_base-body-bg-color);
+    --UI_Notice-border-width: 1px;
+    --UI_Notice-icon-font-size: 1.3em;
+    --UI_Notice-error-bg-color: #F87B8A;
+    --UI_Notice-warning-bg-color: #FFE54D;
+    --UI_Notice-success-bg-color: #0EE4B4;
+    --UI_Notice-info-bg-color: #14B1FC;
+    --UI_Notice-process-bg-color: #E3E3E3;
+    --UI_Popup-font-color: var(--UI_base-font-color);
+    --UI_Popup-padding: var(--UI_base-padding);
+    --UI_Popup-bg-color: var(--UI_base-body-bg-color);
+    --UI_Popup-border-color: var(--UI_base-body-bg-color);
+    --UI_Popup-border-width: 1px;
+    --UI_Popup-close-btn-font-size: 2em;
+    --UI_Popup-close-btn-color: var(--UI_link-color);
+    --UI_Popup-close-btn-color-hover: var(--UI_link-hover-color);
+    --UI_Lim-font-color: var(--UI_form-font-color);
+    --UI_Menu-bg-color: var(--UI_base-color);
+    --UI_Menu-font-color: var(--UI_base-font-color);
+}
+
+/**************************
+ * Reset & Normalize UA Style
+ **************************/
+
+*:where(:not(html, iframe, canvas, img, svg, video, audio):not(svg *, symbol *)) {
+    all: unset;
+    display: revert;
+}
+
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+html {
+    line-sizing: normal;
+    tab-size: 4;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    -ms-overflow-style: scrollbar;
+    -webkit-tap-highlight-color: transparent;
+    word-break: revert;
+}
+
+a, button {
+    cursor: revert;
+}
+
+:where(a:not([href]):not([tabindex])) {
+    color: inherit;
+    text-decoration: none;
+}
+
+:where(a:not([href]):not([tabindex]):focus, a:not([href]):not([tabindex]):hover) {
+    color: inherit;
+    text-decoration: none;
+}
+
+:where(a:not([href]):not([tabindex]):focus) {
+    outline: 0;
+}
+
+img {
+    max-width: 100%;
+    border: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+input, textarea {
+    -webkit-user-select: auto;
+}
+
+textarea {
+    white-space: revert;
+}
+
+meter {
+    -webkit-appearance: revert;
+    appearance: revert;
+}
+
+::placeholder {
+    color: unset;
+}
+
+:where([hidden], template) {
+    display: none;
+}
+
+:where([contenteditable]:not([contenteditable="false"])) {
+    -moz-user-modify: read-write;
+    -webkit-user-modify: read-write;
+    overflow-wrap: break-word;
+    -webkit-line-break: after-white-space;
+    -webkit-user-select: auto;
+}
+
+:where([draggable="true"]) {
+    -webkit-user-drag: element;
+}
+
+::-webkit-file-upload-button {
+    -webkit-appearance: button;
+    font: inherit;
+}
+
+::-webkit-inner-spin-button,
+::-webkit-outer-spin-button {
+    height: auto;
+}
+
+::-webkit-search-cancel-button,
+::-webkit-search-decoration {
+    -webkit-appearance: none;
+}
+
+::-webkit-file-upload-button {
+    font: inherit;
+    -webkit-appearance: button;
+}
+
+/**************************
+ * Layouts
+ **************************/
+
+body {
+    background-color: var(--UI_base-body-bg-color);
+    font: var(--UI_base-font);
+    color: var(--UI_base-font-color);
+    letter-spacing: .013rem;
+}
+
+/**************************
+ * Typography
+ **************************/
+
+h1, h2, h3, h4, h5 {
+    font-weight: 600;
+    word-break: break-word;
+    margin-bottom: .5em;
+}
+
+h1 {
+    font-size: 2.235rem;
+    line-height: 1.263;
+}
+
+h2 {
+    font-size: 1.882rem;
+    line-height: 1.250;
+}
+
+h3 {
+    font-size: 1.412rem;
+    line-height: 1.5;
+}
+
+h4 {
+    font-size: 1.176rem;
+    line-height: 1.4;
+}
+
+h5 {
+    font-size: 1.03rem;
+    line-height: 1.3;
+}
+
+p {
+    margin-bottom: var(--UI_base-gapY);
+}
+
+a:where(:not(.UI_button)) {
+    color: var(--UI_link-color);
+    background-color: transparent;
+    cursor: pointer;
+}
+
+a:where(:not(.UI_button):visited) {
+    color: var(--UI_link-visited-color);
+}
+
+a:where(:not(.UI_button):hover) {
+    color: var(--UI_link-hover-color);
+    border-bottom: var(--UI_base-border-width) solid;
+}
+
+a:where(:not(.UI_button):active) {
+    color: var(--UI_link-active-color);
+}
+
+a[target="_blank"],
+.UI_blank {
+    cursor: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAdCAMAAABymtfJAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAAXFQTFRFAAAA////////////////////////////////////////////////////////9/f39vb2////////+/v76urq5+fn5OTk09PT6enp5OTk39/f6Ojo29vb19fXsLCw0dHRu7u7q6ursrKypaWlxsbGra2t09PTpaWlqKio0tLSqKiotra2oqKisrKypaWlioqKkpKSnZ2dp6eniIiIjo6Oj4+Pnp6esbGxAAAADw8PERERGhoaHh4eKioqODg4SkpKVVVVV1dXW1tbXV1dXl5eX19fYmJiZGRkZWVlZmZmaGhoaWlpampqa2trbW1tcnJyc3NzdXV1d3d3enp6fX19gICAgYGBhYWFiIiIkJCQlJSUl5eXmJiYmZmZm5ubpaWlq6urr6+vsLCws7OzwMDAwcHByMjIycnJysrKy8vL0NDQ0dHR1tbW19fX2dnZ3d3d5ubm7Ozs7u7u7+/v8vLy8/Pz9PT09vb2/Pz8/f39////NkXe/gAAADh0Uk5TAAIFBgsOEhYXGSkxMjRPYHR2d4CUnqCipaq4xdPX4OLo7vHz9PX2+Pn5+vr7+/z9/f39/v7+/v5Tpa/9AAAA+0lEQVQoz2NgAAEBHQNJBgygERgdxoQhqp9W4sWOKZpe6s1BvKirqgwjpqhNjLOeoQgzmqhnVaR/vEeQNhdEhIkJYm5VVEqFXbafLFhQ2NxMmhEqWulTFacEFjXyS3DSNUEXNUisKo6wzahMrcoqqEqBiUq5lFVV5ZVXQQFUlFErqgoJQEUZ+N1zsYgyyPtWwsQqi9I1xcRE+YCinKZJVaEWyEAdpFjCudDBCglYBoPsY1MJCShBMjszloGBVSEiIgpDlNvRwsIaQ5THHptaHk8ggxTRcDdPBHBQhorCQY6akJAgL7posiIkGLjd85FAHFSURS4CCRiLg8QA5lyUGD+P1IMAAAAASUVORK5CYII=), auto !important;
+}
+
+blockquote {
+    position: relative;
+    font-style: italic;
+    margin: 0 0 var(--UI_base-gapY) var(--UI_base-padding);
+    padding: 0 0 0 var(--UI_base-padding);
+    border-left: var(--UI_blockquote-border);
+}
+
+s, del {
+    text-decoration: line-through;
+}
+
+hr {
+    height: 0;
+    padding: 0;
+    margin: 0 0 var(--UI_base-gapY);
+    border: none;
+    border-bottom: var(--UI_hr-border);
+    clear: both;
+}
+
+abbr {
+    border-bottom: none;
+    text-decoration: dotted;
+    cursor: help;
+}
+
+code, kbd, samp, mark {
+    padding: .1rem .5rem;
+    width: fit-content;
+    background-color: var(--UI_mark-mute-bg-color);
+    border-radius: var(--UI_base-border-radius-s);
+    color: var(--UI_base-font-color);
+    font-size: inherit;
+    font-weight: normal;
+    font-style: normal;
+    font-family: monospace;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+}
+
+mark {
+    background-color: var(--UI_mark-bg-color);
+}
+
+b, strong {
+    font-weight: bolder;
+}
+
+small {
+    font-size: 80%;
+}
+
+sub, sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+}
+
+sub {
+    bottom: -.25rem;
+}
+
+sup {
+    top: -.5rem;
+}
+
+pre {
+    margin: 0 0 var(--UI_base-gapY) 0;
+    font-family: monospace;
+    font-size: 90%;
+    white-space: pre-wrap;
+    line-height: normal;
+    overflow: auto;
+}
+
+ul, ol {
+    margin: 0 0 var(--UI_base-gapY) var(--UI_base-padding);
+    list-style-position: inside;
+}
+
+li ul, li ol {
+    margin-bottom: 0;
+}
+
+/**************************
+ * Grid
+ **************************/
+
+.UI_row {
+    margin-bottom: var(--UI_base-gapY);
+    display: flex;
+}
+
+.UI_col-12 {
+    flex-basis: 100%;
+}
+
+.UI_col-11 {
+    flex-basis: 91.416667%;
+}
+
+.UI_col-10 {
+    flex-basis: 82.833334%;
+}
+
+.UI_col-9 {
+    flex-basis: 74.25%;
+}
+
+.UI_col-8 {
+    flex-basis: 65.666667%;
+}
+
+.UI_col-7 {
+    flex-basis: 57.083334%;
+}
+
+.UI_col-6 {
+    flex-basis: 48.5%;
+}
+
+.UI_col-5 {
+    flex-basis: 39.916666%;
+}
+
+.UI_col-4 {
+    flex-basis: 31.333333%;
+}
+
+.UI_col-3 {
+    flex-basis: 22.75%;
+}
+
+.UI_col-2 {
+    flex-basis: 14.166666%;
+}
+
+.UI_col-1 {
+    flex-basis: 5.583333%;
+}
+
+.UI_col-12, .UI_col-11, .UI_col-10, .UI_col-9, .UI_col-8, .UI_col-7,
+.UI_col-6, .UI_col-5, .UI_col-4, .UI_col-3, .UI_col-2, .UI_col-1 {
+    margin-left: 3%;
+}
+
+.UI_col-12:first-child, .UI_col-11:first-child, .UI_col-10:first-child,
+.UI_col-9:first-child, .UI_col-8:first-child, .UI_col-7:first-child,
+.UI_col-6:first-child, .UI_col-5:first-child, .UI_col-4:first-child,
+.UI_col-3:first-child, .UI_col-2:first-child, .UI_col-1:first-child {
+    margin-left: 0;
+}
+
+@media (max-width: 576px) {
+    .UI_row {
+        flex-direction: column;
+        margin-bottom: 0;
+    }
+
+    .UI_col-12, .UI_col-11, .UI_col-10, .UI_col-9, .UI_col-8, .UI_col-7,
+    .UI_col-6, .UI_col-5, .UI_col-4, .UI_col-3, .UI_col-2, .UI_col-1 {
+        flex-basis: 100%;
+        margin: 0 0 var(--UI_base-gapY) 0;
+    }
+}
+
+/**************************
+ * Assistant Classes
+ **************************/
+
+.UI_body-cover-box {
+    display: flex;
+    padding: var(--UI_base-gapY) var(--UI_base-gapX);
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden auto;
+    background-color: rgba(0, 0, 0, .9);
+    z-index: 99999;
+}
+
+.UI_body-hide-overflow {
+    overflow: hidden;
+}
+
+.UI_external {
+    cursor: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAZCAMAAADt/kXiAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAAXpQTFRFAAAA/////////////////////////////////////////////////////////Pz8////////7+/v////////7+/v6Ojo9vb25+fn6Ojo8vLyw8PDysrK3Nzc19fX6Ojo////zMzM////ysrK////zMzMoqKiu7u7vb29oqKiycnJnp6eq6uro6OjuLi4kpKSi4uLkZGRkpKSoqKig4ODhISEiIiIiYmJi4uLm5ubAAAAQUFBSkpKVlZWV1dXW1tbXV1dXl5eY2NjZGRkZmZmZ2dnaGhoampqa2trbm5ub29vcHBwdXV1dnZ2d3d3eHh4eXl5e3t7fHx8g4ODhISEiIiIiYmJjY2Nj4+PkZGRkpKSlJSUmpqanZ2dpKSkqqqqq6urrq6usLCws7OztLS0tra2ubm5u7u7vLy8vb29vr6+ysrKzc3Nz8/P0dHR1dXV2tra3d3d39/f5ubm6Ojo6urq7e3t8vLy+fn5+vr6/Pz8/f39/v7+////loloEAAAADp0Uk5TAAceHyAmKywtMjU5OkRNV2lqfJCSlKSkqa6uuLrM0dzm5+jr6/Dx8vT19vr6+/v8/f39/f7+/v7+/uSLPNAAAAELSURBVCjPY2AAAX4dAzkGLEDdKcmJD4u4dlKtlzB2cW8R0sTdjDXYGbGI28S5WwQpMrGgi3vWZjjk2XkESMDEOLkh5tdmRte6ZKcbQoWlInxUOeDipQW+UHHLsHzvEEuQeBaKuG5MbW2GdWptYW15cW1hDVxcyLGotraiqhYK4OIMyu7VtQhQ4MfFCwSsDAzM5onI4pGxfl4erppADWL2JbVlCfEQkFOmoKSip2UKMkkjoDbaCgqsgXpSPeXB4jyBaX62LhAQXlub7FUjawK2WtIlKhduQ7xvba1sMMRNogjxRP/a2kpxGahjjeDiZUDsJsiAIQ4CzgTF9VMKkYCDAExc2iwUCaixMQAAsEF8RaFan24AAAAASUVORK5CYII=), auto !important;
+}
+
+a.UI_arrow-right::after, .UI_button.UI_arrow-right::after,
+a.UI_angle-right::after, .UI_button.UI_angle-right::after,
+a.UI_angle-down::after, .UI_button.UI_angle-down::after,
+a.UI_angle-up::after, .UI_button.UI_angle-up::after {
+    font-family: "Font Awesome 6 Free";
+    font-style: normal;
+    font-weight: 900;
+    margin-left: .5em;
+}
+
+a.UI_arrow-right::after, .UI_button.UI_arrow-right::after {
+    content: "\f178";
+}
+
+a.UI_angle-right::after, .UI_button.UI_angle-right::after {
+    content: "\f105";
+}
+
+a.UI_angle-down::after, .UI_button.UI_angle-down::after {
+    content: "\f107";
+}
+
+a.UI_angle-up::after, .UI_button.UI_angle-up::after {
+    content: "\f106";
+}
+
+.UI_full-width {
+    width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+.UI_nowrap {
+    white-space: nowrap;
+}
+
+.UI_align-l {
+    text-align: left;
+}
+
+.UI_align-r {
+    text-align: right;
+}
+
+.UI_align-c {
+    text-align: center;
+}
+
+/*--- Color themes ---*/
+.UI_primary {
+}
+
+.UI_accent {
+}
+
+.UI_contour {
+}
+
+/*--- Sizing ---*/
+.UI_size-xl {
+    font-size: 1.5em !important;
+}
+
+.UI_size-l {
+    font-size: 1.3em !important;
+}
+
+.UI_size-s {
+    font-size: .8em !important;
+}
+
+.UI_size-xs {
+    font-size: .6em !important;
+}
+
+/**************************
+ * Notifications
+ **************************/
+
+.UI_notice-success,
+.UI_notice-error,
+.UI_notice-warning,
+.UI_notice-info,
+.UI_notice-process {
+    display: inline-block;
+    position: relative;
+    padding: 1em 1em 1em 5em;
+    margin: 0 var(--UI_base-gapX) var(--UI_base-gapY) 0;
+    border: var(--UI_Notice-border-width) solid var(--UI_Notice-border-color);
+    border-radius: var(--UI_base-border-radius);
+    color: var(--UI_Notice-font-color);
+}
+
+.UI_notice-success hr,
+.UI_notice-error hr,
+.UI_notice-warning hr,
+.UI_notice-info hr,
+.UI_notice-process hr {
+    border-bottom: var(--UI_base-border-width) solid var(--UI_Notice-border-color);
+}
+
+.UI_notice-success::before,
+.UI_notice-error::before,
+.UI_notice-warning::before,
+.UI_notice-info::before,
+.UI_notice-process::before {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 3em;
+    font-size: var(--UI_Notice-icon-font-size);
+    border-right: var(--UI_base-border-width) solid var(--UI_Notice-border-color);
+}
+
+.UI_notice-success::after,
+.UI_notice-error::after,
+.UI_notice-warning::after,
+.UI_notice-info::after,
+.UI_notice-process::after {
+    position: absolute;
+    top: 50%;
+    left: 1em;
+    min-width: var(--UI_Notice-icon-font-size);
+    font-family: "Font Awesome 6 Free";
+    font-size: var(--UI_Notice-icon-font-size);
+    font-style: normal;
+    font-weight: 900;
+    line-height: 0;
+    text-align: center;
+}
+
+.UI_notice-process::after {
+    -webkit-animation: fa-spin 2s linear infinite;
+    animation: fa-spin 2s linear infinite;
+}
+
+.UI_notice-success {
+    background-color: var(--UI_Notice-success-bg-color);
+}
+
+.UI_notice-success::after {
+    content: "\f00c";
+}
+
+.UI_notice-warning {
+    background-color: var(--UI_Notice-warning-bg-color);
+}
+
+.UI_notice-warning::after {
+    content: "\f071";
+}
+
+.UI_notice-error {
+    background-color: var(--UI_Notice-error-bg-color);
+}
+
+.UI_notice-error::after {
+    content: "\f00d";
+}
+
+.UI_notice-info {
+    background-color: var(--UI_Notice-info-bg-color);
+}
+
+.UI_notice-info::after {
+    content: "\f129";
+}
+
+.UI_notice-process {
+    background-color: var(--UI_Notice-process-bg-color);
+}
+
+.UI_notice-process::after {
+    content: "\f110";
+}
+
+/**************************
+ * Table
+ **************************/
+
+.UI_table {
+    border-collapse: collapse;
+    display: block;
+    color: var(--UI_table-font-color);
+    background-color: var(--UI_table-bg-color);
+    overflow: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.UI_table::-webkit-scrollbar {
+    display: none;
+}
+
+.UI_table thead th:first-child {
+    border-top-left-radius: var(--UI_base-border-radius);
+}
+
+.UI_table thead th:last-child {
+    border-top-right-radius: var(--UI_base-border-radius);
+}
+
+.UI_table td, .UI_table th {
+    width: 1%;
+    min-width: max-content;
+    padding: var(--UI_table-td-padding);
+    border: var(--UI_base-border-width) solid var(--UI_table-td-border-color);
+    background-color: var(--UI_table-td-bg-color);
+    text-align: left;
+}
+
+.UI_table th {
+    padding: var(--UI_table-th-padding);
+    color: var(--UI_table-th-font-color);
+    background-color: var(--UI_table-th-bg-color);
+    border-color: var(--UI_table-th-border-color);
+}
+
+.UI_table tr:hover {
+    background-color: var(--UI_table-tr-hover-bg-color);
+}
+
+.UI_table caption {
+    margin-bottom: .5em;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: left;
+}
+
+/*---------------------------------------------- Table color themes ---*/
+.UI_table.UI_primary {
+    --UI_table-th-bg-color: var(--UI_primary-bg-color);
+    --UI_table-th-font-color: var(--UI_primary-font-color);
+    --UI_table-th-border-color: var(--UI_primary-border-color);
+}
+
+.UI_table.UI_accent {
+    --UI_table-th-bg-color: var(--UI_accent-bg-color);
+    --UI_table-th-font-color: var(--UI_accent-font-color);
+    --UI_table-th-border-color: var(--UI_accent-border-color);
+}
+
+.UI_table.UI_contour {
+    --UI_table-th-bg-color: var(--UI_table-bg-color);
+    --UI_table-th-font-color: var(--UI_contour-font-color);
+    --UI_table-th-border-color: var(--UI_contour-border-color);
+}
+
+/**************************
+ * Form Elements
+ **************************/
+
+/*---------------------------------------------- UI form classes ---*/
+::placeholder {
+    color: var(--UI_form-placeholder-color);
+    line-height: var(--UI_form-line-height);
+    opacity: .5;
+}
+
+.UI_input, .UI_textarea, .UI_select, .UI_checkbox, .UI_radio,
+.UI_file, .UI_range, .UI_number, .UI_form-component, .UI_fieldset {
+    position: relative;
+    display: flex;
+    margin: var(--UI_form-gap-top) 0 var(--UI_form-gap-bottom) 0;
+}
+
+.UI_input, .UI_textarea, .UI_select, .UI_file, .UI_number,
+.UI_form-component :where(input, textarea, select) {
+    display: block;
+    width: 100%;
+    min-width: 3em;
+    padding: var(--UI_form-field-paddingY) var(--UI_form-field-paddingX);
+    font-size: var(--UI_form-font-size);
+    line-height: var(--UI_form-line-height);
+    color: var(--UI_form-font-color);
+    border: var(--UI_form-border-width) solid var(--UI_form-border-color);
+    border-radius: var(--UI_form-border-radius);
+    background-color: var(--UI_form-bg-color);
+    box-shadow: var(--UI_form-shadow);
+}
+
+.UI_select {
+    overflow: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.UI_select::-webkit-scrollbar {
+    display: none;
+}
+
+/*---------------------------------------------- UI range ---*/
+.UI_range, .UI_form-component > [type=range] {
+    --UI_range-thumb-half: calc(var(--UI_range-thumb-height) / 2);
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    padding: 0;
+    margin: calc(var(--UI_range-thumb-half) + var(--UI_form-gap-top)) auto calc(var(--UI_range-thumb-half) + var(--UI_form-gap-bottom)) auto;
+    height: var(--UI_range-track-height);
+    background-color: var(--UI_form-border-color);
+    box-shadow: var(--UI_form-shadow);
+    border: none !important;
+    order: 1;
+    align-self: center;
+    cursor: pointer;
+}
+
+.UI_range::-webkit-slider-thumb,
+.UI_form-component > [type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: var(--UI_button-bg-color);
+    border: var(--UI_form-border-width) solid var(--UI_form-border-color);
+    box-shadow: var(--UI_form-shadow);
+    width: var(--UI_range-thumb-width);
+    height: var(--UI_range-thumb-height);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.UI_range::-moz-range-thumb,
+.UI_form-component > [type=range]::-moz-range-thumb {
+    background-color: var(--UI_button-bg-color);
+    border: var(--UI_form-border-width) solid var(--UI_form-border-color);
+    box-shadow: var(--UI_form-shadow);
+    width: var(--UI_range-thumb-width);
+    height: var(--UI_range-thumb-height);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+/*---------------------------------------------- UI checkbox & UI radio ---*/
+.UI_checkbox, .UI_radio {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer;
+}
+
+.UI_checkbox [type="checkbox"], .UI_radio [type="radio"] {
+    position: absolute;
+    opacity: 0;
+}
+
+.UI_checkbox .UI_checkmark, .UI_radio .UI_checkmark {
+    position: relative;
+    display: inline-block;
+    margin: 0 .5rem 0 0;
+    width: var(--UI_checmark-size);
+    height: var(--UI_checmark-size);
+    border: var(--UI_form-border-width) solid var(--UI_form-border-color);
+    box-shadow: var(--UI_form-shadow);
+}
+
+.UI_checkbox .UI_checkmark {
+    border-radius: var(--UI_base-border-radius-xs);
+}
+
+.UI_checkbox .UI_checkmark::before {
+    content: "";
+    display: none;
+    width: .4rem;
+    height: .6rem;
+    margin: .25rem auto;
+    border: var(--UI_form-border-width) solid var(--UI_form-bg-color);
+    border-top: none;
+    border-left: none;
+    transform: rotate(45deg);
+    box-shadow: var(--UI_form-border-width) var(--UI_form-border-width) 0 .02rem var(--UI_form-border-color);
+}
+
+.UI_checkbox [type="checkbox"]:checked + .UI_checkmark {
+    border-color: var(--UI_form-border-color);
+    background-color: var(--UI_button-bg-color);
+    box-shadow: var(--UI_form-shadow);
+}
+
+.UI_checkbox [type="checkbox"]:checked + .UI_checkmark::before {
+    display: block;
+}
+
+.UI_radio .UI_checkmark {
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 var(--UI_checmark-size) var(--UI_form-bg-color), var(--UI_form-shadow);
+}
+
+.UI_radio [type="radio"]:checked + .UI_checkmark {
+    border-color: var(--UI_form-border-color);
+    background-color: var(--UI_button-bg-color);
+    box-shadow: inset 0 0 0 .3rem var(--UI_form-bg-color), inset 0 0 0 .35rem var(--UI_form-border-color), var(--UI_form-shadow);
+}
+
+/*---------------------------------------------- UI buttons ---*/
+.UI_button,
+.UI_form-component :where(
+    button, [type=button], [type=submit], [type=reset], .UI_form-component-control
+) {
+    display: inline-block;
+    text-align: center;
+    align-items: center;
+    margin: 0 var(--UI_form-gap-right) var(--UI_form-gap-bottom) 0;
+    padding: var(--UI_button-paddingY) var(--UI_button-paddingX);
+    font-weight: 700;
+    font-size: var(--UI_button-font-size);
+    line-height: var(--UI_button-line-height);
+    color: var(--UI_button-font-color);
+    border: var(--UI_form-border-width) solid var(--UI_button-border-color);
+    border-radius: var(--UI_button-border-radius);
+    background-color: var(--UI_button-bg-color);
+    box-shadow: var(--UI_button-shadow);
+    cursor: pointer;
+}
+
+.UI_form-component-control {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    padding: var(--UI_button-paddingY);
+    border-color: var(--UI_form-border-color);
+    border-radius: 0;
+}
+
+.UI_button:hover,
+.UI_form-component :where(
+    button:hover, [type=button]:hover, [type=submit]:hover, [type=reset]:hover,
+    .UI_form-component-control:hover
+) {
+    background-color: var(--UI_button-hover-bg-color);
+    color: var(--UI_button-font-color);
+}
+
+.UI_button:active,
+.UI_form-component :where(
+    button:active, [type=button]:active, [type=submit]:active, [type=reset]:active,
+    .UI_form-component-control:active
+) {
+    background-color: var(--UI_button-active-bg-color);
+    color: var(--UI_button-font-color);
+}
+
+/*---------------------------------------------- UI form component ---*/
+.UI_form-component {
+}
+
+.UI_form-component > * {
+    margin: 0;
+    border: var(--UI_form-border-width) solid var(--UI_form-border-color);
+    border-left-width: 0;
+    border-radius: 0;
+    box-shadow: var(--UI_form-shadow);
+}
+
+.UI_form-component .UI_form-component {
+    margin: 0;
+    border: none;
+    box-shadow: none;
+}
+
+.UI_form-component :where(
+    .UI_form-component, textarea, select,
+    input:not([type=button], [type=submit], [type=reset])
+) {
+    flex-grow: 1;
+    width: inherit;
+    min-width: 3em;
+}
+
+.UI_form-component:where(
+    :first-child,
+    :not(.UI_form-component .UI_form-component)
+) > :first-child {
+    border-left-width: var(--UI_form-border-width);
+    border-radius: var(--UI_form-border-radius) 0 0 var(--UI_form-border-radius);
+}
+
+.UI_form-component:where(
+    :last-child,
+    :not(.UI_form-component .UI_form-component)
+) > :last-child {
+    border-radius: 0 var(--UI_form-border-radius) var(--UI_form-border-radius) 0;
+}
+
+.UI_form-component:where(
+    :not(.UI_form-component .UI_form-component)
+) > :only-child {
+    border-radius: var(--UI_form-border-radius);
+}
+
+/*---------------------------------------------- UI fieldset ---*/
+.UI_fieldset {
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    margin: var(--UI_form-gap-top) calc(var(--UI_form-gap-right) * -1) 0 0;
+}
+
+.UI_fieldset > * {
+    margin: 0 var(--UI_form-gap-right) var(--UI_form-gap-bottom) 0;
+}
+
+.UI_fieldset :where(
+    .UI_input, .UI_textarea, .UI_select, .UI_checkbox,
+    .UI_radio, .UI_file, .UI_range, .UI_number, .UI_form-component
+){
+    width: auto;
+    flex-grow: 1;
+}
+
+.UI_fieldset.UI_inline-form :where(
+    .UI_input, .UI_textarea, .UI_select, .UI_checkbox,
+    .UI_radio, .UI_file, .UI_range, .UI_number, .UI_form-component
+){
+    flex-grow: revert;
+}
+
+.UI_fieldset.UI_align-l {
+    justify-content: flex-start;
+}
+
+.UI_fieldset.UI_align-r {
+    justify-content: flex-end;
+}
+
+.UI_fieldset.UI_align-c {
+    justify-content: center;
+}
+
+/*---------------------------------------------- Invalid form ---*/
+.UI_invalid-form, [class^="UI_"]:invalid, [class^="UI_"] :invalid,
+:where(.UI_checkbox [type=checkbox], .UI_radio [type=radio]):invalid + .UI_checkmark {
+    --UI_form-border-color: var(--UI_form-invalid-border-color);
+    --UI_form-shadow: var(--UI_form-invalid-shadow);
+    border-width: var(--UI_form-border-width);
+    z-index: 1;
+}
+
+/*---------------------------------------------- Focus form ---*/
+.UI_focus-form, [class^="UI_"]:focus, [class^="UI_"] :focus,
+:where(.UI_checkbox [type=checkbox], .UI_radio [type=radio]):focus + .UI_checkmark {
+    --UI_form-border-color: var(--UI_form-focus-border-color);
+    --UI_form-shadow: var(--UI_form-focus-shadow);
+    border-width: var(--UI_form-border-width);
+    z-index: 1;
+}
+
+/*---------------------------------------------- Required form ---*/
+.UI_form-component .UI_required-form, [class^="UI_"]:required, [class^="UI_"] :required {
+    background-image: var(--UI_form-required-image);
+    background-repeat: no-repeat;
+    background-position: right var(--UI_form-required-image-size) top var(--UI_form-required-image-size);
+    background-size: var(--UI_form-required-image-size);
+}
+
+:where(label.UI_required-form:not(.UI_form-component, .UI_fieldset))::after {
+    content: var(--UI_form-required-image);
+    display: inline-block;
+    line-height: 0;
+    margin-left: .3rem;
+    margin-right: .5rem;
+    width: var(--UI_form-required-image-size);
+    height: var(--UI_form-required-image-size);
+    vertical-align: super;
+}
+
+/*---------------------------------------------- Readonly form ---*/
+.UI_readonly-form,
+[class^="UI_"]:where(
+    [type=text], [type=search], [type=url], [type=tel], [type=email],
+    [type=password], [type=date], [type=month], [type=week], [type=time],
+    [type=datetime-local], textarea
+):read-only,
+[class^="UI_"] :where(
+    [type=text], [type=search], [type=url], [type=tel], [type=email],
+    [type=password], [type=date], [type=month], [type=week], [type=time],
+    [type=datetime-local], textarea
+):read-only {
+    filter: grayscale(1);
+    pointer-events: none;
+    cursor: default;
+}
+
+/*---------------------------------------------- Disabled form ---*/
+.UI_disabled-form, [class^="UI_"]:disabled, [class^="UI_"] :disabled,
+:where(.UI_checkbox [type=checkbox], .UI_radio [type=radio]):disabled ~ * {
+    opacity: .6;
+    filter: grayscale(1);
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
+/*---------------------------------------------- UI inline forms ---*/
+.UI_inline-form {
+}
+
+:where(
+    .UI_input, .UI_textarea, .UI_select, .UI_checkbox, .UI_radio,
+    .UI_file, .UI_range, .UI_number, .UI_form-component
+).UI_inline-form {
+    display: inline-flex;
+    margin-right: var(--UI_form-gap-right);
+    vertical-align: middle;
+    max-width: 100%;
+    width: auto;
+    flex-grow: 0;
+}
+
+.UI_form-component > .UI_inline-form {
+    margin: 0;
+}
+
+/*---------------------------------------------- Form color themes ---*/
+.UI_button.UI_primary,
+.UI_form-component.UI_primary *,
+.UI_fieldset.UI_primary {
+    --UI_button-font-color: var(--UI_primary-font-color);
+    --UI_button-border-color: var(--UI_primary-border-color);
+    --UI_button-bg-color: var(--UI_primary-bg-color);
+    --UI_button-hover-bg-color: var(--UI_primary-hover-bg-color);
+    --UI_button-active-bg-color: var(--UI_primary-active-bg-color);
+}
+
+.UI_button.UI_accent,
+.UI_form-component.UI_accent *,
+.UI_fieldset.UI_accent {
+    --UI_button-font-color: var(--UI_accent-font-color);
+    --UI_button-border-color: var(--UI_accent-border-color);
+    --UI_button-bg-color: var(--UI_accent-bg-color);
+    --UI_button-hover-bg-color: var(--UI_accent-hover-bg-color);
+    --UI_button-active-bg-color: var(--UI_accent-active-bg-color);
+}
+
+.UI_button.UI_contour,
+.UI_form-component.UI_contour *,
+.UI_fieldset.UI_contour {
+    --UI_button-font-color: var(--UI_contour-font-color);
+    --UI_button-border-color: var(--UI_contour-border-color);
+    --UI_button-bg-color: var(--UI_contour-bg-color);
+    --UI_button-hover-bg-color: var(--UI_contour-hover-bg-color);
+    --UI_button-active-bg-color: var(--UI_contour-active-bg-color);
+}
+
+/**************************
+ * UI Methods
+ **************************/
+
+/*---------------------------------------------- UI_Hint ---*/
+.UI_Hint {
+    padding: var(--UI_Hint-padding);
+    max-width: var(--UI_Hint-max-width) !important;
+    position: absolute;
+    left: 0;
+    border: var(--UI_Hint-border);
+    border-radius: var(--UI_Hint-border-radius);
+    box-shadow: var(--UI_Hint-shadow);
+    background-color: var(--UI_Hint-bg-color);
+    color: var(--UI_Hint-font-color);
+    font-size: .9rem;
+    line-height: normal;
+    font-style: normal;
+    white-space: normal;
+    visibility: hidden;
+    z-index: -1000;
+}
+
+.UI_Hint.UI_Hint-show {
+    visibility: visible;
+    z-index: 1000;
+}
+
+pre.UI_Hint {
+    white-space: pre-line;
+    max-width: none;
+}
+
+@media (max-width: 576px) {
+    .UI_Hint.UI_Hint-show {
+        margin: 0 var(--UI_base-gapX);
+    }
+}
+
+/*---------------------------------------------- UI_Lim ---*/
+.UI_Lim {
+    display: flex;
+    align-items: center;
+    padding: var(--UI_form-field-paddingY);
+    font-size: var(--UI_form-font-size);
+    line-height: var(--UI_form-line-height);
+    color: var(--UI_Lim-font-color);
+    white-space: nowrap;
+    background-color: var(--UI_form-bg-color);
+}
+
+.UI_Lim::before {
+    content: "";
+    padding: .2em;
+    border-left: 1px solid;
+    border-bottom: 1px solid;
+    transform: rotate(45deg);
+}
+
+/*---------------------------------------------- UI_Notice ---*/
+.UI_Notice {
+    position: relative;
+    max-width: 50%;
+    margin: auto;
+}
+
+@media (max-width: 768px) {
+    .UI_Notice {
+        max-width: 70%;
+    }
+}
+
+@media (max-width: 576px) {
+    .UI_Notice {
+        max-width: 100%;
+    }
+}
+
+/*---------------------------------------------- UI_Popup ---*/
+.UI_Popup {
+    display: none;
+    position: relative;
+    max-width: 100%;
+    margin: auto;
+    padding: var(--UI_Popup-padding);
+    border: var(--UI_Popup-border-width) solid var(--UI_Popup-border-color);
+    border-radius: var(--UI_base-border-radius);
+    background-color: var(--UI_Popup-bg-color);
+    color: var(--UI_Popup-font-color);
+}
+
+.UI_Popup-box {
+    display: none;
+}
+
+.UI_Popup-box.UI_Popup-show {
+    display: flex;
+}
+
+.UI_Popup-box.UI_Popup-show .UI_Popup {
+    display: block;
+}
+
+.UI_Popup .UI_Popup-close-btn {
+    position: absolute;
+    margin-top: -.3em;
+    top: calc(var(--UI_Popup-padding) * -1);
+    right: 0;
+    color: var(--UI_Popup-close-btn-color);
+    font-size: var(--UI_Popup-close-btn-font-size);
+    cursor: pointer;
+}
+
+.UI_Popup .UI_Popup-close-btn:hover {
+    color: var(--UI_Popup-close-btn-color-hover);
+}
+
+@media (max-width: 350px) {
+    .UI_Popup .UI_Popup-close-btn {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/*---------------------------------------------- UI_Tabs ---*/
+.UI_Tabs {
+}
+
+dl.UI_Tabs-activated {
+    width: 100%;
+    margin: 0 0 var(--UI_base-gapY) 0;
+}
+
+dl.UI_Tabs-activated .UI_Tabs-control-box {
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+dl.UI_Tabs-activated .UI_Tabs-control-box::-webkit-scrollbar {
+    display: none;
+}
+
+dl.UI_Tabs-activated dt {
+    padding: var(--UI_Tabs-control-padding);
+    white-space: nowrap;
+    font-size: var(--UI_Tabs-control-font-size);
+    border: var(--UI_Tabs-border-width) solid transparent;
+    border-bottom: none;
+    border-radius: var(--UI_base-border-radius) var(--UI_base-border-radius) 0 0;
+    cursor: pointer;
+}
+
+dl.UI_Tabs-activated dt.UI_Tabs-show,
+dl.UI_Tabs-activated dt:hover,
+dl.UI_Tabs-activated dt.UI_Tabs-show:hover {
+    border-color: var(--UI_Tabs-control-border-color);
+    background-color: var(--UI_Tabs-control-bg-color);
+    color: var(--UI_Tabs-control-font-color);
+}
+
+dl.UI_Tabs-activated dt.UI_Tabs-show {
+    cursor: default;
+}
+
+dl.UI_Tabs-activated dd {
+    display: none;
+    width: 100%;
+    padding: var(--UI_Tabs-content-paddingY) var(--UI_Tabs-content-paddingX);
+    background-color: var(--UI_Tabs-content-bg-color);
+    border-top: var(--UI_Tabs-border-width) solid var(--UI_Tabs-border-color);
+    border-radius: 0 0 var(--UI_base-border-radius) var(--UI_base-border-radius);
+}
+
+dl.UI_Tabs-activated dd.UI_Tabs-show {
+    display: block;
+}
+
+/*---------------------------------------------- Tabs color themes ---*/
+.UI_Tabs.UI_primary {
+    --UI_Tabs-border-color: var(--UI_primary-bg-color);
+    --UI_Tabs-control-font-color: var(--UI_primary-font-color);
+    --UI_Tabs-control-bg-color: var(--UI_primary-bg-color);
+}
+
+.UI_Tabs.UI_accent {
+    --UI_Tabs-border-color: var(--UI_accent-bg-color);
+    --UI_Tabs-control-font-color: var(--UI_accent-font-color);
+    --UI_Tabs-control-bg-color: var(--UI_accent-bg-color);
+}
+
+.UI_Tabs.UI_contour {
+    --UI_Tabs-border-color: var(--UI_contour-border-color);
+    --UI_Tabs-control-font-color: var(--UI_contour-font-color);
+    --UI_Tabs-control-bg-color: var(--UI_contour-bg-color);
+    --UI_Tabs-control-border-color: var(--UI_contour-border-color);
+}
+
+/*---------------------------------------------- UI_InputFile ---*/
+.UI_InputFile {
+}
+
+.UI_InputFile-activated {
+    position: absolute;
+    opacity: 0;
+    width: .1px;
+    height: .1px;
+}
+
+.UI_InputFile-control-box {
+    --control-box-item-gap: 10px;
+    display: flex;
+    flex-grow: 1;
+    padding: calc(var(--UI_form-field-paddingY) - var(--control-box-item-gap)) var(--UI_form-field-paddingX);
+    font-size: var(--UI_form-font-size);
+    line-height: var(--UI_form-line-height);
+    color: var(--UI_form-font-color);
+    background-color: var(--UI_form-bg-color);
+    cursor: pointer;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.UI_InputFile-control-box::-webkit-scrollbar {
+    display: none;
+}
+
+.UI_InputFile-control-box-placeholder {
+    padding: var(--control-box-item-gap) 0;
+    color: var(--UI_form-placeholder-color);
+    line-height: var(--UI_form-line-height);
+    opacity: .5;
+}
+
+.UI_InputFile-control-box-item-text,
+.UI_InputFile-control-box-placeholder {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    cursor: auto;
+}
+
+.UI_InputFile-control-box-item {
+    display: flex;
+    align-items: center;
+    margin: calc((var(--control-box-item-gap) / 2) - var(--UI_form-border-width)) var(--control-box-item-gap);
+    margin-left: 0;
+}
+
+.UI_InputFile-control-box-item .UI_InputFile-control-box-item-text {
+    padding: calc(var(--control-box-item-gap) / 2) var(--control-box-item-gap);
+    border: var(--UI_form-border-width) solid var(--UI_form-border-color);
+    border-radius: var(--UI_form-border-radius);
+}
+
+/*---------------------------------------------- UI_InputRange ---*/
+.UI_InputRange {
+    margin: 0 auto !important;
+}
+
+.UI_InputRange-activated + .UI_InputRange-infobox {
+    --UI_button-hover-bg-color: var(--UI_button-bg-color);
+    --UI_button-active-bg-color: var(--UI_button-bg-color);
+    position: relative;
+    margin-right: .5em;
+    border-radius: var(--UI_form-border-radius);
+    border: var(--UI_form-border-width) solid var(--UI_form-border-color);
+    z-index: 0;
+    order: 0;
+    cursor: auto;
+}
+
+.UI_InputRange-activated + .UI_InputRange-infobox::after {
+    content: "";
+    width: .7em;
+    height: .7em;
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+    background-color: inherit;
+    box-shadow: inset calc(var(--UI_form-border-width) * -1) var(--UI_form-border-width) 0 0 var(--UI_form-border-color);
+    z-index: -1;
+}
+
+/*---------------------------------------------- UI_InputNumber ---*/
+.UI_InputNumber {
+}
+
+.UI_InputNumber-activated {
+    -moz-appearance: textfield;
+}
+
+.UI_InputNumber-activated::-webkit-inner-spin-button,
+.UI_InputNumber-activated::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+}
+
+/*---------------------------------------------- UI_Select ---*/
+.UI_Select {
+}
+
+.UI_Select-activated {
+    display: none;
+}
+
+.UI_Select-control-box {
+    --control-box-item-gap: 10px;
+    display: flex;
+    flex-grow: 1;
+    padding: calc(var(--UI_form-field-paddingY) - var(--control-box-item-gap)) var(--UI_form-field-paddingX);
+    font-size: var(--UI_form-font-size);
+    line-height: var(--UI_form-line-height);
+    color: var(--UI_form-font-color);
+    background-color: var(--UI_form-bg-color);
+    cursor: pointer;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.UI_Select-control-box::-webkit-scrollbar {
+    display: none;
+}
+
+.UI_Select-control-box-item,
+.UI_Select-control-box-placeholder {
+    padding: var(--control-box-item-gap) 0;
+}
+
+.UI_Select-control-box-placeholder {
+    color: var(--UI_form-placeholder-color);
+    opacity: .5;
+}
+
+.UI_Select-control-box-item-text,
+.UI_Select-control-box-placeholder {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    cursor: auto;
+}
+
+.UI_Select-control-box-item-multiple {
+    display: flex;
+    align-items: center;
+    margin: calc((var(--control-box-item-gap) / 2) - var(--UI_form-border-width)) var(--control-box-item-gap);
+    margin-left: 0;
+}
+
+.UI_Select-control-box-item-multiple .UI_Select-control-box-item-text {
+    padding: calc(var(--control-box-item-gap) / 2) var(--control-box-item-gap);
+    border: var(--UI_form-border-width) solid var(--UI_form-border-color);
+    border-radius: var(--UI_form-border-radius) 0 0 var(--UI_form-border-radius);
+}
+
+.UI_Select-control-box-item-del {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: stretch;
+    padding: calc(var(--control-box-item-gap) / 2) var(--control-box-item-gap);
+    color: var(--UI_button-font-color);
+    background-color: var(--UI_button-bg-color);
+    border: var(--UI_form-border-width) solid var(--UI_form-border-color);
+    border-left: none;
+    border-radius: 0 var(--UI_form-border-radius) var(--UI_form-border-radius) 0;
+    cursor: pointer;
+}
+
+.UI_Select-control-box-item-del:hover {
+    background-color: var(--UI_button-hover-bg-color);
+}
+
+.UI_Select-dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 10px);
+    width: 100%;
+    max-height: calc((1em + (var(--UI_form-field-paddingY) * 3)) * 6);
+    font-size: var(--UI_form-font-size);
+    line-height: var(--UI_form-line-height);
+    color: var(--UI_form-font-color);
+    background-color: var(--UI_form-bg-color);
+    border: var(--UI_form-border-width) solid var(--UI_form-focus-border-color);
+    border-radius: var(--UI_base-border-radius);
+    box-shadow: var(--UI_form-focus-shadow);
+    z-index: 100;
+    overflow: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.UI_Select-dropdown::-webkit-scrollbar {
+    display: none;
+}
+
+.UI_Select-dropdown-show {
+    display: block;
+}
+
+.UI_Select-dropdown .UI_Select-dropdown-item,
+.UI_Select-dropdown .UI_disabled-form {
+    padding: var(--UI_form-field-paddingY) var(--UI_form-field-paddingX);
+}
+
+.UI_Select-dropdown-item:hover {
+    background-color: var(--UI_base-active-bg-color);
+    cursor: pointer;
+}
+
+.UI_Select-dropdown .UI_Select-search-input {
+    position: sticky;
+    top: 0;
+    will-change: scroll-position;
+    border: none;
+    border-bottom: inherit;
+    border-radius: 0;
+}
+
+/*---------------------------------------------- UI_Menu ---*/
+.UI_Menu {
+}
+
+.UI_Menu-activated,
+.UI_Menu-activated :where(li, ul, ul li, ul ul){
+    margin: 0;
+    padding: 0;
+}
+
+.UI_Menu-activated {
+    display: flex;
+    list-style: none;
+    margin-bottom: var(--UI_base-gapY);
+    background-color: var(--UI_Menu-bg-color);
+}
+
+.UI_Menu-activated li {
+    position: relative;
+    z-index: 100;
+    cursor: pointer;
+}
+
+.UI_Menu-activated ul {
+    display: none;
+    position: absolute;
+    background-color: var(--UI_Menu-bg-color);
+}
+
+.UI_Menu-activated ul li {
+    display: block;
+    background-color: var(--UI_Menu-bg-color);
+}
+
+.UI_Menu-activated ul ul {
+    left: 100%;
+    top: 0;
+}
+
+.UI_Menu-activated li a,
+.UI_Menu-activated li span {
+    display: block;
+    padding: .5em .8em;
+    white-space: nowrap;
+    font-size: 1.2em;
+    color: var(--UI_Menu-font-color);
+}
+
+.UI_Menu-activated :where(
+    .UI_Menu-mark, li a:hover, li span:hover, li:hover > a,
+    li:hover > span, ul li a:hover, ul li:hover > a, ul li:hover > span
+){
+    background-color: var(--UI_base-active-bg-color);
+    border: none;
+    color: var(--UI_Menu-font-color);
+}
+
+.UI_Menu-activated :where(li a:visited) {
+    color: var(--UI_Menu-font-color);
+}
+
+.UI_Menu-activated li:hover > ul {
+    display: block;
+}
+
+.UI_Menu-show-btn {
+    display: none;
+    padding: .5em;
+    margin-bottom: var(--UI_base-gapY);
+    font-size: 300%;
+    background-color: var(--UI_Menu-bg-color);
+}
+
+.UI_Menu-activated .UI_Menu-show-sub-btn {
+    display: none;
+    padding: .6em;
+    font-size: 150%;
+    background-color: var(--UI_base-active-bg-color);
+}
+
+@media (max-width: 768px) {
+    .UI_Menu-activated {
+        width: 100%;
+        margin-bottom: 0;
+    }
+
+    .UI_Menu-show-btn,
+    .UI_Menu-activated .UI_Menu-show-sub-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--UI_Menu-font-color);
+        font-style: normal;
+        line-height: 0;
+        cursor: pointer;
+    }
+
+    .UI_Menu-activated li,
+    .UI_Menu-activated li li {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        z-index: 1;
+    }
+
+    .UI_Menu-activated li a,
+    .UI_Menu-activated li span {
+        flex-grow: 1;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    .UI_Menu-activated ul,
+    .UI_Menu-activated ul ul {
+        position: relative;
+        left: 0;
+        flex-basis: 100%;
+        background-color: var(--UI_base-active-bg-color);
+    }
+
+    .UI_Menu-activated ul li,
+    .UI_Menu-activated :where(
+        .UI_Menu-mark, li a:hover, li span:hover, li:hover > a,
+        li:hover > span, ul li a:hover, ul li:hover > a, ul li:hover > span
+    ){
+        background: none;
+    }
+
+    .UI_Menu-activated,
+    .UI_Menu-activated li:hover > ul {
+        display: none;
+    }
+
+    .UI_Menu-show,
+    .UI_Menu-activated ul.UI_Menu-show,
+    .UI_Menu-activated li:hover > ul.UI_Menu-show {
+        display: block;
+    }
+}
+
+/*---------------------------------------------- Menu color themes ---*/
+.UI_Menu-activated.UI_primary,
+.UI_Menu-activated.UI_primary + .UI_Menu-show-btn {
+    --UI_Menu-bg-color: var(--UI_primary-bg-color);
+    --UI_Menu-font-color: var(--UI_primary-font-color);
+}
+
+.UI_Menu-activated.UI_accent,
+.UI_Menu-activated.UI_accent + .UI_Menu-show-btn {
+    --UI_Menu-bg-color: var(--UI_accent-bg-color);
+    --UI_Menu-font-color: var(--UI_accent-font-color);
+}
+
+.UI_Menu-activated.UI_contour,
+.UI_Menu-activated.UI_contour + .UI_Menu-show-btn {
+    --UI_Menu-bg-color: var(--UI_base-body-bg-color);
+    --UI_Menu-font-color: var(--UI_contour-font-color);
+}
+
+/**************************
+ * Print Styles
+ **************************/
+
+@media print {
+    .UI_noprint {
+        display: none !important;
+        visibility: hidden !important;
+    }
+
+    img {
+        border: none !important;
+    }
+
+    * {
+        background: transparent !important;
+        color: #000000 !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    body {
+        font-family: Arial, Helvetica, sans-serif !important;
+        font-size: 12px !important;
+        font-weight: normal !important;
+    }
+
+    a, a:visited {
+        text-decoration: underline;
+    }
+
+    a[href]::after {
+        content: " (" attr(href) ")";
+    }
+
+    abbr[title]::after {
+        content: " (" attr(title) ")";
+    }
+
+    a::after, a[href^="javascript:"]::after, a[href^="#"]::after {
+        content: "";
+    }
+
+    pre, blockquote {
+        border: var(--UI_base-border-width) solid #999999;
+        page-break-inside: avoid;
+    }
+
+    thead {
+        display: table-header-group;
+    }
+
+    tr, img {
+        page-break-inside: avoid;
+    }
+
+    img {
+        max-width: 100% !important;
+    }
+
+    @page {
+        margin: .5cm
+    }
+
+    p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+    }
+
+    h2, h3 {
+        page-break-after: avoid;
+    }
+}
