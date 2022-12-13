@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="uk">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -109,8 +109,49 @@
             justify-content: space-between;
         }
 
-        pre.code-style {
+        .code-style {
+            position: relative;
+            padding: var(--UI_base-padding);
+            margin: var(--UI_form-gap-top) 0 var(--UI_base-gapY) 0;
+            border: var(--UI_form-border-width) solid var(--UI_form-border-color);
+            box-shadow: var(--UI_form-shadow);
+            border-radius: var(--UI_base-border-radius);
+        }
+
+        dd.code-style {
+            margin: 0;
+            border: 0;
+            box-shadow: none;
+        }
+
+        :where(.code-style, .UI_form-component) .fragment {
+            overflow: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .code-style .fragment {
             line-height: 1.5;
+            padding: 0;
+            margin: 0;
+            white-space: pre;
+        }
+
+        .UI_form-component .fragment {
+            max-width: 250px;
+        }
+
+        .code-style .fragment::-webkit-scrollbar,
+        .UI_form-component .fragment::-webkit-scrollbar {
+            display: none;
+        }
+
+        .code-style .copy-fragment {
+            position: absolute;
+            top: var(--UI_base-padding);
+            right: var(--UI_base-padding);
+            color: var(--UI_link-color);
+            cursor: pointer;
         }
 
         .demo-grid div[class^="UI_col-"], .demo-block {
@@ -230,25 +271,67 @@
     -->
 
     <h2 id="letsGo">Початок роботи з UI</h2>
-    <p>Щоб почати користуватися UI, завантажте каталог <code>UI</code>:
+    <p>Щоб почати користуватися UI, завантажте каталог <code>UI</code>:</p>
     <ul>
         <li>zip:&nbsp;
             <a href="https://github.com/kroloburet/UI/archive/refs/heads/main.zip" class="fa-solid fa-file-zipper"></a>
         </li>
         <li>git clone:&nbsp;
-            <label class="UI_form-component UI_inline-form UI_contour UI_size-s copy-link">
-                <input type="text" value="https://github.com/kroloburet/UI.git" readonly>
-                <i class="UI_form-component-control fa-solid fa-copy" title="Копіювати посилання"></i>
+            <label class="UI_form-component UI_contour UI_size-s">
+                <span class="fragment UI_input">https://github.com/kroloburet/UI.git</span>
+                <i class="copy-fragment UI_form-component-control fa-solid fa-copy" title="Копіювати посилання"></i>
             </label>
         </li>
     </ul>
-    Під'єднайте файл <code>UI.css</code> та <code>UI.js</code> до сторінки.</p>
+    <p>Або скористутеся для підключення CDN:</p>
+    <ul>
+        <li>UI folder cdn:&nbsp;
+            <label class="UI_form-component UI_contour UI_size-s copy-link">
+                <span class="fragment UI_input">https://cdn.jsdelivr.net/gh/kroloburet/UI/</span>
+                <i class="copy-fragment UI_form-component-control fa-solid fa-copy" title="Копіювати посилання"></i>
+            </label>
+        </li>
+        <li>UI.min.css cdn:&nbsp;
+            <label class="UI_form-component UI_contour UI_size-s copy-link">
+                <span class="fragment UI_input">https://cdn.jsdelivr.net/gh/kroloburet/UI/UI.min.css</span>
+                <i class="copy-fragment UI_form-component-control fa-solid fa-copy" title="Копіювати посилання"></i>
+            </label>
+        </li>
+        <li>UI.min.js cdn:&nbsp;
+            <label class="UI_form-component UI_contour UI_size-s copy-link">
+                <span class="fragment UI_input">https://cdn.jsdelivr.net/gh/kroloburet/UI/UI.min.js</span>
+                <i class="copy-fragment UI_form-component-control fa-solid fa-copy" title="Копіювати посилання"></i>
+            </label>
+        </li>
+    </ul>
+    <span>Підключіть файл <code>UI.css</code> та <code>UI.js</code> до сторінки.</span>
+    <div class="code-style">
+        <i class="copy-fragment fa-solid fa-copy" title="Копіювати код"></i>
+        <pre class="fragment">
+&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;uk&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot;&gt;
+    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+    &lt;link href=&quot;https://cdn.jsdelivr.net/gh/kroloburet/UI/UI.min.css&quot; rel=&quot;stylesheet&quot;&gt;
+    &lt;link href=&quot;/style/main.css&quot; rel=&quot;stylesheet&quot;&gt;
+    &lt;script src=&quot;https://cdn.jsdelivr.net/gh/kroloburet/UI/UI.min.js&quot; defer&gt;&lt;/script&gt;
+    &lt;script src=&quot;/scripts/main.js&quot; defer&gt;&lt;/script&gt;
+    &lt;title&gt;Hello, World!&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    Hello, World!
+&lt;/body&gt;
+&lt;/html&gt;
+        </pre>
+    </div>
     <p><code>UI.css</code> містить CSS-класи з префіксом <code>UI_</code> для стилістичного оформлення та спрощення
         адаптивної верстки інтерфейсів та сторінок (відкрийте цю сторінку в мобільному/планшеті чи змініть ширину вікна
-        браузера, щоб побачити як UI <q>адаптує</q> контент). Зверніть увагу, що на початку файла стилів UI завдані
+        браузера, щоб побачити як UI <q>адаптує</q> контент). Зверніть увагу, що на початку файлу стилів UI завдані
         змінні з префіксом <code>--UI_</code>, котрі задають в дизайні кольори, шрифт та інші властивості. Ви можете
-        перевизначити їхнє значення в своєму файлі стилів, щоб, наприклад, легко <a
-                onclick="toggleTheme()">змінити тему сторінки</a>. Отже, перевизначайте та користуйтеся в своїх файлах
+        перевизначити їхнє значення у своєму файлі стилів, щоб, наприклад, легко <a
+                onclick="toggleTheme()">змінити тему сторінки</a>. Отже, перевизначайте та користуйтеся у своїх файлах
         цими змінними, щоб керувати виглядом UI.</p>
     <p><code>UI.js</code> містить суперклас <code>UI</code> з <a onclick="UI.GoTo('methods')">методами</a> для
         забезпечення роботи вебкомпонентів, таких як вікна, що випливають, таби та інших. Деякі методи, що змінюють
@@ -333,8 +416,9 @@
             </blockquote>
         </dd>
         <dt>Код</dt>
-        <dd>
-            <pre class="code-style">
+        <dd class="code-style">
+            <i class="copy-fragment fa-solid fa-copy" title="Копіювати код"></i>
+            <pre class="fragment">
 &lt;!--- h1 with p ---&gt;
 &lt;h1&gt;Заголовок h1 в 2 рядки&lt;br&gt;другий рядок&lt;/h1&gt;
 &lt;p&gt;Параграф 1: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque, dolore dolores eaque fugiat
@@ -439,8 +523,9 @@ sequi voluptatum. Ad autem, culpa cum explicabo, itaque laudantium nesciunt null
             </div>
         </dd>
         <dt>Код</dt>
-        <dd>
-            <pre class="code-style">
+        <dd class="code-style">
+            <i class="copy-fragment fa-solid fa-copy" title="Копіювати код"></i>
+            <pre class="fragment">
 &lt;!--- grid example ---&gt;
 &lt;div class=&quot;UI_row&quot;&gt;
     &lt;div class=&quot;UI_col-1&quot;&gt;UI_col-1&lt;/div&gt;
@@ -568,8 +653,9 @@ sequi voluptatum. Ad autem, culpa cum explicabo, itaque laudantium nesciunt null
             <p class="UI_notice-process">class="UI_notice-process"</p>
         </dd>
         <dt>Код</dt>
-        <dd>
-            <pre class="code-style">
+        <dd class="code-style">
+            <i class="copy-fragment fa-solid fa-copy" title="Копіювати код"></i>
+            <pre class="fragment">
 &lt;p class=&quot;UI_notice-error&quot;&gt;class=&quot;UI_notice-error&quot;&lt;/p&gt;
 &lt;p class=&quot;UI_notice-warning&quot;&gt;class=&quot;UI_notice-warning&quot;&lt;/p&gt;
 &lt;p class=&quot;UI_notice-success&quot;&gt;class=&quot;UI_notice-success&quot;&lt;/p&gt;
@@ -629,8 +715,9 @@ sequi voluptatum. Ad autem, culpa cum explicabo, itaque laudantium nesciunt null
             </table>
         </dd>
         <dt>Код</dt>
-        <dd>
-            <pre class="code-style">
+        <dd class="code-style">
+            <i class="copy-fragment fa-solid fa-copy" title="Копіювати код"></i>
+            <pre class="fragment">
 &lt;table class=&quot;UI_table&quot;&gt;
     &lt;thead&gt;
     &lt;tr&gt;
@@ -838,8 +925,9 @@ sequi voluptatum. Ad autem, culpa cum explicabo, itaque laudantium nesciunt null
             </div>
         </dd>
         <dt>Код</dt>
-        <dd>
-            <pre class="code-style">
+        <dd class="code-style">
+            <i class="copy-fragment fa-solid fa-copy" title="Копіювати код"></i>
+            <pre class="fragment">
 &lt;!--- input type=&quot;text&quot; ---&gt;
 Input type=&quot;text&quot;
 &lt;input type=&quot;text&quot; class=&quot;UI_input&quot; placeholder=&quot;Placeholder&quot;&gt;
@@ -1032,8 +1120,9 @@ Radio
             </div>
         </dd>
         <dt>Код</dt>
-        <dd>
-            <pre class="code-style">
+        <dd class="code-style">
+            <i class="copy-fragment fa-solid fa-copy" title="Копіювати код"></i>
+            <pre class="fragment">
 &lt;!--- Simple input type=&quot;text&quot; with class &quot;UI_inline-form&quot; ---&gt;
 &lt;input type=&quot;text&quot; class=&quot;UI_input UI_inline-form&quot; placeholder=&quot;input type=text&quot;&gt;
 
@@ -1118,8 +1207,9 @@ Radio
             <button type="button" class="UI_button UI_full-width">button UI_button UI_full-width</button>
         </dd>
         <dt>Код</dt>
-        <dd>
-            <pre class="code-style">
+        <dd class="code-style">
+            <i class="copy-fragment fa-solid fa-copy" title="Копіювати код"></i>
+            <pre class="fragment">
 &lt;!--- buttons ---&gt;
 &lt;input type=&quot;button&quot; class=&quot;UI_button&quot; value=&quot;input UI_button&quot;&gt;
 &lt;button type=&quot;button&quot; class=&quot;UI_button&quot;&gt;button UI_button&lt;/button&gt;
@@ -1219,8 +1309,9 @@ Radio
             </div>
         </dd>
         <dt>Код</dt>
-        <dd>
-            <pre class="code-style">
+        <dd class="code-style">
+            <i class="copy-fragment fa-solid fa-copy" title="Копіювати код"></i>
+            <pre class="fragment">
 &lt;!--- Fieldset group ---&gt;
 Fieldset group
 &lt;div class=&quot;UI_fieldset&quot;&gt;
@@ -1365,8 +1456,9 @@ Fieldset group with UI_inline-form
             </div>
         </dd>
         <dt>Код</dt>
-        <dd>
-            <pre class="code-style">
+        <dd class="code-style">
+            <i class="copy-fragment fa-solid fa-copy" title="Копіювати код"></i>
+            <pre class="fragment">
 &lt;!--- Submit form component ---&gt;
 Submit form component
 &lt;form class=&quot;UI_form-component&quot;&gt;
@@ -1481,8 +1573,9 @@ Form component with &quot;UI_contour UI_size-s UI_inline-form&quot;
                 та відкриє перші вкладки.</p>
         </dd>
         <dt>Код</dt>
-        <dd>
-            <pre class="code-style">
+        <dd class="code-style">
+            <i class="copy-fragment fa-solid fa-copy" title="Копіювати код"></i>
+            <pre class="fragment">
 &lt;!--- UI.Tabs() ---&gt;
 &lt;dl class="UI_Tabs"&gt;
     &lt;dt&gt;Tab 1&lt;/dt&gt;
@@ -1575,8 +1668,9 @@ Form component with &quot;UI_contour UI_size-s UI_inline-form&quot;
             </div>
         </dd>
         <dt>Код</dt>
-        <dd>
-            <pre class="code-style">
+        <dd class="code-style">
+            <i class="copy-fragment fa-solid fa-copy" title="Копіювати код"></i>
+            <pre class="fragment">
 &lt;!--- UI.Toggle() ---&gt;
 &lt;button type=&quot;button&quot; class=&quot;UI_button&quot; onclick=&quot;UI.Toggle('hidElem')&quot;&gt;Докладніше&lt;/button&gt;
 &lt;div id=&quot;hidElem&quot; hidden&gt;
@@ -1620,8 +1714,9 @@ Form component with &quot;UI_contour UI_size-s UI_inline-form&quot;
             </button>
         </dd>
         <dt>Код</dt>
-        <dd>
-            <pre class="code-style">
+        <dd class="code-style">
+            <i class="copy-fragment fa-solid fa-copy" title="Копіювати код"></i>
+            <pre class="fragment">
 &lt;!--- UI.GoTo() ---&gt;
 &lt;h2 id=&quot;h2Header&quot;&gt;Заголовок&lt;/h2&gt;
 
@@ -1722,8 +1817,9 @@ assumenda quas qui hic fugiat labore repellendus quos voluptatibus autem dolorem
             </ol>
         </dd>
         <dt>Код</dt>
-        <dd>
-            <pre class="code-style">
+        <dd class="code-style">
+            <i class="copy-fragment fa-solid fa-copy" title="Копіювати код"></i>
+            <pre class="fragment">
 &lt;!--- UI.Hint() ---&gt;
 &lt;ol&gt;
     &lt;li&gt;
@@ -1843,8 +1939,9 @@ assumenda quas qui hic fugiat labore repellendus quos voluptatibus autem dolorem
             </script>
         </dd>
         <dt>Код</dt>
-        <dd>
-            <pre class="code-style">
+        <dd class="code-style">
+            <i class="copy-fragment fa-solid fa-copy" title="Копіювати код"></i>
+            <pre class="fragment">
 &lt;!--- UI.Notice() ---&gt;
 &lt;button type=&quot;button&quot; class=&quot;UI_button&quot; id=&quot;goFeed&quot;&gt;Погодувати Мурчика&lt;/button&gt;
 
@@ -1929,8 +2026,9 @@ assumenda quas qui hic fugiat labore repellendus quos voluptatibus autem dolorem
             </div>
         </dd>
         <dt>Код</dt>
-        <dd>
-            <pre class="code-style">
+        <dd class="code-style">
+            <i class="copy-fragment fa-solid fa-copy" title="Копіювати код"></i>
+            <pre class="fragment">
 &lt;!--- UI.Popup() ---&gt;
 &lt;button type=&quot;button&quot; class=&quot;UI_button&quot; onclick=&quot;UI.Popup('pop1')&quot;&gt;Кнопка&lt;/button&gt;
 &lt;a onclick=&quot;UI.Popup('pop2')&quot;&gt;Посилання&lt;/a&gt;
@@ -1992,8 +2090,9 @@ assumenda quas qui hic fugiat labore repellendus quos voluptatibus autem dolorem
             <textarea class="UI_textarea" placeholder="Почни вводити текст" oninput="UI.Lim(this, 75)"></textarea>
         </dd>
         <dt>Код</dt>
-        <dd>
-            <pre class="code-style">
+        <dd class="code-style">
+            <i class="copy-fragment fa-solid fa-copy" title="Копіювати код"></i>
+            <pre class="fragment">
 &lt;!--- UI.Lim() input type=&quot;text&quot; ---&gt;
 &lt;input type=&quot;text&quot; class=&quot;UI_input&quot; placeholder=&quot;Почни вводити текст&quot; oninput=&quot;UI.Lim(this, 75)&quot;&gt;
 
@@ -2059,8 +2158,9 @@ assumenda quas qui hic fugiat labore repellendus quos voluptatibus autem dolorem
             <input type="file" class="UI_InputFile UI_inline-form">
         </dd>
         <dt>Код</dt>
-        <dd>
-            <pre class="code-style">
+        <dd class="code-style">
+            <i class="copy-fragment fa-solid fa-copy" title="Копіювати код"></i>
+            <pre class="fragment">
 &lt;!--- UI.InputFile() Input type=&quot;file&quot; multiple ---&gt;
 &lt;input type=&quot;file&quot; class=&quot;UI_InputFile&quot; multiple&gt;
 
@@ -2141,8 +2241,9 @@ assumenda quas qui hic fugiat labore repellendus quos voluptatibus autem dolorem
             <input type="range" class="UI_InputRange UI_inline-form" min="0" max="10" step="1" value="0">
         </dd>
         <dt>Код</dt>
-        <dd>
-            <pre class="code-style">
+        <dd class="code-style">
+            <i class="copy-fragment fa-solid fa-copy" title="Копіювати код"></i>
+            <pre class="fragment">
 &lt;!--- UI.InputRange() Input type=&quot;range&quot; ---&gt;
 &lt;input type=&quot;range&quot; class=&quot;UI_InputRange&quot; min=&quot;0&quot; max=&quot;10&quot; step=&quot;1&quot; value=&quot;0&quot;&gt;
 
@@ -2200,8 +2301,9 @@ assumenda quas qui hic fugiat labore repellendus quos voluptatibus autem dolorem
             <input type="number" class="UI_InputNumber UI_inline-form" min="-6" max="6" step="2">
         </dd>
         <dt>Код</dt>
-        <dd>
-            <pre class="code-style">
+        <dd class="code-style">
+            <i class="copy-fragment fa-solid fa-copy" title="Копіювати код"></i>
+            <pre class="fragment">
 &lt;!--- UI.InputNumber() Input type=&quot;number&quot; ---&gt;
 &lt;input type=&quot;number&quot; class=&quot;UI_InputNumber&quot; min=&quot;0&quot; max=&quot;6&quot;&gt;
 
@@ -2317,8 +2419,9 @@ assumenda quas qui hic fugiat labore repellendus quos voluptatibus autem dolorem
             </select>
         </dd>
         <dt>Код</dt>
-        <dd>
-            <pre class="code-style">
+        <dd class="code-style">
+            <i class="copy-fragment fa-solid fa-copy" title="Копіювати код"></i>
+            <pre class="fragment">
 &lt;!--- UI.Select() Multiple select with search ---&gt;
 &lt;select class=&quot;UI_Select&quot; id=&quot;mySelect&quot;
         data-with-search=&quot;true&quot;
@@ -2516,8 +2619,9 @@ assumenda quas qui hic fugiat labore repellendus quos voluptatibus autem dolorem
 
         </dd>
         <dt>Код</dt>
-        <dd>
-            <pre class="code-style">
+        <dd class="code-style">
+            <i class="copy-fragment fa-solid fa-copy" title="Копіювати код"></i>
+            <pre class="fragment">
 &lt;!--- UI.Menu() ---&gt;
 &lt;ul class=&quot;UI_Menu&quot;&gt;
     &lt;li&gt;&lt;a href=&quot;#&quot;&gt;item1&lt;/a&gt;
@@ -2628,19 +2732,17 @@ assumenda quas qui hic fugiat labore repellendus quos voluptatibus autem dolorem
         const root = document.querySelector(`:root`);
         window.toggleTheme = () => root.classList.toggle(`dark-theme`);
 
-        // Копіювати посилання
-        const component = document.querySelector(`.copy-link`);
-        component.addEventListener(`click`, e => {
-            if (e.target.classList.contains(`UI_form-component-control`)) {
-                const field = component.querySelector(`:scope input`);
-                field.select();
-                window.navigator.clipboard.writeText(field.value);
+        // Копіювати фрагмент
+        document.querySelectorAll(`.copy-fragment`).forEach(copyFragmentBtn => {
+            copyFragmentBtn.fragment = copyFragmentBtn.parentElement.querySelector(`.fragment`);
+            copyFragmentBtn.addEventListener(`click`, () => {
+                window.navigator.clipboard.writeText(copyFragmentBtn.fragment.textContent);
                 UI.Notice({
-                    text: `Посилання скопійовано &#x1f60e;`,
+                    text: `Скопійовано &#x1f60e;`,
                     className: `UI_notice-success`,
                     delay: 2000,
                 });
-            }
+            });
         });
     })();
 </script>
