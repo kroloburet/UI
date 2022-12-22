@@ -2,7 +2,8 @@
  * Суперклас UI
  * Документацію з прикладами дивись в index.html
  *
- * @author <kroloburet@gmail.com>
+ * Copyright (c) Serhii Nyzhnyk. Contacts: <kroloburet@gmail.com>
+ * License: http://opensource.org/licenses/MIT
  */
 const UI = new class {
 

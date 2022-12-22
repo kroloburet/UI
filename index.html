@@ -1,3 +1,8 @@
+<!--
+########### Copyright (c) Serhii Nyzhnyk. Contacts: <kroloburet@gmail.com>
+########### License: http://opensource.org/licenses/MIT
+-->
+
 <!DOCTYPE html>
 <html lang="uk">
 <head>
@@ -166,15 +171,20 @@
         }
 
         footer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--UI_base-padding);
             padding: var(--UI_base-gapY) var(--UI_base-gapX);
-        }
-
-        #copy {
             opacity: .5;
         }
 
-        #copy:hover {
+        footer:hover {
             opacity: 1;
+        }
+
+        .buymeacoffee {
+            border-bottom: none;
         }
 
         @media (max-width: 992px) {
@@ -262,7 +272,8 @@
     <h2 id="dependents">Залежності</h2>
     <ul>
         <li><a href="https://fontawesome.com" target="_blank">Font Awesome</a></li>
-        <li><a href="https://fonts.google.com/specimen/Manrope" target="_blank">Шрифт <q>Manrope</q> Regular 400</a></li>
+        <li><a href="https://fonts.google.com/specimen/Manrope" target="_blank">Шрифт <q>Manrope</q> Regular 400</a>
+        </li>
     </ul>
     <p>Залежності імпортовано в файл <code>UI.css</code>.</p>
 
@@ -2708,11 +2719,15 @@ assumenda quas qui hic fugiat labore repellendus quos voluptatibus autem dolorem
     ########### Footer
     -->
 
-    <footer class="UI_align-c" id="copy">
-        Web Development by
-        <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/wgALCAASABIBAREA/8QAGQABAAIDAAAAAAAAAAAAAAAACQMEBQgK/9oACAEBAAAAAQlwlRpGLNLQTrxk/8QAHRAAAQQCAwAAAAAAAAAAAAAABAMFBggABwITMv/aAAgBAQABBQJuaHN3LRRVIVypUslCjiJo+CNk8Lpn2FVsLKF2Hx85/8QAJRAAAgICAQMEAwEAAAAAAAAAAgMBBAUREgATIQYQFTEUMnGx/9oACAEBAAY/Aq1HG0bV21cJkVk10mw3dlZufIajyKEra5xfqlQMYziIlPQIQBuc0oBa1jJmZF9CAD5KZ9sv6NpY+hm8bTrR6kSrKXrKJxWracXk5xICi0j8i9VyzZNZDW7xK4nZjeuk+ucTgcbQf8ber2KSqy4qKyT7lO3VzWPq8Sr0siiFWkE1HaHt2PAdWTVnbJLOw4llJVhkgJhSJSPGeMyOpkdzr630Q1rNiuNjENW+EOYqHL+Rxs9tsLIe4G/PE9xvzrqP5H+e3//EABwQAQEAAgIDAAAAAAAAAAAAAAEhABEQMUFR0f/aAAgBAQABPyG2MigEM7A9g9ATE+4g+LA4kIKb9mSujiAKq60CEnLl6jvErjlujdVAtNbyMtPvyhrxe8Ze2/Bx/9oACAEBAAAAEH5//8QAHBABAQACAgMAAAAAAAAAAAAAAREAQSExEFGR/9oACAEBAAE/EE3I8gXGPNw9ZXiBC6kNsqPJq5H0/HBKB8Nsly/aK4vuECC9GFcT2bQjOndKkLd0KzDZQBqASIOAONUlNlatpV7u/H//2Q=="
-             alt="Web Development by Kroloburet">
-        <a href="mailto:kroloburet@gmail.com">kroloburet@gmail.com</a>
+    <footer>
+        <div>
+            Web Development by
+            <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/wgALCAASABIBAREA/8QAGQABAAIDAAAAAAAAAAAAAAAACQMEBQgK/9oACAEBAAAAAQlwlRpGLNLQTrxk/8QAHRAAAQQCAwAAAAAAAAAAAAAABAMFBggABwITMv/aAAgBAQABBQJuaHN3LRRVIVypUslCjiJo+CNk8Lpn2FVsLKF2Hx85/8QAJRAAAgICAQMEAwEAAAAAAAAAAgMBBAUREgATIQYQFTEUMnGx/9oACAEBAAY/Aq1HG0bV21cJkVk10mw3dlZufIajyKEra5xfqlQMYziIlPQIQBuc0oBa1jJmZF9CAD5KZ9sv6NpY+hm8bTrR6kSrKXrKJxWracXk5xICi0j8i9VyzZNZDW7xK4nZjeuk+ucTgcbQf8ber2KSqy4qKyT7lO3VzWPq8Sr0siiFWkE1HaHt2PAdWTVnbJLOw4llJVhkgJhSJSPGeMyOpkdzr630Q1rNiuNjENW+EOYqHL+Rxs9tsLIe4G/PE9xvzrqP5H+e3//EABwQAQEAAgIDAAAAAAAAAAAAAAEhABEQMUFR0f/aAAgBAQABPyG2MigEM7A9g9ATE+4g+LA4kIKb9mSujiAKq60CEnLl6jvErjlujdVAtNbyMtPvyhrxe8Ze2/Bx/9oACAEBAAAAEH5//8QAHBABAQACAgMAAAAAAAAAAAAAAREAQSExEFGR/9oACAEBAAE/EE3I8gXGPNw9ZXiBC6kNsqPJq5H0/HBKB8Nsly/aK4vuECC9GFcT2bQjOndKkLd0KzDZQBqASIOAONUlNlatpV7u/H//2Q=="
+                 alt="Web Development by Kroloburet">
+            <a href="mailto:kroloburet@gmail.com">kroloburet@gmail.com</a>
+        </div>
+        <a href="https://www.buymeacoffee.com/kroloburet" class="buymeacoffee" target="_blank"><img
+                src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=kroloburet&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff"/></a>
     </footer>
 </main>
 </body>
