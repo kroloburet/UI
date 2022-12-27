@@ -131,6 +131,7 @@
         }
 
         :where(.code-style, .UI_form-component) .fragment {
+            white-space: pre;
             overflow: auto;
             scrollbar-width: none;
             -ms-overflow-style: none;
@@ -140,7 +141,6 @@
             line-height: 1.5;
             padding: 0;
             margin: 0;
-            white-space: pre;
         }
 
         .UI_form-component .fragment {
@@ -2344,11 +2344,11 @@ assumenda quas qui hic fugiat labore repellendus quos voluptatibus autem dolorem
                     за тегом <code>input type="number"</code> в колекцію. Саме ця колекція буде надалі опрацьована
                     методом.
                 </li>
-                <li><code>incIcon</code> (рядок, опціонально, за замовчуванням "&plus;"). Іконка на кнопці додавання.
-                    Може містити HTML.
+                <li><code>incIcon</code> (рядок, опціонально, за замовчуванням "&lt;i class='fa-solid fa-plus'&gt;").
+                    Іконка на кнопці додавання. Може містити HTML.
                 </li>
-                <li><code>decIcon</code> (рядок, опціонально, за замовчуванням "&minus;"). Іконка на кнопці віднімання.
-                    Може містити HTML.
+                <li><code>decIcon</code> (рядок, опціонально, за замовчуванням "&lt;i class='fa-solid fa-minus'&gt;").
+                    Іконка на кнопці віднімання. Може містити HTML.
                 </li>
                 <li><code>title</code> (рядок, опціонально, за замовчуванням "Put the cursor in the field and scroll it
                     ;)"). Текст атрибуту <q>title</q> компонента. Спеціальні символи слід екранувати.
