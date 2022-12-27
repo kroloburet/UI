@@ -1067,8 +1067,8 @@ const UI = new class {
         // Конфігурація за замовчуванням
         const defConf = {
             selector: `.UI_${selfName}`,
-            incIcon: `&plus;`,
-            decIcon: `&minus;`,
+            incIcon: `<i class="fa-solid fa-plus"></i>`,
+            decIcon: `<i class="fa-solid fa-minus"></i>`,
             title: `Put the cursor in the field and scroll it ;)`,
         };
 
@@ -1227,9 +1227,9 @@ const UI = new class {
             withSearch: false,
             multiSelectPlaceholder: `Make a multiple choice`,
             searchPlaceholder: `Search on the list`,
-            selectIcon: `&#8942;`,
-            multiSelectIcon: `&plus;`,
-            delItemIcon: `&#10005;`,
+            arrowIconDown: `<i class="fa-solid fa-chevron-down"></i>`,
+            arrowIconUp: `<i class="fa-solid fa-chevron-up"></i>`,
+            delItemIcon: `<i class="fa-solid fa-xmark"></i>`,
         };
 
         // CSS-класи які використовує метод
@@ -1256,8 +1256,6 @@ const UI = new class {
         return new class {
             constructor() {
                 this.#activate();
-                // Клік по документу сховає всі dropdown
-                document.addEventListener(`click`, e => this.#hideDropdownsIfNotClass(e.target));
             }
 
             /**
@@ -1285,6 +1283,7 @@ const UI = new class {
                     select.uiData.hasMultiple = select.multiple;
                     select.uiData.hasSearch = select.uiData.conf.withSearch;
                     select.uiData.dropdownItems = [];
+                    select.uiData.controlBoxPlaceholder;
                     // Побудувати компонент
                     if (select.uiData.hasSearch) {
                         select.uiData.searchInput.type = `text`;
@@ -1294,50 +1293,31 @@ const UI = new class {
                         select.uiData.dropdown.append(select.uiData.searchInput);
                     }
                     select.uiData.dropdownShowBtn.classList.add(UI.classes.formComponentControl);
-                    select.uiData.dropdownShowBtn.innerHTML = select.uiData.hasMultiple
-                        ? select.uiData.conf.multiSelectIcon
-                        : select.uiData.conf.selectIcon;
+                    select.uiData.dropdownShowBtn.innerHTML = select.uiData.conf.arrowIconDown;
                     select.uiData.dropdown.classList.add(classes.dropdown);
                     select.uiData.controlBox.classList.add(classes.controlBox);
                     select.before(select.uiData.controlBox);
                     select.after(select.uiData.dropdown, select.uiData.dropdownShowBtn);
                     this.render(select);
                     // Слухачі подій для показу dropdown
-                    [select.uiData.controlBox, select.uiData.dropdownShowBtn].forEach(control => {
-                        control.onclick = e => {
-                            e.stopPropagation();
-                            this.hideDropdown();
-                            if (e.target === control) this.showDropdown(select);
+                    select.uiData.componentBox.onclick = e => {
+                        let control = [
+                            select.uiData.controlBox,
+                            select.uiData.controlBoxItemText,
+                            select.uiData.controlBoxPlaceholder,
+                            select.uiData.dropdownShowBtn,
+                            select.uiData.dropdownShowBtn.firstChild,
+                        ].includes(e.target);
+                        if (control) {
+                            let show = select.uiData.dropdown.classList.contains(classes.dropdownShow);
+                            show ? this.hideDropdown() : this.showDropdown(select);
                         }
-                    });
+                    };
                     // Слухачі подій поля
                     select.oninvalid = () => select.uiData.controlBox.classList.add(UI.classes.invalidForm);
                     // Помітити елемент як активований
                     UI.#markActivate(select, selfName);
                 });
-                return this;
-            }
-
-            /**
-             * Сховати всі dropdown в документі
-             * якщо "target" не має CSS-клас який
-             * забороняє це робити
-             *
-             * @param {HTMLElement} target Елемент що перевіряється на заборону
-             * @returns {this}
-             * @private
-             */
-            #hideDropdownsIfNotClass(target) {
-                let classList = target.classList;
-                let notHandleClasses = [
-                    `UI_${selfName}-activated`,
-                    UI.classes.disabledForm,
-                    classes.selectSearchInput,
-                ];
-                let notHandle = notHandleClasses.some(notHandleClass => {
-                    return classList.contains(notHandleClass);
-                });
-                if (!notHandle) this.hideDropdown();
                 return this;
             }
 
@@ -1354,8 +1334,12 @@ const UI = new class {
                         ? select.uiData.controlBox.classList.replace(UI.classes.invalidForm, UI.classes.focusForm)
                         : select.uiData.controlBox.classList.add(UI.classes.focusForm);
                     select.uiData.dropdown.classList.add(classes.dropdownShow);
+                    select.uiData.dropdownShowBtn.innerHTML = select.uiData.conf.arrowIconUp;
+                    let searchVal = select.uiData.searchInput.value;
+                    if (searchVal) this.search(searchVal, select);
                     select.uiData.searchInput.focus();
                 }
+                this.hideDropdown();
                 // Опрацювати всю колекцію якщо поле не передано
                 !(select instanceof HTMLElement) ? collection.forEach(worker) : worker(select);
                 return this;
@@ -1372,6 +1356,7 @@ const UI = new class {
                     if (!select.uiData || select.uiData.hasDisabled) return;
                     select.uiData.dropdown.classList.remove(classes.dropdownShow);
                     select.uiData.controlBox.classList.remove(UI.classes.focusForm);
+                    select.uiData.dropdownShowBtn.innerHTML = select.uiData.conf.arrowIconDown;
                 };
                 // Опрацювати всю колекцію якщо поле не передано
                 !(select instanceof HTMLElement) ? collection.forEach(worker) : worker(select);
@@ -1400,7 +1385,7 @@ const UI = new class {
             }
 
             /**
-             * Встановити значення атрибуту "selected"
+             * Встановити значення атрибута "selected"
              * для опцій поля за індексами та оновити компонент
              *
              * @param {boolean} val Значення атрибуту "selected"
@@ -1424,6 +1409,7 @@ const UI = new class {
                         select.item(index).selected = val;
                     }
                     this.render(select);
+                    this.hideDropdown(select);
                 };
                 // Опрацювати всю колекцію якщо поле не передано
                 !(select instanceof HTMLElement) ? collection.forEach(worker) : worker(select);
@@ -1453,10 +1439,7 @@ const UI = new class {
                             : classes.dropdownItem
                         dropdownItem.classList.add(dropdownItemClass);
                         dropdownItem.textContent = option.textContent;
-                        dropdownItem.onclick = e => {
-                            e.preventDefault();
-                            this.selected(true, [index], select);
-                        };
+                        dropdownItem.onclick = () => this.selected(true, [index], select);
                         select.uiData.dropdownItems.push(dropdownItem);
                         select.uiData.dropdown.append(dropdownItem);
                         if (option.selected) {
@@ -1469,6 +1452,7 @@ const UI = new class {
                             controlBoxItem.classList.add(controlBoxItemClass);
                             controlBoxItemText.classList.add(classes.controlBoxItemText);
                             controlBoxItemText.textContent = dropdownItem.textContent;
+                            controlBoxItemText.onclick = () => this.showDropdown(select);
                             controlBoxItem.append(controlBoxItemText);
                             select.uiData.controlBox.append(controlBoxItem);
                             if (select.uiData.hasMultiple) {
@@ -1482,10 +1466,10 @@ const UI = new class {
                     });
                     // Створити placeholder в multiple компоненті
                     if (!select.value && select.uiData.hasMultiple) {
-                        let controlBoxPlaceholder = document.createElement(`span`);
-                        controlBoxPlaceholder.classList.add(classes.controlBoxPlaceholder);
-                        controlBoxPlaceholder.textContent = select.uiData.conf.multiSelectPlaceholder;
-                        select.uiData.controlBox.append(controlBoxPlaceholder);
+                        select.uiData.controlBoxPlaceholder = document.createElement(`span`);
+                        select.uiData.controlBoxPlaceholder.classList.add(classes.controlBoxPlaceholder);
+                        select.uiData.controlBoxPlaceholder.textContent = select.uiData.conf.multiSelectPlaceholder;
+                        select.uiData.controlBox.append(select.uiData.controlBoxPlaceholder);
                     }
                     // Додати властивість полю для отримання значення {Array|String}
                     select.data = data;

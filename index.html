@@ -32,6 +32,7 @@
             --UI_form-font-color: #5E6C74;
             --UI_form-focus-shadow: 0 0 0 .188rem #101E20;
             --UI_form-focus-border-color: #0A78DE;
+            --UI_form-active-bg-color: rgba(42, 83, 89, .2);
             --UI_form-invalid-shadow: 0 0 0 .188rem #381419;
             --UI_Tabs-control-font-color: #000000;
             --UI_Hint-font-color: #000000;
@@ -1455,7 +1456,7 @@ Fieldset group with UI_inline-form
             <!--- Form component with "UI_contour UI_size-s UI_inline-form" --->
             Form component with "UI_contour UI_size-s UI_inline-form"
             <div class="UI_form-component UI_contour UI_size-s UI_inline-form">
-                <select class="UI_Select" data-select-icon="&#8628;">
+                <select class="UI_Select" data-arrow-icon-down="&#10549;" data-arrow-icon-up="&#10548;">
                     <option>Option1</option>
                     <option>Option2</option>
                     <option>Option3</option>
@@ -1520,7 +1521,7 @@ Form component with &quot;UI_contour UI_readonly-form&quot;
 &lt;!--- Form component with &quot;UI_contour UI_size-s UI_inline-form&quot; ---&gt;
 Form component with &quot;UI_contour UI_size-s UI_inline-form&quot;
 &lt;div class=&quot;UI_form-component UI_contour UI_size-s UI_inline-form&quot;&gt;
-    &lt;select class=&quot;UI_Select&quot; data-select-icon=&quot;&amp;#8628;&quot;&gt;
+    &lt;select class=&quot;UI_Select&quot; data-arrow-icon-down=&quot;&#10549;&quot; data-arrow-icon-up=&quot;&#10548;&quot;&gt;
         &lt;option&gt;Option1&lt;/option&gt;
         &lt;option&gt;Option2&lt;/option&gt;
         &lt;option&gt;Option3&lt;/option&gt;
@@ -2506,14 +2507,14 @@ assumenda quas qui hic fugiat labore repellendus quos voluptatibus autem dolorem
                 <li><code>searchPlaceholder</code> (рядок, опціонально, за замовчуванням "Search on the list").
                     Заповнювач порожнього поля пошуку по опціях списку.
                 </li>
-                <li><code>selectIcon</code> (рядок, опціонально, за замовчуванням "&#8942;"). Іконка кнопки, що показує
-                    dropdown компонента. Може містити HTML.
+                <li><code>arrowIconDown</code> (рядок, опціонально, за замовчуванням "&lt;i class='fa-solid
+                    fa-chevron-down'&gt;"). Іконка кнопки, що показує dropdown компонента. Може містити HTML.
                 </li>
-                <li><code>multiSelectIcon</code> (рядок, опціонально, за замовчуванням "&plus;"). Іконка кнопки, що
-                    показує dropdown в multiple компоненті. Може містити HTML.
+                <li><code>arrowIconUp</code> (рядок, опціонально, за замовчуванням "&lt;i class='fa-solid
+                    fa-chevron-up'&gt;"). Іконка кнопки, що ховає dropdown компонента. Може містити HTML.
                 </li>
-                <li><code>delItemIcon</code> (рядок, опціонально, за замовчуванням "&#10005;"). Іконка кнопки видалення
-                    обраної опції в multiple компоненті. Може містити HTML.
+                <li><code>delItemIcon</code> (рядок, опціонально, за замовчуванням "&lt;i class='fa-solid fa-xmark'&gt;").
+                    Іконка кнопки видалення обраної опції в multiple компоненті. Може містити HTML.
                 </li>
             </ol>
             <h4><q>клас-будівельник</q></h4>
