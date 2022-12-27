@@ -101,7 +101,13 @@
     --UI_form-border-width: 1px;
     --UI_form-border-color: #888F93;
     --UI_form-border-radius: var(--UI_base-border-radius);
-    --UI_form-shadow: 0 .125rem .25rem rgba(69, 90, 100, .25);
+    --UI_form-shadow: 0 .125rem 0 rgba(69, 90, 100, .25);
+    --UI_form-active-bg-color: rgba(198, 237, 255, .6);
+    --UI_form-component-control-bg-color: var(--UI_form-bg-color);
+    --UI_form-component-control-border-color: transparent;
+    --UI_form-component-control-font-color: var(--UI_form-border-color);
+    --UI_form-component-control-hover-bg-color: var(--UI_form-bg-color);
+    --UI_form-component-control-active-bg-color: var(--UI_form-bg-color);
     --UI_form-focus-border-color: #0B3950;
     --UI_form-focus-shadow: 0 0 0 .188rem #C6EDFF;
     --UI_form-invalid-border-color: #FF405A;
@@ -960,14 +966,15 @@ a.UI_angle-up::after, .UI_button.UI_angle-up::after {
     justify-content: center;
     margin: 0;
     padding: var(--UI_button-paddingY);
-    border-color: var(--UI_form-border-color);
+    color: var(--UI_form-component-control-font-color);
+    background-color: var(--UI_form-component-control-bg-color);
+    border-color: var(--UI_form-component-control-border-color);
     border-radius: 0;
 }
 
 .UI_button:hover,
 .UI_form-component :where(
-    button:hover, [type=button]:hover, [type=submit]:hover, [type=reset]:hover,
-    .UI_form-component-control:hover
+    button:hover, [type=button]:hover, [type=submit]:hover, [type=reset]:hover
 ) {
     background-color: var(--UI_button-hover-bg-color);
     color: var(--UI_button-font-color);
@@ -975,8 +982,7 @@ a.UI_angle-up::after, .UI_button.UI_angle-up::after {
 
 .UI_button:active,
 .UI_form-component :where(
-    button:active, [type=button]:active, [type=submit]:active, [type=reset]:active,
-    .UI_form-component-control:active
+    button:active, [type=button]:active, [type=submit]:active, [type=reset]:active
 ) {
     background-color: var(--UI_button-active-bg-color);
     color: var(--UI_button-font-color);
@@ -990,6 +996,7 @@ a.UI_angle-up::after, .UI_button.UI_angle-up::after {
     margin: 0;
     border: var(--UI_form-border-width) solid var(--UI_form-border-color);
     border-left-width: 0;
+    border-right-width: 0;
     border-radius: 0;
     box-shadow: var(--UI_form-shadow);
 }
@@ -998,6 +1005,25 @@ a.UI_angle-up::after, .UI_button.UI_angle-up::after {
     margin: 0;
     border: none;
     box-shadow: none;
+}
+
+.UI_form-component:where(.UI_primary, .UI_accent, .UI_contour) .UI_form-component-control {
+    border-left-width: var(--UI_form-border-width);
+    border-right-width: var(--UI_form-border-width);
+}
+
+.UI_form-component-control:hover {
+    background-color: var(--UI_form-component-control-hover-bg-color);
+    color: var(--UI_form-component-control-font-color);
+}
+
+.UI_form-component-control:active {
+    background-color: var(--UI_form-component-control-active-bg-color);
+    color: var(--UI_form-component-control-font-color);
+}
+
+.UI_form-component :where(button, [type=button], [type=submit], [type=reset], .UI_button) {
+    border-left-width: var(--UI_form-border-width);
 }
 
 .UI_form-component :where(
@@ -1021,6 +1047,7 @@ a.UI_angle-up::after, .UI_button.UI_angle-up::after {
     :last-child,
     :not(.UI_form-component .UI_form-component)
 ) > :last-child {
+    border-right-width: var(--UI_form-border-width);
     border-radius: 0 var(--UI_form-border-radius) var(--UI_form-border-radius) 0;
 }
 
@@ -1079,7 +1106,9 @@ a.UI_angle-up::after, .UI_button.UI_angle-up::after {
 }
 
 /*---------------------------------------------- Focus form ---*/
-.UI_focus-form, [class^="UI_"]:focus, [class^="UI_"] :focus,
+.UI_focus-form,
+[class^="UI_"]:where(:not(button, [type=button], [type=submit], [type=reset], .UI_form-component-control .UI_button)):focus,
+[class^="UI_"] :where(:not(button, [type=button], [type=submit], [type=reset], .UI_form-component-control .UI_button)):focus,
 :where(.UI_checkbox [type=checkbox], .UI_radio [type=radio]):focus + .UI_checkmark {
     --UI_form-border-color: var(--UI_form-focus-border-color);
     --UI_form-shadow: var(--UI_form-focus-shadow);
@@ -1161,6 +1190,11 @@ a.UI_angle-up::after, .UI_button.UI_angle-up::after {
     --UI_button-bg-color: var(--UI_primary-bg-color);
     --UI_button-hover-bg-color: var(--UI_primary-hover-bg-color);
     --UI_button-active-bg-color: var(--UI_primary-active-bg-color);
+    --UI_form-component-control-bg-color: var(--UI_primary-bg-color);
+    --UI_form-component-control-font-color: var(--UI_primary-font-color);
+    --UI_form-component-control-border-color: var(--UI_primary-border-color);
+    --UI_form-component-control-hover-bg-color: var(--UI_primary-hover-bg-color);
+    --UI_form-component-control-active-bg-color: var(--UI_primary-active-bg-color);
 }
 
 .UI_button.UI_accent,
@@ -1171,6 +1205,11 @@ a.UI_angle-up::after, .UI_button.UI_angle-up::after {
     --UI_button-bg-color: var(--UI_accent-bg-color);
     --UI_button-hover-bg-color: var(--UI_accent-hover-bg-color);
     --UI_button-active-bg-color: var(--UI_accent-active-bg-color);
+    --UI_form-component-control-bg-color: var(--UI_accent-bg-color);
+    --UI_form-component-control-font-color: var(--UI_accent-font-color);
+    --UI_form-component-control-border-color: var(--UI_accent-border-color);
+    --UI_form-component-control-hover-bg-color: var(--UI_accent-hover-bg-color);
+    --UI_form-component-control-active-bg-color: var(--UI_accent-active-bg-color);
 }
 
 .UI_button.UI_contour,
@@ -1181,6 +1220,11 @@ a.UI_angle-up::after, .UI_button.UI_angle-up::after {
     --UI_button-bg-color: var(--UI_contour-bg-color);
     --UI_button-hover-bg-color: var(--UI_contour-hover-bg-color);
     --UI_button-active-bg-color: var(--UI_contour-active-bg-color);
+    --UI_form-component-control-bg-color: var(--UI_contour-bg-color);
+    --UI_form-component-control-font-color: var(--UI_contour-font-color);
+    --UI_form-component-control-border-color: var(--UI_contour-border-color);
+    --UI_form-component-control-hover-bg-color: var(--UI_contour-hover-bg-color);
+    --UI_form-component-control-active-bg-color: var(--UI_contour-active-bg-color);
 }
 
 /**************************
@@ -1525,7 +1569,7 @@ dl.UI_Tabs-activated dd.UI_Tabs-show {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    cursor: auto;
+    cursor: pointer;
 }
 
 .UI_Select-control-box-item-multiple {
@@ -1538,6 +1582,7 @@ dl.UI_Tabs-activated dd.UI_Tabs-show {
 .UI_Select-control-box-item-multiple .UI_Select-control-box-item-text {
     padding: calc(var(--control-box-item-gap) / 2) var(--control-box-item-gap);
     border: var(--UI_form-border-width) solid var(--UI_form-border-color);
+    border-right-width: 0;
     border-radius: var(--UI_form-border-radius) 0 0 var(--UI_form-border-radius);
 }
 
@@ -1547,16 +1592,20 @@ dl.UI_Tabs-activated dd.UI_Tabs-show {
     justify-content: center;
     align-self: stretch;
     padding: calc(var(--control-box-item-gap) / 2) var(--control-box-item-gap);
-    color: var(--UI_button-font-color);
-    background-color: var(--UI_button-bg-color);
+    color: var(--UI_form-component-control-font-color);
+    background-color: var(--UI_form-component-control-bg-color);
     border: var(--UI_form-border-width) solid var(--UI_form-border-color);
-    border-left: none;
+    border-left-width: 0;
     border-radius: 0 var(--UI_form-border-radius) var(--UI_form-border-radius) 0;
     cursor: pointer;
 }
 
+:where(.UI_primary, .UI_accent, .UI_contour) .UI_Select-control-box-item-del {
+    border-left-width: var(--UI_form-border-width);
+}
+
 .UI_Select-control-box-item-del:hover {
-    background-color: var(--UI_button-hover-bg-color);
+    background-color: var(--UI_form-component-control-hover-bg-color);
 }
 
 .UI_Select-dropdown {
@@ -1592,7 +1641,7 @@ dl.UI_Tabs-activated dd.UI_Tabs-show {
 }
 
 .UI_Select-dropdown-item:hover {
-    background-color: var(--UI_base-active-bg-color);
+    background-color: var(--UI_form-active-bg-color);
     cursor: pointer;
 }
 
