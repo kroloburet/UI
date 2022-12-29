@@ -209,7 +209,7 @@
 </head>
 <body>
 <span class="page-control">
-    <a class="fa-solid fa-bars" onclick="UI.Toggle('asideMenu')" title="Зміст сторінки"></a>
+    <a class="fa-solid fa-bars" data-toggle="asideMenu" title="Зміст сторінки"></a>
     <a class="fa-solid fa-circle-half-stroke" onclick="toggleTheme()" title="Змінити тему сторінки"></a>
 </span>
 <aside id="asideMenu">
@@ -345,7 +345,7 @@
         перевизначити їхнє значення у своєму файлі стилів, щоб, наприклад, легко <a
                 onclick="toggleTheme()">змінити тему сторінки</a>. Отже, перевизначайте та користуйтеся у своїх файлах
         цими змінними, щоб керувати виглядом UI.</p>
-    <p><code>UI.js</code> містить суперклас <code>UI</code> з <a onclick="UI.GoTo('methods')">методами</a> для
+    <p><code>UI.js</code> містить суперклас <code>UI</code> з <a data-go-to="methods">методами</a> для
         забезпечення роботи вебкомпонентів, таких як вікна, що випливають, таби та інших. Деякі методи, що змінюють
         елементи, повинні бути викликані одразу після завантаження сторінки. Тому у файлі одразу ініціюється клас
         <code>UI</code> та викликаються такі методи.</p>
@@ -777,7 +777,7 @@ sequi voluptatum. Ad autem, culpa cum explicabo, itaque laudantium nesciunt null
     <p>В UI передбачено стилізацію елементів форми. Дотримуйтесь простих правил розмітки форм UI. Для елементів форми в
         <code>UI</code> передбачені CSS-класи (див. вкладку <q>Код</q>). Для елементів форм, які важко стилізуються і не
         дуже зручні для використання, UI <q>обгортає</q> в компоненти форми передбачені в <a
-                onclick="UI.GoTo('methods')">методах UI</a>. Елементи форми в UI можуть бути звичайними
+                data-go-to="methods">методах UI</a>. Елементи форми в UI можуть бути звичайними
         (блоковими за замовчуванням) та інлайновими.</p>
 
     <!--
@@ -787,8 +787,8 @@ sequi voluptatum. Ad autem, culpa cum explicabo, itaque laudantium nesciunt null
     <h3 id="assistantFormClasses">Допоміжні класи елементів форми</h3>
     <p><code>UI_focus-form</code>, <code>UI_invalid-form</code>, <code>UI_readonly-form</code> та
         <code>UI_disabled-form</code> стилізують елемент форми відповідно до статусу. Можна застосувати один з цих
-        класів до елемента форми, щоб стилізувати тільки його, або до <a onclick="UI.GoTo('fieldset')">групи
-            елементів</a> чи <a onclick="UI.GoTo('formComponent')">компоненту</a>, щоб стилізувати всі вкладені
+        класів до елемента форми, щоб стилізувати тільки його, або до <a data-go-to="fieldset">групи
+            елементів</a> чи <a data-go-to="formComponent">компоненту</a>, щоб стилізувати всі вкладені
         елементи. Поля та елементи форми <code>:focus</code>, <code>:invalid</code>, <code>:read-only</code> та <code>:disabled</code>
         будуть стилізовані за відповідними правилами цих класів.</p>
     <p><code>UI_primary</code>, <code>UI_accent</code> та <code>UI_contour</code> cтилізують елемент форми
@@ -1069,8 +1069,8 @@ Radio
     <p>Кнопки &mdash; типові інлайнові елементи. Вони такі за замовчуванням. Інлайнові елементи форми мають ширину, що
         дорівнює максимальній ширині контенту, який вони містять. Вони поводять себе як рядкові (display: inline) та
         мають відступ з правої сторони. Будь-які звичайні (блокові) елементи форми можна перетворити в інлайновий, якщо
-        застосувати клас <code>UI_inline-form</code>. <a onclick="UI.GoTo('formComponent')">Компоненти форми</a> та <a
-                onclick="UI.GoTo('fieldset')">групи елементів форми</a> з цим класом також стануть інлайновими.</p>
+        застосувати клас <code>UI_inline-form</code>. <a data-go-to="formComponent">Компоненти форми</a> та <a
+                data-go-to="fieldset">групи елементів форми</a> з цим класом також стануть інлайновими.</p>
 
     <dl class="UI_Tabs">
         <dt>Вигляд</dt>
@@ -1447,7 +1447,7 @@ Fieldset group with UI_inline-form
                     <option>Option2</option>
                     <option>Option3</option>
                 </select>
-                <input type="text" oninput="UI.Lim(this, 50)"
+                <input type="text" data-lim="this, 50"
                        placeholder="Example text">
                 <button type="button">Add</button>
                 <i class="fa-solid fa-trash-alt UI_form-component-control"></i>
@@ -1461,7 +1461,7 @@ Fieldset group with UI_inline-form
                     <option>Option2</option>
                     <option>Option3</option>
                 </select>
-                <input type="text" oninput="UI.Lim(this, 50)"
+                <input type="text" data-lim="this, 50"
                        placeholder="Example text">
                 <button type="button">Add</button>
                 <i class="fa-solid fa-trash-alt UI_form-component-control"></i>
@@ -1512,7 +1512,7 @@ Form component with &quot;UI_contour UI_readonly-form&quot;
         &lt;option&gt;Option2&lt;/option&gt;
         &lt;option&gt;Option3&lt;/option&gt;
     &lt;/select&gt;
-    &lt;input type=&quot;text&quot; oninput=&quot;UI.Lim(this, 50)&quot;
+    &lt;input type=&quot;text&quot; data-lim=&quot;this, 50&quot;
            placeholder=&quot;Example text&quot;&gt;
     &lt;button type=&quot;button&quot;&gt;Add&lt;/button&gt;
     &lt;i class=&quot;fa-solid fa-trash-alt UI_form-component-control&quot;&gt;&lt;/i&gt;
@@ -1526,7 +1526,7 @@ Form component with &quot;UI_contour UI_size-s UI_inline-form&quot;
         &lt;option&gt;Option2&lt;/option&gt;
         &lt;option&gt;Option3&lt;/option&gt;
     &lt;/select&gt;
-    &lt;input type=&quot;text&quot; oninput=&quot;UI.Lim(this, 50)&quot;
+    &lt;input type=&quot;text&quot; data-lim=&quot;this, 50&quot;
            placeholder=&quot;Example text&quot;&gt;
     &lt;button type=&quot;button&quot;&gt;Add&lt;/button&gt;
     &lt;i class=&quot;fa-solid fa-trash-alt UI_form-component-control&quot;&gt;&lt;/i&gt;
@@ -1560,8 +1560,7 @@ Form component with &quot;UI_contour UI_size-s UI_inline-form&quot;
         класи, знайдіть рядок <code>#disabledNodes = [`.UI_disabled-node`];</code> в файлі <code>UI.js</code> та
         скорегуйте масив.</p>
     <p>Блокування може стати у пригоді, коли на сторінці використовується <abbr title="What You See Is What You Get">WYSIWYG</abbr>
-        HTML-редактор, в якому потрібно зверстати, наприклад, <a onclick="UI.GoTo('popup')">вікно, що випливає
-            (popup)</a>.
+        HTML-редактор, в якому потрібно зверстати, наприклад, <a data-go-to="popup">вікно, що випливає (popup)</a>.
         Оскільки сучасні редактори вбудовують контент, зверстаний в них, у поточний документ, під'єднані до документу
         <code>UI.css</code> та <code>UI.js</code> також будуть працювати в вікні редактора. Річ в тому, що деякі
         методи UI змінюють зміст та навіть розташування в <abbr title="Document Object Model">DOM</abbr> елементів, які
@@ -1671,12 +1670,17 @@ Form component with &quot;UI_contour UI_size-s UI_inline-form&quot;
         <dt>Вигляд</dt>
         <dd>
             <!--- UI.Toggle() --->
+            <button type="button" class="UI_button" data-toggle="hidElem">Докладніше</button>
+
+            <!--- або "повісити" опрацьовувач на подію
             <button type="button" class="UI_button" onclick="UI.Toggle('hidElem')">Докладніше</button>
+            --->
+
             <div id="hidElem" hidden>
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae dignissimos doloremque ducimus et,
                 fugiat in iure nemo odit quidem quo! Aliquid aspernatur assumenda consequuntur doloremque enim, fugiat
                 in iure modi nihil quas quos, ratione recusandae reiciendis rem suscipit. Cum, laudantium?.<br>
-                <a onclick="UI.Toggle('hidElem')">Приховати</a>
+                <a data-toggle="hidElem">Приховати</a>
             </div>
         </dd>
         <dt>Код</dt>
@@ -1684,12 +1688,17 @@ Form component with &quot;UI_contour UI_size-s UI_inline-form&quot;
             <i class="copy-fragment fa-solid fa-copy" title="Копіювати код"></i>
             <pre class="fragment">
 &lt;!--- UI.Toggle() ---&gt;
+&lt;button type=&quot;button&quot; class=&quot;UI_button&quot; data-toggle=&quot;hidElem&quot;&gt;Докладніше&lt;/button&gt;
+
+&lt;!--- або &quot;повісити&quot; опрацьовувач на подію
 &lt;button type=&quot;button&quot; class=&quot;UI_button&quot; onclick=&quot;UI.Toggle('hidElem')&quot;&gt;Докладніше&lt;/button&gt;
+---&gt;
+
 &lt;div id=&quot;hidElem&quot; hidden&gt;
     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae dignissimos doloremque ducimus et,
     fugiat in iure nemo odit quidem quo! Aliquid aspernatur assumenda consequuntur doloremque enim, fugiat
     in iure modi nihil quas quos, ratione recusandae reiciendis rem suscipit. Cum, laudantium?.&lt;br&gt;
-    &lt;a onclick=&quot;UI.Toggle('hidElem')&quot;&gt;Приховати&lt;/a&gt;
+    &lt;a data-toggle=&quot;hidElem&quot;&gt;Приховати&lt;/a&gt;
 &lt;/div&gt;
             </pre>
         </dd>
@@ -1699,6 +1708,13 @@ Form component with &quot;UI_contour UI_size-s UI_inline-form&quot;
                 елемент був прихованим від самого початку, додайте йому атрибут <code>hidden</code> або <code>display:
                     none</code>. Метод повертає елемент з <code>id</code>. Якщо елемент не знайдено, буде видана помилка
                 <code>ReferenceError</code>.</p>
+            <blockquote>
+                <h5>Порада</h5>
+                <p>Метод можна <q>повісити</q> на елемент атрибутом <code>data-</code> та
+                    передати параметри через кому в його властивість. Приклад: <code>data-toggle="elemId, block"</code>.
+                    Рядкові параметри слід передавати не в лапках. UI коректно опрацює типи (числові, булеві, this,
+                    null, undefined), а інше передасть в метод як рядок.</p>
+            </blockquote>
             <h4>Аргументи метода</h4>
             <ol>
                 <li><code>id</code> (рядок, обов'язковий). Елемент з цим id буде показано або приховано.</li>
@@ -1721,9 +1737,15 @@ Form component with &quot;UI_contour UI_size-s UI_inline-form&quot;
         <dt>Вигляд</dt>
         <dd>
             <!--- UI.GoTo() --->
+            <button type="button" class="UI_button" data-go-to="letsGo">
+                Перейти до: <q>Початок роботи з UI</q>
+            </button>
+
+            <!--- або "повісити" опрацьовувач на подію
             <button type="button" class="UI_button" onclick="UI.GoTo('letsGo')">
                 Перейти до: <q>Початок роботи з UI</q>
             </button>
+            --->
         </dd>
         <dt>Код</dt>
         <dd class="code-style">
@@ -1743,7 +1765,11 @@ assumenda quas qui hic fugiat labore repellendus quos voluptatibus autem dolorem
 
 І ще багато всякого...
 
+&lt;button type=&quot;button&quot; class=&quot;UI_button&quot; data-go-to=&quot;h2Header&quot;&gt;Перейти до заголовку&lt;/button&gt;
+
+&lt;!--- або &quot;повісити&quot; опрацьовувач на подію
 &lt;button type=&quot;button&quot; class=&quot;UI_button&quot; onclick=&quot;UI.GoTo(&#39;h2Header&#39;)&quot;&gt;Перейти до заголовку&lt;/button&gt;
+---&gt;
             </pre>
         </dd>
         <dt>API</dt>
@@ -1754,14 +1780,19 @@ assumenda quas qui hic fugiat labore repellendus quos voluptatibus autem dolorem
                 ідентичний рядку в хеш. Це вже працює, бо <code>UI.GoTo()</code> викликано в кінці файлу
                 <code>UI.js</code>. Метод повертає елемент з <code>id</code> або <code>undefined</code>, якщо елемент не
                 знайдено.</p>
+            <blockquote>
+                <h5>Порада</h5>
+                <p>Метод можна <q>повісити</q> на елемент атрибутом <code>data-</code> та
+                    передати параметер в його властивість. Приклад: <code>data-go-to="elemId"</code>.
+                    Рядкові параметри слід передавати не в лапках. UI коректно опрацює типи (числові, булеві, this,
+                    null, undefined), а інше передасть в метод як рядок.</p>
+            </blockquote>
             <h4>Аргументи метода</h4>
             <ol>
                 <li><code>id</code> (рядок, опціонально, за замовчуванням null). До елемента з цим id буде
                     <q>прокручено</q>сторінку. Якщо аргумент не передано, метод намагатиметься отримати в поточному uri
-                    хеш
-                    (рядок після <q>#</q> включно) та шукатиме на сторінці елемент з таким id, щоб <q>прокрутити</q>
-                    сторінку до
-                    нього.
+                    хеш (рядок після <q>#</q> включно) та шукатиме на сторінці елемент з таким id, щоб <q>прокрутити</q>
+                    сторінку до нього.
                 </li>
             </ol>
         </dd>
@@ -1772,12 +1803,11 @@ assumenda quas qui hic fugiat labore repellendus quos voluptatibus autem dolorem
     -->
 
     <h3 id="hint">Підказка, що випливає</h3>
-    <p>Метод <code>UI.Hint()</code> слід <q>прив'язувати</q> до якоїсь події елементу, безпосередньо за якою є <code>&lt;span
-        class=&quot;UI_Hint&quot;&gt;...&lt;/span&gt;</code> з будь-яким контентом підказки всередині. Ба більше, немає
-        ніяких обмежень щодо тегу, в якому буде розташовуватись контент підказки. Головне, щоб тег мав клас
-        <code>UI_Hint</code> та був розташований одразу за елементом, на якому буде викликано <code>UI.Hint()</code>.
-        Тож, ви можете
-        верстати, не порушуючи правила валідації. Контент підказки буде доступний пошуковим ботам.</p>
+    <p>При наведені на елемент з <q>навішеним</q> методом <code>UI.Hint()</code> з'явиться підказка. Підказка може
+        містити буд-який контент. Немає жодних обмежень що до тегу підказки &mdash; <q>обгортки</q> контенту. Однак,
+        підказка повинна мати клас <code>UI_Hint</code> та бути розташована одразу за елементом на який <q>навішений</q>
+        метод <code>UI.Hint()</code>. Тож, ви можете верстати, не порушуючи правила валідації. Контент підказки буде
+        доступний пошуковим ботам.</p>
 
     <dl class="UI_Tabs">
         <dt>Вигляд</dt>
@@ -1785,7 +1815,7 @@ assumenda quas qui hic fugiat labore repellendus quos voluptatibus autem dolorem
             <!--- UI.Hint() --->
             <ol>
                 <li>
-                    <mark onmouseover="UI.Hint(this)">Підказка</mark>
+                    <mark data-hint="this">Підказка</mark>
                     <span class="UI_Hint">
                         Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                         Dolores, aliquid consequuntur harum, quia voluptatem.
@@ -1794,7 +1824,7 @@ assumenda quas qui hic fugiat labore repellendus quos voluptatibus autem dolorem
                 </li>
                 <li>
                     Щоб сховати,
-                    <mark onmouseover="UI.Hint(this, 'click')">цю підказку</mark>&nbsp;
+                    <mark data-hint="this, click">цю підказку</mark>&nbsp;
                     <i class="UI_Hint">
                         Клацни в будь-якому місці. Це стане в пригоді, наприклад,
                         коли в підказці буде <a>посилання</a> або
@@ -1803,7 +1833,7 @@ assumenda quas qui hic fugiat labore repellendus quos voluptatibus autem dolorem
                     треба клікнути
                 </li>
                 <li>
-                    <mark onmouseover="UI.Hint(this, 'dblclick')">Підказка</mark>&nbsp;
+                    <mark data-hint="this, dblclick">Підказка</mark>&nbsp;
                     <pre class="UI_Hint">
                         Нумо! Ти знаєш, що робити. Клацай двічі..)
                     </pre>
@@ -1811,7 +1841,7 @@ assumenda quas qui hic fugiat labore repellendus quos voluptatibus autem dolorem
                 </li>
                 <li>
                     Трохи HTML в
-                    <mark onmouseover="UI.Hint(this)">цій підказці</mark>&nbsp;
+                    <mark data-hint="this">цій підказці</mark>&nbsp;
                     <div class="UI_Hint">
                         <h4>Випадкове зображення</h4>
                         <img src="https://picsum.photos/250" alt="Random Image">
@@ -1819,7 +1849,7 @@ assumenda quas qui hic fugiat labore repellendus quos voluptatibus autem dolorem
                 </li>
                 <li>
                     Якщо щось потрібно пояснити
-                    <i class="fa-solid fa-question-circle" onmouseover="UI.Hint(this)"></i>
+                    <i class="fa-solid fa-question-circle" data-hint="this"></i>
                     <span class="UI_Hint">
                         Та що тут вже пояснювати..)
                         Все стане ясно, якщо подивитись код
@@ -1827,6 +1857,15 @@ assumenda quas qui hic fugiat labore repellendus quos voluptatibus autem dolorem
                     </span>
                 </li>
             </ol>
+
+            <!--- або "повісити" опрацьовувач на подію
+            <i class="fa-solid fa-question-circle" onmouseover="UI.Hint(this)"></i>
+            <span class="UI_Hint">
+                Але все ж таки, в верстці краще
+                використовувати виклик через
+                "data-" атрибут &#128521;
+            </span>
+            --->
         </dd>
         <dt>Код</dt>
         <dd class="code-style">
@@ -1835,7 +1874,7 @@ assumenda quas qui hic fugiat labore repellendus quos voluptatibus autem dolorem
 &lt;!--- UI.Hint() ---&gt;
 &lt;ol&gt;
     &lt;li&gt;
-        &lt;mark onmouseover=&quot;UI.Hint(this)&quot;&gt;Підказка&lt;/mark&gt;
+        &lt;mark data-hint=&quot;this&quot;&gt;Підказка&lt;/mark&gt;
         &lt;span class=&quot;UI_Hint&quot;&gt;
             Lorem ipsum dolor sit amet, consectetur adipisicing elit.
             Dolores, aliquid consequuntur harum, quia voluptatem.
@@ -1844,24 +1883,24 @@ assumenda quas qui hic fugiat labore repellendus quos voluptatibus autem dolorem
     &lt;/li&gt;
     &lt;li&gt;
         Щоб сховати,
-        &lt;mark onmouseover=&quot;UI.Hint(this, 'click')&quot;&gt;цю підказку&lt;/mark&gt;&amp;nbsp;
+        &lt;mark data-hint=&quot;this, click&quot;&gt;цю підказку&lt;/mark&gt;&amp;nbsp;
         &lt;i class=&quot;UI_Hint&quot;&gt;
             Клацни в будь-якому місці. Це стане в пригоді, наприклад,
-            коли в підказці буде &lt;a href=&quot;#&quot;&gt;посилання&lt;/a&gt; або
+            коли в підказці буде &lt;a&gt;посилання&lt;/a&gt; або
             інший елемент взаємодії.
         &lt;/i&gt;
         треба клікнути
     &lt;/li&gt;
     &lt;li&gt;
-        &lt;mark onmouseover=&quot;UI.Hint(this, 'dblclick')&quot;&gt;Підказка&lt;/mark&gt;&amp;nbsp;
+        &lt;mark data-hint=&quot;this, dblclick&quot;&gt;Підказка&lt;/mark&gt;&amp;nbsp;
         &lt;pre class=&quot;UI_Hint&quot;&gt;
             Нумо! Ти знаєш, що робити. Клацай двічі..)
         &lt;/pre&gt;
-        в цьому прикладі ховається якщо клацнути двічі.
+        в цьому прикладі підказка ховається, якщо клацнути двічі.
     &lt;/li&gt;
     &lt;li&gt;
-        Tрохи HTML в
-        &lt;mark onmouseover=&quot;UI.Hint(this)&quot;&gt;цій підказці&lt;/mark&gt;&amp;nbsp;
+        Трохи HTML в
+        &lt;mark data-hint=&quot;this&quot;&gt;цій підказці&lt;/mark&gt;&amp;nbsp;
         &lt;div class=&quot;UI_Hint&quot;&gt;
             &lt;h4&gt;Випадкове зображення&lt;/h4&gt;
             &lt;img src=&quot;https://picsum.photos/250&quot; alt=&quot;Random Image&quot;&gt;
@@ -1869,7 +1908,7 @@ assumenda quas qui hic fugiat labore repellendus quos voluptatibus autem dolorem
     &lt;/li&gt;
     &lt;li&gt;
         Якщо щось потрібно пояснити
-        &lt;i class=&quot;fa-solid fa-question-circle&quot; onmouseover=&quot;UI.Hint(this)&quot;&gt;&lt;/i&gt;
+        &lt;i class=&quot;fa-solid fa-question-circle&quot; data-hint=&quot;this&quot;&gt;&lt;/i&gt;
         &lt;span class=&quot;UI_Hint&quot;&gt;
             Та що тут вже пояснювати..)
             Все стане ясно, якщо подивитись код
@@ -1877,6 +1916,15 @@ assumenda quas qui hic fugiat labore repellendus quos voluptatibus autem dolorem
         &lt;/span&gt;
     &lt;/li&gt;
 &lt;/ol&gt;
+
+&lt;!--- або &quot;повісити&quot; опрацьовувач на подію
+&lt;i class=&quot;fa-solid fa-question-circle&quot; onmouseover=&quot;UI.Hint(this)&quot;&gt;&lt;/i&gt;
+&lt;span class=&quot;UI_Hint&quot;&gt;
+    Але все ж таки, в верстці краще
+    використовувати виклик через
+    &quot;data-&quot; атрибут &#128521;
+&lt;/span&gt;
+---&gt;
             </pre>
         </dd>
         <dt>API</dt>
@@ -1886,6 +1934,13 @@ assumenda quas qui hic fugiat labore repellendus quos voluptatibus autem dolorem
                 знаходитись
                 одразу за <code>el</code> та мати клас <code>UI_Hint</code>. Метод слід застосовувати як опрацьовувач
                 події на елементі <code>el</code>. Метод повертає екземпляр <q>класу-будівельника</q>.</p>
+            <blockquote>
+                <h5>Порада</h5>
+                <p>Метод можна <q>повісити</q> на елемент атрибутом <code>data-</code> та
+                    передати параметри через кому в його властивість. Приклад: <code>data-hint="this, click"</code>.
+                    Рядкові параметри слід передавати не в лапках. UI коректно опрацює типи (числові, булеві, this,
+                    null, undefined), а інше передасть в метод як рядок.</p>
+            </blockquote>
             <h4>Аргументи метода</h4>
             <ol>
                 <li><code>el</code> (HTMLElement, обов'язковий). Елемент або посилання на нього.</li>
@@ -1923,7 +1978,7 @@ assumenda quas qui hic fugiat labore repellendus quos voluptatibus autem dolorem
 
     <h3 id="notice">Повідомлення</h3>
     <p>Метод <code>UI.Notice()</code> &mdash; гарна альтернатива стандартним, сумним <code>alert()</code>, <code>prompt()</code>
-        та <code>confirm()</code>. Метод використовує <a onclick="UI.GoTo('noticeClasses')">класи повідомлень</a>, але
+        та <code>confirm()</code>. Метод використовує <a data-go-to="noticeClasses">класи повідомлень</a>, але
         також може викристовувати ваші класи.</p>
 
     <dl class="UI_Tabs">
@@ -1988,7 +2043,7 @@ assumenda quas qui hic fugiat labore repellendus quos voluptatibus autem dolorem
                 </li>
                 <li><code>className</code> (рядок, опціонально, за замовчуванням "UI_notice-process"). Один або декілька
                     CSS-класів, які будуть застосовані до елемента підказки. Зручно використовувати один з
-                    <a onclick="UI.GoTo('noticeClasses')">класів повідомлень UI</a>.
+                    <a data-go-to="noticeClasses">класів повідомлень UI</a>.
                 </li>
                 <li><code>delay</code> (ціле число або null, опціонально, за замовчуванням null). Скільки мілісекунд
                     буде показане (активне) повідомлення перед тим, як зникне. Якщо передано 0 або null, повідомлення
@@ -2027,8 +2082,14 @@ assumenda quas qui hic fugiat labore repellendus quos voluptatibus autem dolorem
         <dt>Вигляд</dt>
         <dd>
             <!--- UI.Popup() --->
+            <button type="button" class="UI_button" data-popup="pop1">Кнопка</button>
+            <a data-popup="pop2">Посилання</a>
+
+            <!--- або "повісити" опрацьовувач на подію
             <button type="button" class="UI_button" onclick="UI.Popup('pop1')">Кнопка</button>
             <a onclick="UI.Popup('pop2')">Посилання</a>
+            --->
+
             <div id="pop1" class="UI_Popup">
                 <h3>Привіт!</h3>
                 Вікно активоване кнопкою.
@@ -2042,8 +2103,14 @@ assumenda quas qui hic fugiat labore repellendus quos voluptatibus autem dolorem
             <i class="copy-fragment fa-solid fa-copy" title="Копіювати код"></i>
             <pre class="fragment">
 &lt;!--- UI.Popup() ---&gt;
+&lt;button type=&quot;button&quot; class=&quot;UI_button&quot; data-popup=&quot;pop1&quot;&gt;Кнопка&lt;/button&gt;
+&lt;a data-popup=&quot;pop2&quot;&gt;Посилання&lt;/a&gt;
+
+&lt;!--- або &quot;повісити&quot; опрацьовувач на подію
 &lt;button type=&quot;button&quot; class=&quot;UI_button&quot; onclick=&quot;UI.Popup('pop1')&quot;&gt;Кнопка&lt;/button&gt;
 &lt;a onclick=&quot;UI.Popup('pop2')&quot;&gt;Посилання&lt;/a&gt;
+---&gt;
+
 &lt;div id=&quot;pop1&quot; class=&quot;UI_Popup&quot;&gt;
     &lt;h3&gt;Привіт!&lt;/h3&gt;
     Вікно активоване кнопкою.
@@ -2061,11 +2128,17 @@ assumenda quas qui hic fugiat labore repellendus quos voluptatibus autem dolorem
                 <code>UI_Popup</code>, опрацює їх та активує. Це вже зроблено, бо <code>UI.Popup()</code> викликано в
                 кінці файлу <code>UI.js</code>. Вам залишилось лише передати <code>id</code> та показати вікно. Метод
                 повертає екземпляр <q>класу-будівельника</q>.</p>
+            <blockquote>
+                <h5>Порада</h5>
+                <p>Метод можна <q>повісити</q> на елемент атрибутом <code>data-</code> та
+                    передати параметер в його властивість. Приклад: <code>data-popup="elemId"</code>.
+                    Рядкові параметри слід передавати не в лапках. UI коректно опрацює типи (числові, булеві, this,
+                    null, undefined), а інше передасть в метод як рядок.</p>
+            </blockquote>
             <h4>Аргументи метода</h4>
             <ol>
                 <li><code>id</code> (рядок, необов'зковий, за замовчуванням null). Елемент з цим <code>id</code> та
-                    класом
-                    <code>UI_Popup</code> буде показано як вікно, що випливає.
+                    класом <code>UI_Popup</code> буде показано як вікно, що випливає.
                 </li>
             </ol>
             <h4><q>клас-будівельник</q></h4>
@@ -2096,20 +2169,30 @@ assumenda quas qui hic fugiat labore repellendus quos voluptatibus autem dolorem
         <dt>Вигляд</dt>
         <dd>
             <!--- UI.Lim() input type="text" --->
-            <input type="text" class="UI_input" placeholder="Почни вводити текст" oninput="UI.Lim(this, 75)">
+            <input type="text" class="UI_input" placeholder="Почни вводити текст" data-lim="this, 75">
 
             <!--- UI.Lim() textarea --->
+            <textarea class="UI_textarea" placeholder="Почни вводити текст" data-lim="this, 75"></textarea>
+
+            <!--- або "повісити" опрацьовувач на подію
+            <input type="text" class="UI_input" placeholder="Почни вводити текст" oninput="UI.Lim(this, 75)">
             <textarea class="UI_textarea" placeholder="Почни вводити текст" oninput="UI.Lim(this, 75)"></textarea>
+            --->
         </dd>
         <dt>Код</dt>
         <dd class="code-style">
             <i class="copy-fragment fa-solid fa-copy" title="Копіювати код"></i>
             <pre class="fragment">
 &lt;!--- UI.Lim() input type=&quot;text&quot; ---&gt;
-&lt;input type=&quot;text&quot; class=&quot;UI_input&quot; placeholder=&quot;Почни вводити текст&quot; oninput=&quot;UI.Lim(this, 75)&quot;&gt;
+&lt;input type=&quot;text&quot; class=&quot;UI_input&quot; placeholder=&quot;Почни вводити текст&quot; data-lim=&quot;this, 75&quot;&gt;
 
 &lt;!--- UI.Lim() textarea ---&gt;
+&lt;textarea class=&quot;UI_textarea&quot; placeholder=&quot;Почни вводити текст&quot; data-lim=&quot;this, 75&quot;&gt;&lt;/textarea&gt;
+
+&lt;!--- або &quot;повісити&quot; опрацьовувач на подію
+&lt;input type=&quot;text&quot; class=&quot;UI_input&quot; placeholder=&quot;Почни вводити текст&quot; oninput=&quot;UI.Lim(this, 75)&quot;&gt;
 &lt;textarea class=&quot;UI_textarea&quot; placeholder=&quot;Почни вводити текст&quot; oninput=&quot;UI.Lim(this, 75)&quot;&gt;&lt;/textarea&gt;
+---&gt;
             </pre>
         </dd>
         <dt>API</dt>
@@ -2117,9 +2200,15 @@ assumenda quas qui hic fugiat labore repellendus quos voluptatibus autem dolorem
             <p>Метод <code>UI.Lim(field [, limit])</code> обмежує ввод символів в поле <code>field</code> до
                 <code>limit</code> та показує користувачу, скільки ще можна ввести. Слід зазначити, що метод опрацьовує
                 тільки текстові поля <code>&lt;input type="text"&gt;</code> та <code>&lt;textarea&gt;...&lt;/textarea&gt;</code>,
-                зверстані за правилами UI, як зазначено в розділі <q><a onclick="UI.GoTo('forms')">Форми</a></q>. Метод
-                повертає
-                екземпляр <q>класу-будівельника</q>.</p>
+                зверстані за правилами UI, як зазначено в розділі <q><a data-go-to="forms">Форми</a></q>. Метод
+                повертає екземпляр <q>класу-будівельника</q>.</p>
+            <blockquote>
+                <h5>Порада</h5>
+                <p>Метод можна <q>повісити</q> на елемент атрибутом <code>data-</code> та
+                    передати параметри через кому в його властивість. Приклад: <code>data-lim="this, 50"</code>.
+                    Рядкові параметри слід передавати не в лапках. UI коректно опрацює типи (числові, булеві, this,
+                    null, undefined), а інше передасть в метод як рядок.</p>
+            </blockquote>
             <h4>Аргументи метода</h4>
             <ol>
                 <li><code>field</code> (HTMLElement, обов'язковий). Елемент (поле) або посилання на нього.</li>
@@ -2156,7 +2245,7 @@ assumenda quas qui hic fugiat labore repellendus quos voluptatibus autem dolorem
     -->
 
     <h3 id="inputFile">Input type="file"</h3>
-    <p>Метод <code>UI.InputFile()</code> будує <a onclick="UI.GoTo('formComponent')">компонент форми</a> з зручним
+    <p>Метод <code>UI.InputFile()</code> будує <a data-go-to="formComponent">компонент форми</a> з зручним
         інтерфейсом навколо звичайного поля <code>&lt;input type=&quot;file&quot;&gt;</code> та забезпечує управління
         полем через цей компонент.</p>
 
@@ -2299,7 +2388,7 @@ assumenda quas qui hic fugiat labore repellendus quos voluptatibus autem dolorem
     -->
 
     <h3 id="inputNumber">Input type="number"</h3>
-    <p>Метод <code>UI.InputNumber()</code> будує <a onclick="UI.GoTo('formComponent')">компонент форми</a> зі зручним
+    <p>Метод <code>UI.InputNumber()</code> будує <a data-go-to="formComponent">компонент форми</a> зі зручним
         інтерфейсом навколо звичайного поля <code>&lt;input type=&quot;number&quot;&gt;</code> та забезпечує управління
         полем через цей компонент.</p>
 
@@ -2387,7 +2476,7 @@ assumenda quas qui hic fugiat labore repellendus quos voluptatibus autem dolorem
     -->
 
     <h3 id="select">Список, що випадає</h3>
-    <p>Метод <code>UI.Select()</code> будує <a onclick="UI.GoTo('formComponent')">компонент форми</a> зі зручним
+    <p>Метод <code>UI.Select()</code> будує <a data-go-to="formComponent">компонент форми</a> зі зручним
         інтерфейсом навколо звичайного поля <code>&lt;select&gt;...&lt;/select&gt;</code> та забезпечує управління
         полем через цей компонент.</p>
 
