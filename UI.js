@@ -8,6 +8,20 @@
 const UI = new class {
 
     /***************************************
+     * Constructor
+     **************************************/
+
+    constructor() {
+        this.#datasetMethodRegister([
+            {attributeName: `data-toggle`, methodName: `Toggle`, event: `click`},
+            {attributeName: `data-go-to`, methodName: `GoTo`, event: `click`},
+            {attributeName: `data-hint`, methodName: `Hint`, event: `mouseover`},
+            {attributeName: `data-popup`, methodName: `Popup`, event: `click`},
+            {attributeName: `data-lim`, methodName: `Lim`, event: `input`},
+        ]);
+    }
+
+    /***************************************
      * Private UI fields
      **************************************/
 
@@ -81,6 +95,40 @@ const UI = new class {
      */
     #isActivate(el, selfName) {
         return el.classList.contains(`UI_${selfName}-activated`);
+    }
+
+    /**
+     * Реєстрація методів UI що працюватимуть через атрибути "data-"
+     *
+     * @param {[{attributeName: `data-method`, methodName: `Method`, event: `click`}]} registerData Масив даних реєстрації
+     * @private
+     */
+    #datasetMethodRegister(registerData) {
+        // Отримати параметри для метода UI зі значення атрибута "data-method"
+        const getDatasetMethodParams = (el, val) => {
+            let formatParam = param => {
+                param = param.trim();
+                const lowerCaseParam = param.toLowerCase();
+                const intParam = parseInt(param, 10);
+                const isSpecial = [`true`, `false`, `null`, `undefined`].includes(lowerCaseParam);
+                if (isSpecial) return JSON.parse(lowerCaseParam);
+                if (lowerCaseParam === `this`) return el;
+                if (!isNaN(intParam)) return intParam;
+                return param;
+            };
+            return val.split(`,`).map(formatParam);
+        }
+        // Опрацювати масив даних
+        registerData.forEach(data => {
+            document.addEventListener(data.event, e => {
+                const el = e.target.closest(`[${data.attributeName}]`);
+                if (!el) return;
+                const methodParams = el.getAttribute(data.attributeName);
+                if (data.methodName in this && methodParams) {
+                    this[data.methodName](...getDatasetMethodParams(el, methodParams));
+                }
+            });
+        });
     }
 
     /**
