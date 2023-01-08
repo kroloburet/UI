@@ -605,9 +605,9 @@ const UI = new class {
                 notice.classList.add(`UI_${selfName}`, conf.className);
                 notice.innerHTML = conf.text;
                 if (conf.delay) {
-                    setTimeout(() => {
+                    setTimeout(async () => {
                         this.remove();
-                        if (typeof conf.callback === `function`) conf.callback();
+                        if (typeof conf.callback === `function`) await conf.callback();
                     }, conf.delay)
                 }
                 return this;
