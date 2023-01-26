@@ -1613,7 +1613,6 @@ dl.UI_Tabs-activated dd.UI_Tabs-show {
     position: absolute;
     top: calc(100% + 10px);
     width: 100%;
-    max-height: calc((1em + (var(--UI_form-field-paddingY) * 3)) * 6);
     font-size: var(--UI_form-font-size);
     line-height: var(--UI_form-line-height);
     color: var(--UI_form-font-color);
@@ -1621,13 +1620,18 @@ dl.UI_Tabs-activated dd.UI_Tabs-show {
     border: var(--UI_form-border-width) solid var(--UI_form-focus-border-color);
     border-radius: var(--UI_base-border-radius);
     box-shadow: var(--UI_form-focus-shadow);
+    overflow: hidden;
     z-index: 100;
+}
+
+.UI_Select-dropdown-list {
+    max-height: 15em;
     overflow: auto;
     scrollbar-width: none;
     -ms-overflow-style: none;
 }
 
-.UI_Select-dropdown::-webkit-scrollbar {
+.UI_Select-dropdown-list::-webkit-scrollbar {
     display: none;
 }
 
@@ -1635,8 +1639,7 @@ dl.UI_Tabs-activated dd.UI_Tabs-show {
     display: block;
 }
 
-.UI_Select-dropdown .UI_Select-dropdown-item,
-.UI_Select-dropdown .UI_disabled-form {
+.UI_Select-dropdown .UI_Select-dropdown-item {
     padding: var(--UI_form-field-paddingY) var(--UI_form-field-paddingX);
 }
 
@@ -1646,9 +1649,6 @@ dl.UI_Tabs-activated dd.UI_Tabs-show {
 }
 
 .UI_Select-dropdown .UI_Select-search-input {
-    position: sticky;
-    top: 0;
-    will-change: scroll-position;
     border: none;
     border-bottom: inherit;
     border-radius: 0;
