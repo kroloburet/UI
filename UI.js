@@ -1273,7 +1273,7 @@ const UI = new class {
         const defConf = {
             selector: `.UI_${selfName}`,
             withSearch: false,
-            multiSelectPlaceholder: `Make a multiple choice`,
+            selectPlaceholder: `Make a choice`,
             searchPlaceholder: `Search on the list`,
             arrowIconDown: `<i class="fa-solid fa-chevron-down"></i>`,
             arrowIconUp: `<i class="fa-solid fa-chevron-up"></i>`,
@@ -1283,6 +1283,7 @@ const UI = new class {
         // CSS-класи які використовує метод
         const classes = {
             dropdown: `UI_${selfName}-dropdown`,
+            dropdownList: `UI_${selfName}-dropdown-list`,
             dropdownItem: `UI_${selfName}-dropdown-item`,
             dropdownShow: `UI_${selfName}-dropdown-show`,
             controlBox: `UI_${selfName}-control-box`,
@@ -1322,9 +1323,9 @@ const UI = new class {
                     select.uiData.conf = Object.assign({}, defConf, userConf, UI.#getDatasetConf(select));
                     select.uiData.componentBox = UI.#formComponent.wrap(select);
                     select.uiData.controlBox = document.createElement(`div`);
-                    select.uiData.options = select.querySelectorAll(`:scope option`);
                     select.uiData.searchInput = document.createElement(`input`);
                     select.uiData.dropdown = document.createElement(`div`);
+                    select.uiData.dropdownList = document.createElement(`div`);
                     select.uiData.dropdownShowBtn = document.createElement(`span`);
                     select.uiData.changeEvent = new Event(`change`);
                     select.uiData.hasDisabled = select.disabled;
@@ -1333,19 +1334,23 @@ const UI = new class {
                     select.uiData.dropdownItems = [];
                     select.uiData.controlBoxPlaceholder;
                     // Побудувати компонент
+                    select.uiData.dropdownShowBtn.classList.add(UI.classes.formComponentControl);
+                    select.uiData.dropdownShowBtn.innerHTML = select.uiData.conf.arrowIconDown;
+                    select.uiData.dropdown.classList.add(classes.dropdown);
+                    select.uiData.dropdownList.classList.add(classes.dropdownList);
+                    select.uiData.controlBox.classList.add(classes.controlBox);
+                    select.before(select.uiData.controlBox);
+                    select.after(select.uiData.dropdown, select.uiData.dropdownShowBtn);
+                    select.uiData.dropdown.append(select.uiData.dropdownList);
                     if (select.uiData.hasSearch) {
                         select.uiData.searchInput.type = `text`;
                         select.uiData.searchInput.classList.add(classes.selectSearchInput);
                         select.uiData.searchInput.placeholder = select.uiData.conf.searchPlaceholder;
                         select.uiData.searchInput.oninput = () => this.search(select.uiData.searchInput.value, select);
-                        select.uiData.dropdown.append(select.uiData.searchInput);
+                        select.uiData.dropdown.prepend(select.uiData.searchInput);
                     }
-                    select.uiData.dropdownShowBtn.classList.add(UI.classes.formComponentControl);
-                    select.uiData.dropdownShowBtn.innerHTML = select.uiData.conf.arrowIconDown;
-                    select.uiData.dropdown.classList.add(classes.dropdown);
-                    select.uiData.controlBox.classList.add(classes.controlBox);
-                    select.before(select.uiData.controlBox);
-                    select.after(select.uiData.dropdown, select.uiData.dropdownShowBtn);
+                    let hasDefaultSelected = [...select.options].filter(opt => opt.defaultSelected).length;
+                    if (select.uiData.conf.selectPlaceholder && !hasDefaultSelected) select.selectedIndex = -1;
                     this.render(select);
                     // Слухачі подій для показу dropdown
                     select.uiData.componentBox.onclick = e => {
@@ -1363,9 +1368,32 @@ const UI = new class {
                     };
                     // Слухачі подій поля
                     select.oninvalid = () => select.uiData.controlBox.classList.add(UI.classes.invalidForm);
+                    select.addEventListener(`change`, this.render(select));
                     // Помітити елемент як активований
                     UI.#markActivate(select, selfName);
                 });
+                return this;
+            }
+
+            /**
+             * Додати placeholder
+             *
+             * @param {HTMLElement|null} select Поле
+             * @returns {undefined|this}
+             */
+            #addPlaceholder(select = null) {
+                const worker = select => {
+                    if (!select.uiData.conf.selectPlaceholder) return;
+                    select.selectedIndex = -1;
+                    select.data = select.uiData.hasMultiple ? [] : ``;
+                    select.uiData.controlBox.innerHTML = ``;
+                    select.uiData.controlBoxPlaceholder = document.createElement(`span`);
+                    select.uiData.controlBoxPlaceholder.classList.add(classes.controlBoxPlaceholder);
+                    select.uiData.controlBoxPlaceholder.textContent = select.uiData.conf.selectPlaceholder;
+                    select.uiData.controlBox.prepend(select.uiData.controlBoxPlaceholder);
+                }
+                // Опрацювати всю колекцію якщо поле не передано
+                !(select instanceof HTMLElement) ? collection.forEach(worker) : worker(select);
                 return this;
             }
 
@@ -1377,15 +1405,13 @@ const UI = new class {
              */
             showDropdown(select = null) {
                 const worker = select => {
-                    if (select.uiData.hasDisabled) return;
+                    if (select.uiData.hasDisabled || !select.uiData.dropdownItems.length) return;
                     select.uiData.controlBox.classList.contains(UI.classes.invalidForm)
                         ? select.uiData.controlBox.classList.replace(UI.classes.invalidForm, UI.classes.focusForm)
                         : select.uiData.controlBox.classList.add(UI.classes.focusForm);
                     select.uiData.dropdown.classList.add(classes.dropdownShow);
                     select.uiData.dropdownShowBtn.innerHTML = select.uiData.conf.arrowIconUp;
-                    let searchVal = select.uiData.searchInput.value;
-                    if (searchVal) this.search(searchVal, select);
-                    select.uiData.searchInput.focus();
+                    select.uiData.searchInput?.focus();
                 }
                 this.hideDropdown();
                 // Опрацювати всю колекцію якщо поле не передано
@@ -1421,7 +1447,11 @@ const UI = new class {
              */
             search(query, select = null) {
                 const worker = select => {
-                    if (select.uiData.hasDisabled || !select.uiData.hasSearch) return;
+                    if (
+                        select.uiData.hasDisabled ||
+                        !select.uiData.hasSearch ||
+                        !select.uiData.dropdownItems.length
+                    ) return;
                     const q = query.toLowerCase();
                     select.uiData.dropdownItems.forEach(item => {
                         item.hidden = !(item.textContent.toLowerCase().indexOf(q) > -1);
@@ -1447,17 +1477,12 @@ const UI = new class {
                 const worker = select => {
                     if (select.uiData.hasDisabled) return;
                     for (let index of indexes) {
-                        // Не опрацьовувати обрані поля в dropdown
-                        if (
-                            val &&
-                            select.uiData.dropdownItems[index].classList.contains(UI.classes.disabledForm)
-                        ) continue;
-                        // В не multiple полях опрацювати лише indexes[0]
-                        if (!select.uiData.hasMultiple && index !== indexes[0]) break;
-                        select.item(index).selected = val;
+                        let option = select.item(index);
+                        if (option.disabled || (!select.uiData.hasMultiple && index !== indexes[0])) break;
+                        option.selected = val;
                     }
                     this.render(select);
-                    this.hideDropdown(select);
+                    if (!select.uiData.hasMultiple || !select.uiData.dropdownItems.length) this.hideDropdown(select);
                 };
                 // Опрацювати всю колекцію якщо поле не передано
                 !(select instanceof HTMLElement) ? collection.forEach(worker) : worker(select);
@@ -1475,31 +1500,29 @@ const UI = new class {
                     // Обнулити дані
                     let data = select.uiData.hasMultiple ? [] : ``;
                     select.uiData.controlBox.innerHTML = ``;
+                    select.uiData.dropdownList.innerHTML = ``;
                     select.uiData.dropdownItems = [];
-                    [...select.uiData.dropdown.children].forEach(child => {
-                        if (child !== select.uiData.searchInput) child.remove();
-                    });
-                    // Створити та синхронізувати елементи <option>
-                    select.uiData.options.forEach((option, index) => {
-                        let dropdownItem = document.createElement(`div`);
-                        let dropdownItemClass = (option.disabled || option.selected)
-                            ? UI.classes.disabledForm
-                            : classes.dropdownItem
-                        dropdownItem.classList.add(dropdownItemClass);
-                        dropdownItem.textContent = option.textContent;
-                        dropdownItem.onclick = () => this.selected(true, [index], select);
-                        select.uiData.dropdownItems.push(dropdownItem);
-                        select.uiData.dropdown.append(dropdownItem);
+                    [...select.options].forEach(option => {
+                        // Додати опцію у dropdown
+                        if (!option.selected && !option.disabled) {
+                            let dropdownItem = document.createElement(`div`);
+                            dropdownItem.classList.add(classes.dropdownItem);
+                            dropdownItem.innerHTML = option.innerHTML;
+                            dropdownItem.onclick = () => this.selected(true, [option.index], select);
+                            select.uiData.dropdownItems[option.index] = dropdownItem;
+                            select.uiData.dropdownList.append(dropdownItem);
+                        }
+                        // Додати як обрані
                         if (option.selected) {
                             let controlBoxItem = document.createElement(`span`);
                             let controlBoxItemText = document.createElement(`span`);
                             let controlBoxItemClass = select.uiData.hasMultiple
                                 ? classes.controlBoxItemMultiply
                                 : classes.controlBoxItem;
-                            select.uiData.hasMultiple ? data.push(option.value) : data = option.value;
+                            select.uiData.hasMultiple ? data.push(option.value) : data = select.value;
                             controlBoxItem.classList.add(controlBoxItemClass);
                             controlBoxItemText.classList.add(classes.controlBoxItemText);
-                            controlBoxItemText.textContent = dropdownItem.textContent;
+                            controlBoxItemText.innerHTML = option.innerHTML;
                             controlBoxItemText.onclick = () => this.showDropdown(select);
                             controlBoxItem.append(controlBoxItemText);
                             select.uiData.controlBox.append(controlBoxItem);
@@ -1507,23 +1530,22 @@ const UI = new class {
                                 let controlBoxItemDel = document.createElement(`span`);
                                 controlBoxItemDel.classList.add(classes.controlBoxItemDel);
                                 controlBoxItemDel.innerHTML = select.uiData.conf.delItemIcon;
-                                controlBoxItemDel.onclick = () => this.selected(false, [index], select);
+                                controlBoxItemDel.onclick = () => this.selected(false, [option.index], select);
                                 controlBoxItem.append(controlBoxItemDel);
                             }
                         }
                     });
-                    // Створити placeholder в multiple компоненті
-                    if (!select.value && select.uiData.hasMultiple) {
-                        select.uiData.controlBoxPlaceholder = document.createElement(`span`);
-                        select.uiData.controlBoxPlaceholder.classList.add(classes.controlBoxPlaceholder);
-                        select.uiData.controlBoxPlaceholder.textContent = select.uiData.conf.multiSelectPlaceholder;
-                        select.uiData.controlBox.append(select.uiData.controlBoxPlaceholder);
-                    }
-                    // Додати властивість полю для отримання значення {Array|String}
-                    select.data = data;
+                    // Додати placeholder
+                    if (!select.value) this.#addPlaceholder(select);
+                    //
                     select.dispatchEvent(select.uiData.changeEvent);
                     select.uiData.controlBox.classList.toggle(UI.classes.requiredForm, select.required);
                     select.uiData.componentBox.classList.toggle(UI.classes.disabledForm, select.uiData.hasDisabled);
+                    // Якщо є запит, показати результат пошуку
+                    let searchVal = select.uiData.searchInput?.value;
+                    if (searchVal) this.search(searchVal, select);
+                    // Додати властивість полю для отримання значення {Array|String}
+                    select.data = data;
                 };
                 // Опрацювати всю колекцію якщо поле не передано
                 !(select instanceof HTMLElement) ? collection.forEach(worker) : worker(select);

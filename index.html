@@ -1410,7 +1410,7 @@ Fieldset group with UI_inline-form
             Submit form component
             <form class="UI_form-component">
                 <select class="UI_Select"
-                        data-multi-select-placeholder="Add categories" data-with-search="true" multiple>
+                        data-select-placeholder="Add categories" data-with-search="true" multiple>
                     <option>Category 1</option>
                     <option>Category 2</option>
                     <option>Category 3</option>
@@ -1475,7 +1475,7 @@ Fieldset group with UI_inline-form
 Submit form component
 &lt;form class=&quot;UI_form-component&quot;&gt;
     &lt;select class=&quot;UI_Select&quot;
-            data-multi-select-placeholder=&quot;Add categories&quot; data-with-search=&quot;true&quot; multiple&gt;
+            data-select-placeholder=&quot;Add categories&quot; data-with-search=&quot;true&quot; multiple&gt;
         &lt;option&gt;Category 1&lt;/option&gt;
         &lt;option&gt;Category 2&lt;/option&gt;
         &lt;option&gt;Category 3&lt;/option&gt;
@@ -2486,7 +2486,7 @@ assumenda quas qui hic fugiat labore repellendus quos voluptatibus autem dolorem
             <!--- UI.Select() Multiple select with search --->
             <select class="UI_Select" id="mySelect"
                     data-with-search="true"
-                    data-multi-select-placeholder="Шукай та обирай своїх героїв..)" multiple>
+                    data-select-placeholder="Шукай та обирай своїх героїв..)" multiple>
                 <option>Aquaman</option>
                 <option>Asterix</option>
                 <option>Batman</option>
@@ -2526,7 +2526,7 @@ assumenda quas qui hic fugiat labore repellendus quos voluptatibus autem dolorem
 &lt;!--- UI.Select() Multiple select with search ---&gt;
 &lt;select class=&quot;UI_Select&quot; id=&quot;mySelect&quot;
         data-with-search=&quot;true&quot;
-        data-multi-select-placeholder=&quot;Шукай та обирай своїх героїв..)&quot; multiple&gt;
+        data-select-placeholder=&quot;Шукай та обирай своїх героїв..)&quot; multiple&gt;
     &lt;option&gt;Aquaman&lt;/option&gt;
     &lt;option&gt;Asterix&lt;/option&gt;
     &lt;option&gt;Batman&lt;/option&gt;
@@ -2590,8 +2590,8 @@ assumenda quas qui hic fugiat labore repellendus quos voluptatibus autem dolorem
                 <li><code>withSearch</code> (булево, опціонально, за замовчуванням true). Чи потрібен в компоненті пошук
                     по опціях списку.
                 </li>
-                <li><code>multiSelectPlaceholder</code> (рядок, опціонально, за замовчуванням "Make a multiple
-                    choice"). Заповнювач порожнього поля multiple.
+                <li><code>selectPlaceholder</code> (рядок, опціонально, за замовчуванням "Make a choice"). Заповнювач
+                    порожнього поля. Якщо передано порожній рядок, заповнювач не буде додано.
                 </li>
                 <li><code>searchPlaceholder</code> (рядок, опціонально, за замовчуванням "Search on the list").
                     Заповнювач порожнього поля пошуку по опціях списку.
@@ -2648,7 +2648,9 @@ assumenda quas qui hic fugiat labore repellendus quos voluptatibus autem dolorem
                         <li>Аргумент <code>val</code> (булево, обов'язковий). true або false для значення атрибуту <q>selected</q>.
                         </li>
                         <li>Аргумент <code>indexes</code> (масив, обов'язковий). Масив індексів опцій в полі <code>select</code>.
-                            Атрибутам <q>selected</q> цих опцій буде встановлене значення.
+                            Атрибутам <q>selected</q> цих опцій буде встановлене значення <code>val</code>. Зверніть
+                            увагу, disabled опції оброблені не будуть. Для списку з одинарним обиранням в
+                            <code>indexes</code> буде опрацьовано лише перше значення.
                         </li>
                         <li>Аргумент <code>select</code> (HTMLElement, опціонально, за замовчуванням null). Елемент з
                             колекції, який потрібно опрацювати. Якщо аргумент не передано, будуть опрацьовані всі
