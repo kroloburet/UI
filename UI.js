@@ -874,8 +874,7 @@ const UI = new class {
         // Конфігурація за замовчуванням
         const defConf = {
             selector: `.UI_${selfName}`,
-            placeholder: `Make a choice`,
-            placeholderMultiple: `Make a multiple choice`,
+            placeholder: `Choose a file`,
             selectIcon: `<i class="fa-solid fa-folder-open">`,
         };
 
@@ -922,8 +921,7 @@ const UI = new class {
                     input.uiData.selectBtn.classList.add(UI.classes.formComponentControl);
                     input.uiData.selectBtn.innerHTML = input.uiData.conf.selectIcon;
                     input.uiData.placeholder.classList.add(classes.controlBoxPlaceholder);
-                    input.uiData.placeholder.textContent = input.uiData.hasMultiple
-                        ? input.uiData.conf.placeholderMultiple : input.uiData.conf.placeholder;
+                    input.uiData.placeholder.textContent = input.uiData.conf.placeholder;
                     input.after(input.uiData.selectBtn);
                     input.before(input.uiData.controlBox);
                     this.render(input);

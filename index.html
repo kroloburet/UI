@@ -2253,7 +2253,7 @@ assumenda quas qui hic fugiat labore repellendus quos voluptatibus autem dolorem
         <dt>Вигляд</dt>
         <dd>
             <!--- UI.InputFile() Input type="file" multiple --->
-            <input type="file" class="UI_InputFile" multiple>
+            <input type="file" class="UI_InputFile" data-placeholder="Choose several files" multiple>
 
             <!--- UI.InputFile() Inline input type="file" --->
             <input type="file" class="UI_InputFile UI_inline-form">
@@ -2263,7 +2263,7 @@ assumenda quas qui hic fugiat labore repellendus quos voluptatibus autem dolorem
             <i class="copy-fragment fa-solid fa-copy" title="Копіювати код"></i>
             <pre class="fragment">
 &lt;!--- UI.InputFile() Input type=&quot;file&quot; multiple ---&gt;
-&lt;input type=&quot;file&quot; class=&quot;UI_InputFile&quot; multiple&gt;
+&lt;input type=&quot;file&quot; class=&quot;UI_InputFile&quot; data-placeholder=&quot;Choose several files&quot; multiple&gt;
 
 &lt;!--- UI.InputFile() Inline input type=&quot;file&quot; ---&gt;
 &lt;input type=&quot;file&quot; class=&quot;UI_InputFile UI_inline-form&quot;&gt;
@@ -2290,11 +2290,8 @@ assumenda quas qui hic fugiat labore repellendus quos voluptatibus autem dolorem
                     за тегом <code>input type="file"</code> в колекцію. Саме ця колекція буде надалі опрацьована
                     методом.
                 </li>
-                <li><code>placeholder</code> (рядок, опціонально, за замовчуванням "Make a choice"). Текст в полі
+                <li><code>placeholder</code> (рядок, опціонально, за замовчуванням "Choose a file"). Текст в полі
                     компонента, якщо файл не обрано.
-                </li>
-                <li><code>placeholderMultiple</code> (рядок, опціонально, за замовчуванням "Make a multiple choice").
-                    Текст в полі <q>multiple</q> компоненту, якщо файли не обрано.
                 </li>
                 <li><code>selectIcon</code> (рядок, опціонально, за замовчуванням "&lt;i class='fa-solid fa-folder-open'&gt;").
                     Текст або HTML-іконки обрання файла/лів.
