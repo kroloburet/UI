@@ -86,12 +86,6 @@
             height: 100vh;
             overflow: auto;
             z-index: 99;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-        }
-
-        aside::-webkit-scrollbar {
-            display: none;
         }
 
         main {
@@ -171,6 +165,13 @@
             background-color: transparent;
         }
 
+        .demo-scrollbar {
+            padding: .5em 1em;
+            border: 1px solid var(--demo-color);
+            height: 15em;
+            overflow: auto;
+        }
+
         footer {
             display: flex;
             flex-direction: column;
@@ -207,13 +208,13 @@
         }
     </style>
 </head>
-<body>
+<body class="UI_scrollbar">
 <span class="page-control">
     <a class="fa-solid fa-bars" data-toggle="asideMenu" title="Зміст сторінки"></a>
     <a class="fa-solid fa-circle-half-stroke" onclick="toggleTheme()" title="Змінити тему сторінки"></a>
 </span>
-<aside id="asideMenu">
-    <Ul>
+<aside id="asideMenu" class="UI_no-scrollbar">
+    <ul>
         <li><a data-anchor="dependents">Залежності</a></li>
         <li><a data-anchor="letsGo">Початок роботи</a></li>
         <li><a data-anchor="typography">Типографіка</a></li>
@@ -248,7 +249,7 @@
                 <li><a data-anchor="menu">Багаторівневе меню</a></li>
             </ul>
         </li>
-    </Ul>
+    </ul>
 </aside>
 
 <main>
@@ -644,6 +645,19 @@ sequi voluptatum. Ad autem, culpa cum explicabo, itaque laudantium nesciunt null
     <!--- UI_align-c --->
     <p><code>UI_align-c</code> &mdash; Вирівняти текст та елементи по центру. Приклад:</p>
     <p class="UI_align-c demo-block">Lorem ipsum dolor sit amet.</p>
+
+    <div class="UI_row">
+        <div class="UI_col-6">
+            <!--- UI_scrollbar --->
+            <p><code>UI_scrollbar</code> &mdash; Стилізує scrollbar.  Приклад:</p>
+            <div class="demo-scrollbar UI_scrollbar">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab aliquid hic inventore laboriosam laudantium maxime odit pariatur, porro praesentium reiciendis rem sequi sit, temporibus ut veritatis vero voluptatibus voluptatum. Atque ipsum possimus similique sint voluptatem. Accusantium animi beatae delectus excepturi harum hic laborum, magni maxime minima odio officia officiis omnis pariatur, praesentium qui rerum tempore, vitae voluptatem. Ab accusamus adipisci amet aut consectetur ducimus fugit id impedit in nisi, nulla quae rem repellat repudiandae sunt ullam ut, veritatis, voluptatum? Animi aspernatur id velit? Architecto, assumenda aut culpa delectus doloremque doloribus ducimus eligendi exercitationem explicabo fugit id illum ipsam laborum libero maiores, nostrum odio officia provident quae quas quibusdam quidem quo repellendus sit tempore tenetur unde, voluptas voluptatem voluptatibus voluptatum! A, consequatur eius enim, eos est, illum in incidunt ipsa labore laboriosam modi natus odio quos reprehenderit velit! Eligendi natus neque odit vero vitae! Ea fugit illo, necessitatibus obcaecati quis repellat.</div>
+        </div>
+        <div class="UI_col-6">
+            <!--- UI_no-scrollbar --->
+            <p><code>UI_no-scrollbar</code> &mdash; Ховає scrollbar.  Приклад:</p>
+            <div class="demo-scrollbar UI_no-scrollbar">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab aliquid hic inventore laboriosam laudantium maxime odit pariatur, porro praesentium reiciendis rem sequi sit, temporibus ut veritatis vero voluptatibus voluptatum. Atque ipsum possimus similique sint voluptatem. Accusantium animi beatae delectus excepturi harum hic laborum, magni maxime minima odio officia officiis omnis pariatur, praesentium qui rerum tempore, vitae voluptatem. Ab accusamus adipisci amet aut consectetur ducimus fugit id impedit in nisi, nulla quae rem repellat repudiandae sunt ullam ut, veritatis, voluptatum? Animi aspernatur id velit? Architecto, assumenda aut culpa delectus doloremque doloribus ducimus eligendi exercitationem explicabo fugit id illum ipsam laborum libero maiores, nostrum odio officia provident quae quas quibusdam quidem quo repellendus sit tempore tenetur unde, voluptas voluptatem voluptatibus voluptatum! A, consequatur eius enim, eos est, illum in incidunt ipsa labore laboriosam modi natus odio quos reprehenderit velit! Eligendi natus neque odit vero vitae! Ea fugit illo, necessitatibus obcaecati quis repellat.</div>
+        </div>
+    </div>
 
     <!--
     ########### Повідомлення

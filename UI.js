@@ -219,6 +219,8 @@ const UI = new class {
     classes = {
         bodyCoverBox: `UI_body-cover-box`,
         bodyHideOverflow: `UI_body-hide-overflow`,
+        scrollbar: `UI_scrollbar`,
+        noScrollbar: `UI_no-scrollbar`,
         invalidForm: `UI_invalid-form`,
         focusForm: `UI_focus-form`,
         requiredForm: `UI_required-form`,
@@ -315,7 +317,7 @@ const UI = new class {
                     tabs.uiData.dtList = tabs.querySelectorAll(`:scope dt`);
                     tabs.uiData.ddList = tabs.querySelectorAll(`:scope dd`);
                     // Додати елементи, класи та слухачів подій
-                    tabs.uiData.controlBox.classList.add(classes.controlBox);
+                    tabs.uiData.controlBox.classList.add(classes.controlBox, UI.classes.noScrollbar);
                     tabs.uiData.controlBox.append(...tabs.uiData.dtList);
                     tabs.uiData.componentBox.prepend(tabs.uiData.controlBox);
                     tabs.uiData.dtList.forEach(
@@ -917,7 +919,7 @@ const UI = new class {
                     };
                     input.oninvalid = () => input.uiData.controlBox.classList.add(UI.classes.invalidForm);
                     input.onblur = () => input.uiData.controlBox.classList.remove(UI.classes.focusForm);
-                    input.uiData.controlBox.classList.add(classes.controlBox);
+                    input.uiData.controlBox.classList.add(classes.controlBox, UI.classes.noScrollbar);
                     input.uiData.selectBtn.classList.add(UI.classes.formComponentControl);
                     input.uiData.selectBtn.innerHTML = input.uiData.conf.selectIcon;
                     input.uiData.placeholder.classList.add(classes.controlBoxPlaceholder);
@@ -1335,8 +1337,8 @@ const UI = new class {
                     select.uiData.dropdownShowBtn.classList.add(UI.classes.formComponentControl);
                     select.uiData.dropdownShowBtn.innerHTML = select.uiData.conf.arrowIconDown;
                     select.uiData.dropdown.classList.add(classes.dropdown);
-                    select.uiData.dropdownList.classList.add(classes.dropdownList);
-                    select.uiData.controlBox.classList.add(classes.controlBox);
+                    select.uiData.dropdownList.classList.add(classes.dropdownList, UI.classes.scrollbar);
+                    select.uiData.controlBox.classList.add(classes.controlBox, UI.classes.noScrollbar);
                     select.before(select.uiData.controlBox);
                     select.after(select.uiData.dropdown, select.uiData.dropdownShowBtn);
                     select.uiData.dropdown.append(select.uiData.dropdownList);
