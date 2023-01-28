@@ -1129,8 +1129,11 @@ a.UI_angle-up::after, .UI_button.UI_angle-up::after {
 }
 
 /*---------------------------------------------- Invalid form ---*/
-.UI_invalid-form, [class^="UI_"]:invalid, [class^="UI_"] :invalid,
-:where(.UI_checkbox [type=checkbox], .UI_radio [type=radio]):invalid + .UI_checkmark {
+.UI_invalid-form,
+[class^="UI_"]:invalid:not(form, fieldset, :required), [class^="UI_"] :invalid:not(form, fieldset, :required),
+[class^="UI_"]:invalid:required:focus, [class^="UI_"] :invalid:required:focus,
+:where(.UI_checkbox [type=checkbox], .UI_radio [type=radio]):invalid:not(:required) + .UI_checkmark,
+:where(.UI_checkbox [type=checkbox], .UI_radio [type=radio]):invalid:required:focus + .UI_checkmark {
     --UI_form-border-color: var(--UI_form-invalid-border-color);
     --UI_form-shadow: var(--UI_form-invalid-shadow);
     border-width: var(--UI_form-border-width);
@@ -1457,6 +1460,7 @@ dl.UI_Tabs-activated dd.UI_Tabs-show {
 }
 
 .UI_InputFile-activated {
+    pointer-events: none;
     position: absolute;
     opacity: 0;
     width: .1px;
@@ -1552,7 +1556,11 @@ dl.UI_Tabs-activated dd.UI_Tabs-show {
 }
 
 .UI_Select-activated {
-    display: none;
+    pointer-events: none;
+    position: absolute;
+    opacity: 0;
+    width: .1px;
+    height: .1px;
 }
 
 .UI_Select-control-box {
