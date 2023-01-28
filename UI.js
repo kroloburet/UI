@@ -912,6 +912,10 @@ const UI = new class {
                     input.uiData.placeholder = document.createElement(`span`);
                     input.uiData.hasMultiple = input.multiple;
                     // Додати елементи, класи та слухачів подій
+                    if (input.form) {
+                        input.uiData.resetHandler = () => setTimeout(() => this.render(input), 100);
+                        input.form.addEventListener(`reset`, input.uiData.resetHandler);
+                    }
                     input.onchange = () => {
                         this.render(input);
                         input.uiData.controlBox.classList.add(UI.classes.focusForm);
@@ -979,6 +983,7 @@ const UI = new class {
                     input.onchange = null;
                     input.oninvalid = null;
                     input.onblur = null;
+                    if (input.form) input.form.removeEventListener(`reset`, input.uiData.resetHandler);
                     UI.#unmarkActivate(input, selfName);
                     UI.#formComponent.unwrap(input);
                     delete input.uiData;
@@ -1059,6 +1064,11 @@ const UI = new class {
                     } else {
                         input.oninput = () => input.uiData.infobox.innerText = input.value;
                     }
+                    if (input.form) {
+                        input.uiData.resetHandler = () =>
+                            setTimeout(() => input.uiData.infobox.innerText = input.value || `0`, 100);
+                        input.form.addEventListener(`reset`, input.uiData.resetHandler);
+                    }
                     // Помітити елемент як активований
                     UI.#markActivate(input, selfName);
                 });
@@ -1074,6 +1084,7 @@ const UI = new class {
                 collection.filter(el => UI.#isActivate(el, selfName)).forEach(input => {
                     // Повернути елементи в стан до активації
                     input.oninput = null;
+                    if (input.form) input.form.removeEventListener(`reset`, input.uiData.resetHandler)
                     UI.#unmarkActivate(input, selfName);
                     UI.#formComponent.unwrap(input);
                     delete input.uiData;
@@ -1368,6 +1379,10 @@ const UI = new class {
                     };
                     // Слухачі подій поля
                     select.oninvalid = () => select.uiData.controlBox.classList.add(UI.classes.invalidForm);
+                    if (select.form) {
+                        select.uiData.resetHandler = () => setTimeout(() => this.render(select), 100);
+                        select.form.addEventListener(`reset`, select.uiData.resetHandler);
+                    }
                     // Помітити елемент як активований
                     UI.#markActivate(select, selfName);
                 });
@@ -1561,6 +1576,7 @@ const UI = new class {
                 collection.filter(el => UI.#isActivate(el, selfName)).forEach(select => {
                     // Повернути елементи в стан до активації
                     select.oninvalid = null;
+                    if (select.form) select.form.removeEventListener(`reset`, select.uiData.resetHandler);
                     UI.#unmarkActivate(select, selfName);
                     UI.#formComponent.unwrap(select);
                     delete select.data;
