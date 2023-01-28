@@ -1368,7 +1368,6 @@ const UI = new class {
                     };
                     // Слухачі подій поля
                     select.oninvalid = () => select.uiData.controlBox.classList.add(UI.classes.invalidForm);
-                    select.addEventListener(`change`, this.render(select));
                     // Помітити елемент як активований
                     UI.#markActivate(select, selfName);
                 });
