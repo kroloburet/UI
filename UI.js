@@ -1497,6 +1497,7 @@ const UI = new class {
                     }
                     this.render(select);
                     if (!select.uiData.hasMultiple || !select.uiData.dropdownItems.length) this.hideDropdown(select);
+                    select.dispatchEvent(select.uiData.changeEvent);
                 };
                 // Опрацювати всю колекцію якщо поле не передано
                 !(select instanceof HTMLElement) ? collection.forEach(worker) : worker(select);
@@ -1552,7 +1553,6 @@ const UI = new class {
                     // Додати placeholder
                     if (!select.value) this.#addPlaceholder(select);
                     //
-                    select.dispatchEvent(select.uiData.changeEvent);
                     select.uiData.controlBox.classList.toggle(UI.classes.requiredForm, select.required);
                     select.uiData.componentBox.classList.toggle(UI.classes.disabledForm, select.uiData.hasDisabled);
                     // Якщо є запит, показати результат пошуку
