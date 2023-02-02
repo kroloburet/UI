@@ -244,7 +244,7 @@ meter {
     color: unset;
 }
 
-:where([hidden], template) {
+:where([hidden], [type=hidden], template) {
     display: none;
 }
 
