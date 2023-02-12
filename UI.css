@@ -1670,6 +1670,14 @@ dl.UI_Tabs-activated dd.UI_Tabs-show {
     border-radius: 0;
 }
 
+.UI_Select-overlay {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden auto;
+    background-color: transparent !important;
+}
+
 /*---------------------------------------------- UI_Menu ---*/
 .UI_Menu {
 }

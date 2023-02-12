@@ -1293,6 +1293,7 @@ const UI = new class {
 
         // CSS-класи які використовує метод
         const classes = {
+            overlay: `UI_${selfName}-overlay`,
             dropdown: `UI_${selfName}-dropdown`,
             dropdownList: `UI_${selfName}-dropdown-list`,
             dropdownItem: `UI_${selfName}-dropdown-item`,
@@ -1333,6 +1334,7 @@ const UI = new class {
                     select.uiData = {};
                     select.uiData.conf = Object.assign({}, defConf, userConf, UI.#getDatasetConf(select));
                     select.uiData.componentBox = UI.#formComponent.wrap(select);
+                    select.uiData.overlay = document.createElement(`div`);
                     select.uiData.controlBox = document.createElement(`div`);
                     select.uiData.searchInput = document.createElement(`input`);
                     select.uiData.dropdown = document.createElement(`div`);
@@ -1350,6 +1352,7 @@ const UI = new class {
                     select.uiData.dropdown.classList.add(classes.dropdown);
                     select.uiData.dropdownList.classList.add(classes.dropdownList, UI.classes.scrollbar);
                     select.uiData.controlBox.classList.add(classes.controlBox, UI.classes.noScrollbar);
+                    select.uiData.overlay.classList.add(classes.overlay)
                     select.before(select.uiData.controlBox);
                     select.after(select.uiData.dropdown, select.uiData.dropdownShowBtn);
                     select.uiData.dropdown.append(select.uiData.dropdownList);
@@ -1363,7 +1366,8 @@ const UI = new class {
                     let hasDefaultSelected = [...select.options].filter(opt => opt.defaultSelected).length;
                     if (select.uiData.conf.selectPlaceholder && !hasDefaultSelected) select.selectedIndex = -1;
                     this.render(select);
-                    // Слухачі подій для показу dropdown
+                    // Слухачі подій для показу та приховування dropdown
+                    select.uiData.overlay.onclick = () => this.hideDropdown(select);
                     select.uiData.componentBox.onclick = e => {
                         let control = [
                             select.uiData.controlBox,
@@ -1374,7 +1378,7 @@ const UI = new class {
                         ].includes(e.target);
                         if (control) {
                             let show = select.uiData.dropdown.classList.contains(classes.dropdownShow);
-                            show ? this.hideDropdown() : this.showDropdown(select);
+                            show ? this.hideDropdown(select) : this.showDropdown(select);
                         }
                     };
                     // Слухачі подій поля
@@ -1420,12 +1424,13 @@ const UI = new class {
             showDropdown(select = null) {
                 const worker = select => {
                     if (select.uiData.hasDisabled || !select.uiData.dropdownItems.length) return;
+                    document.body.append(select.uiData.overlay);
+                    select.uiData.componentBox.style.zIndex = 1;
                     select.uiData.controlBox.classList.contains(UI.classes.invalidForm)
                         ? select.uiData.controlBox.classList.replace(UI.classes.invalidForm, UI.classes.focusForm)
                         : select.uiData.controlBox.classList.add(UI.classes.focusForm);
                     select.uiData.dropdown.classList.add(classes.dropdownShow);
                     select.uiData.dropdownShowBtn.innerHTML = select.uiData.conf.arrowIconUp;
-                    select.uiData.searchInput?.focus();
                 }
                 this.hideDropdown();
                 // Опрацювати всю колекцію якщо поле не передано
@@ -1442,6 +1447,8 @@ const UI = new class {
             hideDropdown(select = null) {
                 const worker = select => {
                     if (!select.uiData || select.uiData.hasDisabled) return;
+                    select.uiData.overlay.remove();
+                    select.uiData.componentBox.style.zIndex = `auto`;
                     select.uiData.dropdown.classList.remove(classes.dropdownShow);
                     select.uiData.controlBox.classList.remove(UI.classes.focusForm);
                     select.uiData.dropdownShowBtn.innerHTML = select.uiData.conf.arrowIconDown;
