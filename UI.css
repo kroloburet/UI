@@ -1355,6 +1355,7 @@ pre.UI_Hint {
 
 .UI_Popup-box {
     display: none;
+    padding-top: calc(var(--UI_Popup-close-btn-font-size) * 2);
 }
 
 .UI_Popup-box.UI_Popup-show {
@@ -1367,7 +1368,7 @@ pre.UI_Hint {
 
 .UI_Popup .UI_Popup-close-btn {
     position: absolute;
-    margin-top: -.3em;
+    margin-top: -.5em;
     top: calc(var(--UI_Popup-padding) * -1);
     right: 0;
     color: var(--UI_Popup-close-btn-color);
