@@ -217,7 +217,9 @@ const UI = new class {
      * @type {Object}
      */
     classes = {
-        bodyCoverBox: `UI_body-cover-box`,
+        elementsOverlayZIndex: getComputedStyle(document.body).getPropertyValue(`--UI_base-overlay-elements-z-index`),
+        bodyOverlayZIndex: getComputedStyle(document.body).getPropertyValue(`--UI_base-overlay-body-z-index`),
+        bodyOverlay: `UI_body-overlay`,
         bodyHideOverflow: `UI_body-hide-overflow`,
         scrollbar: `UI_scrollbar`,
         noScrollbar: `UI_no-scrollbar`,
@@ -407,7 +409,7 @@ const UI = new class {
         const el = document.getElementById(id);
         if (!el) throw ReferenceError(`Element with id "${id}" not found.`);
         // Обробка відображення/приховування
-        const visible = el.style.display || window.getComputedStyle(el, null).getPropertyValue('display');
+        const visible = el.style.display || getComputedStyle(el, null).getPropertyValue('display');
         if (visible === `none` || el.hidden) {
             el.style.display = display;
             el.hidden = false;
@@ -598,7 +600,7 @@ const UI = new class {
                     notice = document.createElement(`div`);
                     notice.uiData = {};
                     notice.uiData.componentBox = document.createElement(`div`);
-                    notice.uiData.componentBox.classList.add(UI.classes.bodyCoverBox, classes.box);
+                    notice.uiData.componentBox.classList.add(UI.classes.bodyOverlay, classes.box);
                     notice.uiData.componentBox.prepend(notice);
                     document.body.classList.add(UI.classes.bodyHideOverflow);
                     document.body.append(notice.uiData.componentBox);
@@ -680,7 +682,7 @@ const UI = new class {
                         pop.uiData = {};
                         pop.uiData.componentBox = document.createElement(`div`);
                         pop.uiData.closeBtn = document.createElement(`span`);
-                        pop.uiData.componentBox.classList.add(UI.classes.bodyCoverBox, classes.box);
+                        pop.uiData.componentBox.classList.add(UI.classes.bodyOverlay, classes.box);
                         pop.uiData.componentBox.onclick = e =>
                             e.target === pop.uiData.componentBox ? this.hide() : null;
                         pop.uiData.closeBtn.classList.add(classes.closeBtn, `fa-solid`, `fa-times-circle`);
@@ -1425,7 +1427,7 @@ const UI = new class {
                 const worker = select => {
                     if (select.uiData.hasDisabled || !select.uiData.dropdownItems.length) return;
                     document.body.append(select.uiData.overlay);
-                    select.uiData.componentBox.style.zIndex = 1;
+                    select.uiData.componentBox.style.zIndex = UI.classes.bodyOverlayZIndex;
                     select.uiData.controlBox.classList.contains(UI.classes.invalidForm)
                         ? select.uiData.controlBox.classList.replace(UI.classes.invalidForm, UI.classes.focusForm)
                         : select.uiData.controlBox.classList.add(UI.classes.focusForm);

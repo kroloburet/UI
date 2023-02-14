@@ -50,6 +50,8 @@
     --UI_base-padding: calc(.7em + 1vw);
     --UI_base-gapX: 2vw;
     --UI_base-gapY: 2rem;
+    --UI_base-overlay-body-z-index: 9999; /* Use number unit */
+    --UI_base-overlay-elements-z-index: 1000; /* Use number unit */
     /*--- Color themes ---*/
     --UI_base-color: #E5CA00;
     --UI_primary-font-color: #FFFFFF;
@@ -520,7 +522,7 @@ li ul, li ol {
  * Assistant Classes
  **************************/
 
-.UI_body-cover-box {
+.UI_body-overlay {
     display: flex;
     padding: var(--UI_base-gapY) var(--UI_base-gapX);
     position: fixed;
@@ -530,7 +532,7 @@ li ul, li ol {
     height: 100vh;
     overflow: hidden auto;
     background-color: rgba(0, 0, 0, .9);
-    z-index: 99999;
+    z-index: var(--UI_base-overlay-body-z-index);
 }
 
 .UI_body-hide-overflow {
@@ -1275,12 +1277,11 @@ a.UI_angle-up::after, .UI_button.UI_angle-up::after {
     font-style: normal;
     white-space: normal;
     visibility: hidden;
-    z-index: -1000;
 }
 
 .UI_Hint.UI_Hint-show {
     visibility: visible;
-    z-index: 1000;
+    z-index: var(--UI_base-overlay-elements-z-index);
 }
 
 pre.UI_Hint {
@@ -1637,7 +1638,7 @@ dl.UI_Tabs-activated dd.UI_Tabs-show {
     border-radius: var(--UI_base-border-radius);
     box-shadow: var(--UI_form-focus-shadow);
     overflow: hidden;
-    z-index: 100;
+    z-index: var(--UI_base-overlay-elements-z-index);
 }
 
 .UI_Select-dropdown-list {
@@ -1672,7 +1673,7 @@ dl.UI_Tabs-activated dd.UI_Tabs-show {
     height: 100vh;
     overflow: hidden auto;
     background-color: transparent !important;
-    z-index: 99;
+    z-index: var(--UI_base-overlay-elements-z-index);
 }
 
 /*---------------------------------------------- UI_Menu ---*/
@@ -1694,7 +1695,7 @@ dl.UI_Tabs-activated dd.UI_Tabs-show {
 
 .UI_Menu-activated li {
     position: relative;
-    z-index: 100;
+    z-index: var(--UI_base-overlay-elements-z-index);
     cursor: pointer;
 }
 
@@ -1777,7 +1778,7 @@ dl.UI_Tabs-activated dd.UI_Tabs-show {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
-        z-index: 1;
+        z-index: auto;
     }
 
     .UI_Menu-activated li a,
