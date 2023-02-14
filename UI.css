@@ -1722,6 +1722,7 @@ dl.UI_Tabs-activated dd.UI_Tabs-show {
     white-space: nowrap;
     font-size: 1.2em;
     color: var(--UI_Menu-font-color);
+    border: none;
 }
 
 .UI_Menu-activated :where(
@@ -1729,7 +1730,6 @@ dl.UI_Tabs-activated dd.UI_Tabs-show {
     li:hover > span, ul li a:hover, ul li:hover > a, ul li:hover > span
 ){
     background-color: var(--UI_base-active-bg-color);
-    border: none;
     color: var(--UI_Menu-font-color);
 }
 
