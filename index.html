@@ -497,40 +497,28 @@ sequi voluptatum. Ad autem, culpa cum explicabo, itaque laudantium nesciunt null
     -->
 
     <h2 id="grid">Сітка</h2>
-    <p>Сітка може мати необмежену кількість рядків <code>UI_row</code>, кожен з яких може містити до 12-ти стовпчиків
-        <code>UI_col</code>. 12 стовпчиків = 100% від ширини батьківського елементу, 3 стовпці = 25% і так далі. На
-        малих пристроях усі стовпчики трансформуються в рядки.</p>
+    <p>Сітка UI розрахована на 12 стовпців. Елемент з класом <code>UI_grid</code> матиме <code>display: grid</code>, тож
+        може містити як один, так і декілька рядків зі стовпцями з класом <code>UI_col</code>. На малих пристроях усі
+        стовпці трансформуються в рядки.</p>
     <dl class="UI_Tabs">
         <dt>Вигляд</dt>
         <dd>
             <div class="demo-grid">
 
                 <!--- grid example --->
-                <div class="UI_row">
+                <div class="UI_grid">
                     <div class="UI_col-1">UI_col-1</div>
                     <div class="UI_col-11">UI_col-11</div>
-                </div>
-                <div class="UI_row">
                     <div class="UI_col-2">UI_col-2</div>
                     <div class="UI_col-10">UI_col-10</div>
-                </div>
-                <div class="UI_row">
                     <div class="UI_col-3">UI_col-3</div>
                     <div class="UI_col-9">UI_col-9</div>
-                </div>
-                <div class="UI_row">
                     <div class="UI_col-4">UI_col-4</div>
                     <div class="UI_col-8">UI_col-8</div>
-                </div>
-                <div class="UI_row">
                     <div class="UI_col-5">UI_col-5</div>
                     <div class="UI_col-7">UI_col-7</div>
-                </div>
-                <div class="UI_row">
                     <div class="UI_col-6">UI_col-6</div>
                     <div class="UI_col-6">UI_col-6</div>
-                </div>
-                <div class="UI_row">
                     <div class="UI_col-12">UI_col-12</div>
                 </div>
             </div>
@@ -540,31 +528,19 @@ sequi voluptatum. Ad autem, culpa cum explicabo, itaque laudantium nesciunt null
             <i class="copy-fragment fa-solid fa-copy" title="Копіювати код"></i>
             <pre class="fragment">
 &lt;!--- grid example ---&gt;
-&lt;div class=&quot;UI_row&quot;&gt;
+&lt;div class=&quot;UI_grid&quot;&gt;
     &lt;div class=&quot;UI_col-1&quot;&gt;UI_col-1&lt;/div&gt;
     &lt;div class=&quot;UI_col-11&quot;&gt;UI_col-11&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;UI_row&quot;&gt;
     &lt;div class=&quot;UI_col-2&quot;&gt;UI_col-2&lt;/div&gt;
     &lt;div class=&quot;UI_col-10&quot;&gt;UI_col-10&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;UI_row&quot;&gt;
     &lt;div class=&quot;UI_col-3&quot;&gt;UI_col-3&lt;/div&gt;
     &lt;div class=&quot;UI_col-9&quot;&gt;UI_col-9&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;UI_row&quot;&gt;
     &lt;div class=&quot;UI_col-4&quot;&gt;UI_col-4&lt;/div&gt;
     &lt;div class=&quot;UI_col-8&quot;&gt;UI_col-8&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;UI_row&quot;&gt;
     &lt;div class=&quot;UI_col-5&quot;&gt;UI_col-5&lt;/div&gt;
     &lt;div class=&quot;UI_col-7&quot;&gt;UI_col-7&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;UI_row&quot;&gt;
     &lt;div class=&quot;UI_col-6&quot;&gt;UI_col-6&lt;/div&gt;
     &lt;div class=&quot;UI_col-6&quot;&gt;UI_col-6&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;UI_row&quot;&gt;
     &lt;div class=&quot;UI_col-12&quot;&gt;UI_col-12&lt;/div&gt;
 &lt;/div&gt;
             </pre>
@@ -646,16 +622,40 @@ sequi voluptatum. Ad autem, culpa cum explicabo, itaque laudantium nesciunt null
     <p><code>UI_align-c</code> &mdash; Вирівняти текст та елементи по центру. Приклад:</p>
     <p class="UI_align-c demo-block">Lorem ipsum dolor sit amet.</p>
 
-    <div class="UI_row">
+    <div class="UI_grid">
         <div class="UI_col-6">
             <!--- UI_scrollbar --->
-            <p><code>UI_scrollbar</code> &mdash; Стилізує scrollbar.  Приклад:</p>
-            <div class="demo-scrollbar UI_scrollbar">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab aliquid hic inventore laboriosam laudantium maxime odit pariatur, porro praesentium reiciendis rem sequi sit, temporibus ut veritatis vero voluptatibus voluptatum. Atque ipsum possimus similique sint voluptatem. Accusantium animi beatae delectus excepturi harum hic laborum, magni maxime minima odio officia officiis omnis pariatur, praesentium qui rerum tempore, vitae voluptatem. Ab accusamus adipisci amet aut consectetur ducimus fugit id impedit in nisi, nulla quae rem repellat repudiandae sunt ullam ut, veritatis, voluptatum? Animi aspernatur id velit? Architecto, assumenda aut culpa delectus doloremque doloribus ducimus eligendi exercitationem explicabo fugit id illum ipsam laborum libero maiores, nostrum odio officia provident quae quas quibusdam quidem quo repellendus sit tempore tenetur unde, voluptas voluptatem voluptatibus voluptatum! A, consequatur eius enim, eos est, illum in incidunt ipsa labore laboriosam modi natus odio quos reprehenderit velit! Eligendi natus neque odit vero vitae! Ea fugit illo, necessitatibus obcaecati quis repellat.</div>
+            <p><code>UI_scrollbar</code> &mdash; Стилізує scrollbar. Приклад:</p>
+            <div class="demo-scrollbar UI_scrollbar">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab
+                aliquid hic inventore laboriosam laudantium maxime odit pariatur, porro praesentium reiciendis rem sequi
+                sit, temporibus ut veritatis vero voluptatibus voluptatum. Atque ipsum possimus similique sint
+                voluptatem. Accusantium animi beatae delectus excepturi harum hic laborum, magni maxime minima odio
+                officia officiis omnis pariatur, praesentium qui rerum tempore, vitae voluptatem. Ab accusamus adipisci
+                amet aut consectetur ducimus fugit id impedit in nisi, nulla quae rem repellat repudiandae sunt ullam
+                ut, veritatis, voluptatum? Animi aspernatur id velit? Architecto, assumenda aut culpa delectus
+                doloremque doloribus ducimus eligendi exercitationem explicabo fugit id illum ipsam laborum libero
+                maiores, nostrum odio officia provident quae quas quibusdam quidem quo repellendus sit tempore tenetur
+                unde, voluptas voluptatem voluptatibus voluptatum! A, consequatur eius enim, eos est, illum in incidunt
+                ipsa labore laboriosam modi natus odio quos reprehenderit velit! Eligendi natus neque odit vero vitae!
+                Ea fugit illo, necessitatibus obcaecati quis repellat.
+            </div>
         </div>
         <div class="UI_col-6">
             <!--- UI_no-scrollbar --->
-            <p><code>UI_no-scrollbar</code> &mdash; Ховає scrollbar.  Приклад:</p>
-            <div class="demo-scrollbar UI_no-scrollbar">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab aliquid hic inventore laboriosam laudantium maxime odit pariatur, porro praesentium reiciendis rem sequi sit, temporibus ut veritatis vero voluptatibus voluptatum. Atque ipsum possimus similique sint voluptatem. Accusantium animi beatae delectus excepturi harum hic laborum, magni maxime minima odio officia officiis omnis pariatur, praesentium qui rerum tempore, vitae voluptatem. Ab accusamus adipisci amet aut consectetur ducimus fugit id impedit in nisi, nulla quae rem repellat repudiandae sunt ullam ut, veritatis, voluptatum? Animi aspernatur id velit? Architecto, assumenda aut culpa delectus doloremque doloribus ducimus eligendi exercitationem explicabo fugit id illum ipsam laborum libero maiores, nostrum odio officia provident quae quas quibusdam quidem quo repellendus sit tempore tenetur unde, voluptas voluptatem voluptatibus voluptatum! A, consequatur eius enim, eos est, illum in incidunt ipsa labore laboriosam modi natus odio quos reprehenderit velit! Eligendi natus neque odit vero vitae! Ea fugit illo, necessitatibus obcaecati quis repellat.</div>
+            <p><code>UI_no-scrollbar</code> &mdash; Ховає scrollbar. Приклад:</p>
+            <div class="demo-scrollbar UI_no-scrollbar">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab
+                aliquid hic inventore laboriosam laudantium maxime odit pariatur, porro praesentium reiciendis rem sequi
+                sit, temporibus ut veritatis vero voluptatibus voluptatum. Atque ipsum possimus similique sint
+                voluptatem. Accusantium animi beatae delectus excepturi harum hic laborum, magni maxime minima odio
+                officia officiis omnis pariatur, praesentium qui rerum tempore, vitae voluptatem. Ab accusamus adipisci
+                amet aut consectetur ducimus fugit id impedit in nisi, nulla quae rem repellat repudiandae sunt ullam
+                ut, veritatis, voluptatum? Animi aspernatur id velit? Architecto, assumenda aut culpa delectus
+                doloremque doloribus ducimus eligendi exercitationem explicabo fugit id illum ipsam laborum libero
+                maiores, nostrum odio officia provident quae quas quibusdam quidem quo repellendus sit tempore tenetur
+                unde, voluptas voluptatem voluptatibus voluptatum! A, consequatur eius enim, eos est, illum in incidunt
+                ipsa labore laboriosam modi natus odio quos reprehenderit velit! Eligendi natus neque odit vero vitae!
+                Ea fugit illo, necessitatibus obcaecati quis repellat.
+            </div>
         </div>
     </div>
 
@@ -912,7 +912,7 @@ sequi voluptatum. Ad autem, culpa cum explicabo, itaque laudantium nesciunt null
             Input type="range" with class "UI_InputRange"
             <input type="range" class="UI_InputRange" min="0" max="100" step="1" value="0">
 
-            <div class="UI_row">
+            <div class="UI_grid">
                 <div class="UI_col-6">
 
                     <!--- checkbox --->

@@ -48,7 +48,7 @@
     --UI_base-border-radius-s: .35rem;
     --UI_base-border-radius-xs: .18rem;
     --UI_base-padding: calc(.7em + 1vw);
-    --UI_base-gapX: 3vw;
+    --UI_base-gapX: 2vw;
     --UI_base-gapY: 2rem;
     /*--- Color themes ---*/
     --UI_base-color: #E5CA00;
@@ -445,81 +445,74 @@ li ul, li ol {
  * Grid
  **************************/
 
-.UI_row {
+.UI_grid {
     margin-bottom: var(--UI_base-gapY);
-    display: flex;
-}
-
-.UI_col-12 {
-    flex-basis: 100%;
-}
-
-.UI_col-11 {
-    flex-basis: 91.416667%;
-}
-
-.UI_col-10 {
-    flex-basis: 82.833334%;
-}
-
-.UI_col-9 {
-    flex-basis: 74.25%;
-}
-
-.UI_col-8 {
-    flex-basis: 65.666667%;
-}
-
-.UI_col-7 {
-    flex-basis: 57.083334%;
-}
-
-.UI_col-6 {
-    flex-basis: 48.5%;
-}
-
-.UI_col-5 {
-    flex-basis: 39.916666%;
-}
-
-.UI_col-4 {
-    flex-basis: 31.333333%;
-}
-
-.UI_col-3 {
-    flex-basis: 22.75%;
-}
-
-.UI_col-2 {
-    flex-basis: 14.166666%;
-}
-
-.UI_col-1 {
-    flex-basis: 5.583333%;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-gap: var(--UI_base-gapX);
 }
 
 .UI_col-12, .UI_col-11, .UI_col-10, .UI_col-9, .UI_col-8, .UI_col-7,
 .UI_col-6, .UI_col-5, .UI_col-4, .UI_col-3, .UI_col-2, .UI_col-1 {
-    margin-left: 3%;
+    overflow: auto;
 }
 
-.UI_col-12:first-child, .UI_col-11:first-child, .UI_col-10:first-child,
-.UI_col-9:first-child, .UI_col-8:first-child, .UI_col-7:first-child,
-.UI_col-6:first-child, .UI_col-5:first-child, .UI_col-4:first-child,
-.UI_col-3:first-child, .UI_col-2:first-child, .UI_col-1:first-child {
-    margin-left: 0;
+.UI_col-12 {
+    grid-column: span 12;
+}
+
+.UI_col-11 {
+    grid-column: span 11;
+}
+
+.UI_col-10 {
+    grid-column: span 10;
+}
+
+.UI_col-9 {
+    grid-column: span 9;
+}
+
+.UI_col-8 {
+    grid-column: span 8;
+}
+
+.UI_col-7 {
+    grid-column: span 7;
+}
+
+.UI_col-6 {
+    grid-column: span 6;
+}
+
+.UI_col-5 {
+    grid-column: span 5;
+}
+
+.UI_col-4 {
+    grid-column: span 4;
+}
+
+.UI_col-3 {
+    grid-column: span 3;
+}
+
+.UI_col-2 {
+    grid-column: span 2;
+}
+
+.UI_col-1 {
+    grid-column: span 1;
 }
 
 @media (max-width: 576px) {
-    .UI_row {
-        flex-direction: column;
-        margin-bottom: 0;
+    .UI_grid {
+        grid-gap: var(--UI_base-gapY) 0;
     }
 
     .UI_col-12, .UI_col-11, .UI_col-10, .UI_col-9, .UI_col-8, .UI_col-7,
     .UI_col-6, .UI_col-5, .UI_col-4, .UI_col-3, .UI_col-2, .UI_col-1 {
-        flex-basis: 100%;
-        margin: 0 0 var(--UI_base-gapY) 0;
+        grid-column: span 12;
     }
 }
 
@@ -1673,10 +1666,13 @@ dl.UI_Tabs-activated dd.UI_Tabs-show {
 
 .UI_Select-overlay {
     position: fixed;
+    top: 0;
+    left: 0;
     width: 100vw;
     height: 100vh;
     overflow: hidden auto;
     background-color: transparent !important;
+    z-index: 99;
 }
 
 /*---------------------------------------------- UI_Menu ---*/
