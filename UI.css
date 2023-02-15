@@ -120,7 +120,7 @@
     --UI_form-invalid-shadow: 0 0 0 .188rem #FFD4DA;
     --UI_form-required-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23F8142FFF' d='M208 32c0-17.7 14.3-32 32-32h32c17.7 0 32 14.3 32 32V172.9l122-70.4c15.3-8.8 34.9-3.6 43.7 11.7l16 27.7c8.8 15.3 3.6 34.9-11.7 43.7L352 256l122 70.4c15.3 8.8 20.5 28.4 11.7 43.7l-16 27.7c-8.8 15.3-28.4 20.6-43.7 11.7L304 339.1V480c0 17.7-14.3 32-32 32H240c-17.7 0-32-14.3-32-32V339.1L86 409.6c-15.3 8.8-34.9 3.6-43.7-11.7l-16-27.7c-8.8-15.3-3.6-34.9 11.7-43.7L160 256 38 185.6c-15.3-8.8-20.5-28.4-11.7-43.7l16-27.7C51.1 98.8 70.7 93.6 86 102.4l122 70.4V32z'/%3E%3C/svg%3E");
     --UI_form-required-image-size: .5rem;
-    --UI_checmark-size: 1.5rem;
+    --UI_checmark-size: 1.5em;
     --UI_range-track-height: 1px;
     --UI_range-thumb-width: 1.5em;
     --UI_range-thumb-height: 1.5em;
@@ -922,9 +922,10 @@ a.UI_angle-up::after, .UI_button.UI_angle-up::after {
 .UI_checkbox .UI_checkmark, .UI_radio .UI_checkmark {
     position: relative;
     display: inline-block;
-    margin: 0 .5rem 0 0;
+    margin: 0 .5em 0 0;
     width: var(--UI_checmark-size);
     height: var(--UI_checmark-size);
+    flex-shrink: 0;
     border: var(--UI_form-border-width) solid var(--UI_form-border-color);
     box-shadow: var(--UI_form-shadow);
 }
@@ -936,9 +937,9 @@ a.UI_angle-up::after, .UI_button.UI_angle-up::after {
 .UI_checkbox .UI_checkmark::before {
     content: "";
     display: none;
-    width: .4rem;
-    height: .6rem;
-    margin: .25rem auto;
+    width: .4em;
+    height: .6em;
+    margin: .25em auto;
     border: var(--UI_form-border-width) solid var(--UI_form-bg-color);
     border-top: none;
     border-left: none;
@@ -964,7 +965,7 @@ a.UI_angle-up::after, .UI_button.UI_angle-up::after {
 .UI_radio [type="radio"]:checked + .UI_checkmark {
     border-color: var(--UI_form-border-color);
     background-color: var(--UI_button-bg-color);
-    box-shadow: inset 0 0 0 .3rem var(--UI_form-bg-color), inset 0 0 0 .35rem var(--UI_form-border-color), var(--UI_form-shadow);
+    box-shadow: inset 0 0 0 .3em var(--UI_form-bg-color), inset 0 0 0 .35em var(--UI_form-border-color), var(--UI_form-shadow);
 }
 
 /*---------------------------------------------- UI buttons ---*/
