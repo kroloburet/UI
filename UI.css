@@ -835,13 +835,13 @@ a.UI_angle-up::after, .UI_button.UI_angle-up::after {
 }
 
 .UI_input, .UI_textarea, .UI_select, .UI_checkbox, .UI_radio,
-.UI_file, .UI_range, .UI_number, .UI_form-component, .UI_fieldset {
+.UI_range, .UI_form-component, .UI_fieldset {
     position: relative;
     display: flex;
     margin: var(--UI_form-gap-top) 0 var(--UI_form-gap-bottom) 0;
 }
 
-.UI_input, .UI_textarea, .UI_select, .UI_file, .UI_number,
+.UI_input, .UI_textarea, .UI_select,
 .UI_form-component :where(input, textarea, select) {
     display: block;
     width: 100%;
@@ -1096,7 +1096,7 @@ a.UI_angle-up::after, .UI_button.UI_angle-up::after {
 
 .UI_fieldset :where(
     .UI_input, .UI_textarea, .UI_select, .UI_checkbox,
-    .UI_radio, .UI_file, .UI_range, .UI_number, .UI_form-component
+    .UI_radio, .UI_range, .UI_form-component
 ){
     width: auto;
     flex-grow: 1;
@@ -1104,7 +1104,7 @@ a.UI_angle-up::after, .UI_button.UI_angle-up::after {
 
 .UI_fieldset.UI_inline-form :where(
     .UI_input, .UI_textarea, .UI_select, .UI_checkbox,
-    .UI_radio, .UI_file, .UI_range, .UI_number, .UI_form-component
+    .UI_radio, .UI_range, .UI_form-component
 ){
     flex-grow: revert;
 }
@@ -1194,8 +1194,8 @@ a.UI_angle-up::after, .UI_button.UI_angle-up::after {
 }
 
 :where(
-    .UI_input, .UI_textarea, .UI_select, .UI_checkbox, .UI_radio,
-    .UI_file, .UI_range, .UI_number, .UI_form-component
+    .UI_input, .UI_textarea, .UI_select, .UI_checkbox,
+    .UI_radio, .UI_range, .UI_form-component
 ).UI_inline-form {
     display: inline-flex;
     margin-right: var(--UI_form-gap-right);
