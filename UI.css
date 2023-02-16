@@ -1145,14 +1145,19 @@ a.UI_angle-up::after, .UI_button.UI_angle-up::after {
 }
 
 /*---------------------------------------------- Required form ---*/
-.UI_form-component .UI_required-form, [class^="UI_"]:required, [class^="UI_"] :required {
+.UI_form-component .UI_required-form,
+:where(.UI_input, .UI_textarea, .UI_select).UI_required-form,
+[class^="UI_"]:required, [class^="UI_"] :required {
     background-image: var(--UI_form-required-image);
     background-repeat: no-repeat;
     background-position: right var(--UI_form-required-image-size) top var(--UI_form-required-image-size);
     background-size: var(--UI_form-required-image-size);
 }
 
-:where(label.UI_required-form:not(.UI_form-component, .UI_fieldset))::after {
+:where(
+    label.UI_required-form:not(.UI_form-component, .UI_fieldset),
+    label:has(> [type="checkbox"]:required, > [type="radio"]:required)
+)::after {
     content: var(--UI_form-required-image);
     display: inline-block;
     line-height: 0;
