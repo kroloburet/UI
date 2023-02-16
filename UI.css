@@ -78,6 +78,9 @@
     --UI_link-hover-color: #0764E6;
     --UI_link-active-color: #0764E6;
     --UI_hr-border: 1px solid var(--UI_base-color);
+    /*--- Grid ---*/
+    --UI_grid-gapX: 2rem;
+    --UI_grid-gapY: 2rem;
     /*--- Assistants ---*/
     --UI_scrollbar-width: 5px;
     --UI_scrollbar-thumb-bg-color: var(--UI_base-font-color);
@@ -451,7 +454,7 @@ li ul, li ol {
     margin-bottom: var(--UI_base-gapY);
     display: grid;
     grid-template-columns: repeat(12, 1fr);
-    grid-gap: var(--UI_base-gapX);
+    grid-gap: var(--UI_grid-gapY) var(--UI_grid-gapX);
 }
 
 .UI_col-12, .UI_col-11, .UI_col-10, .UI_col-9, .UI_col-8, .UI_col-7,
