@@ -457,11 +457,6 @@ li ul, li ol {
     grid-gap: var(--UI_grid-gapY) var(--UI_grid-gapX);
 }
 
-.UI_col-12, .UI_col-11, .UI_col-10, .UI_col-9, .UI_col-8, .UI_col-7,
-.UI_col-6, .UI_col-5, .UI_col-4, .UI_col-3, .UI_col-2, .UI_col-1 {
-    overflow: auto;
-}
-
 .UI_col-12 {
     grid-column: span 12;
 }
