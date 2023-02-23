@@ -164,21 +164,21 @@ const UI = new class {
 
         /**
          * Обгорнути елемент форми в компонент
-         * та призначити компоненту CSS-класи елемента
+         * та призначити компоненту CSS класи елемента
          *
          * @param {HTMLElement} el Елемент форми
          * @returns {HTMLElement} Компонент
          */
         wrap(el) {
             const denyClasses = [
-                UI.classes.InputFile,
-                UI.classes.InputRange,
-                UI.classes.InputNumber,
-                UI.classes.Select,
-                UI.classes.UI_range,
-                UI.classes.UI_select,
-                UI.classes.UI_input,
-                UI.classes.UI_textarea,
+                UI.css.InputFile,
+                UI.css.InputRange,
+                UI.css.InputNumber,
+                UI.css.Select,
+                UI.css.UI_range,
+                UI.css.UI_select,
+                UI.css.UI_input,
+                UI.css.UI_textarea,
             ];
             const className = el.className;
             const component = document.createElement('label');
@@ -186,7 +186,7 @@ const UI = new class {
             el.uiData ??= {};
             el.uiData.oldClasses = className;
             el.classList.remove(...componentClassList);
-            component.classList.add(UI.classes.formComponent, ...componentClassList);
+            component.classList.add(UI.css.formComponent, ...componentClassList);
             el.before(component);
             component.append(el);
             return component;
@@ -194,7 +194,7 @@ const UI = new class {
 
         /**
          * Видалити "обгортку" компонента форми
-         * та повернути елементу початкові CSS-класи
+         * та повернути елементу початкові CSS класи
          *
          * @param {HTMLElement} el Елемент форми
          */
@@ -210,11 +210,11 @@ const UI = new class {
      **************************************/
 
     /**
-     * Спільні CSS-класи які використовують методи UI
+     * CSS селектори з файлу UI.css для використання в сценаріях
      *
      * @type {Object}
      */
-    classes = {
+    css = {
         elementsOverlayZIndex: getComputedStyle(document.body).getPropertyValue(`--UI_base-overlay-elements-z-index`),
         bodyOverlayZIndex: getComputedStyle(document.body).getPropertyValue(`--UI_base-overlay-body-z-index`),
         bodyOverlay: `UI_body-overlay`,
@@ -262,8 +262,8 @@ const UI = new class {
         // Ім'я методу
         const selfName = `Tabs`;
 
-        // CSS-класи які використовує метод
-        const classes = {
+        // CSS селектори які використовує метод
+        const css = {
             controlBox: `UI_${selfName}-control-box`,
             show: `UI_${selfName}-show`,
         };
@@ -315,7 +315,7 @@ const UI = new class {
                     tabs.uiData.dtList = tabs.querySelectorAll(`:scope dt`);
                     tabs.uiData.ddList = tabs.querySelectorAll(`:scope dd`);
                     // Додати елементи, класи та слухачів подій
-                    tabs.uiData.controlBox.classList.add(classes.controlBox, UI.classes.noScrollbar);
+                    tabs.uiData.controlBox.classList.add(css.controlBox, UI.css.noScrollbar);
                     tabs.uiData.controlBox.append(...tabs.uiData.dtList);
                     tabs.uiData.componentBox.prepend(tabs.uiData.controlBox);
                     tabs.uiData.dtList.forEach(
@@ -346,17 +346,17 @@ const UI = new class {
                 const worker = tabs => {
                     // Закрити всі вкладки
                     tabs.uiData.dtList.forEach((dt, index) => {
-                        if (dt.classList.contains(classes.show)) {
-                            tabs.uiData.dtList[index].classList.remove(classes.show);
-                            tabs.uiData.ddList[index].classList.remove(classes.show);
+                        if (dt.classList.contains(css.show)) {
+                            tabs.uiData.dtList[index].classList.remove(css.show);
+                            tabs.uiData.ddList[index].classList.remove(css.show);
                         }
                     });
                     // Перевірити, чи існує вкладка за індексом та відкрити
                     tabIndex = tabs.uiData.dtList[tabIndex]
                         ? tabIndex
                         : (tabs.uiData.dtList[tabs.uiData.conf.showTabIndex] ? tabs.uiData.conf.showTabIndex : 0);
-                    tabs.uiData.dtList[tabIndex].classList.add(classes.show);
-                    tabs.uiData.ddList[tabIndex].classList.add(classes.show);
+                    tabs.uiData.dtList[tabIndex].classList.add(css.show);
+                    tabs.uiData.ddList[tabIndex].classList.add(css.show);
                 };
                 // Опрацювати всю колекцію якщо компонент не передано
                 !(tabs instanceof HTMLElement) ? collection.forEach(worker) : worker(tabs);
@@ -448,8 +448,8 @@ const UI = new class {
         // Ім'я методу
         const selfName = `Hint`;
 
-        // CSS-класи які використовує метод
-        const classes = {
+        // CSS селектори які використовує метод
+        const css = {
             show: `UI_${selfName}-show`,
         };
 
@@ -515,7 +515,7 @@ const UI = new class {
              * @returns {this}
              */
             show() {
-                el.uiData.hint.classList.add(classes.show);
+                el.uiData.hint.classList.add(css.show);
                 return this;
             }
 
@@ -525,7 +525,7 @@ const UI = new class {
              * @returns {this}
              */
             hide() {
-                el.uiData.hint.classList.remove(classes.show);
+                el.uiData.hint.classList.remove(css.show);
                 return this;
             }
 
@@ -561,8 +561,8 @@ const UI = new class {
         // Ім'я методу
         const selfName = `Notice`;
 
-        // CSS-класи які використовує метод
-        const classes = {
+        // CSS селектори які використовує метод
+        const css = {
             box: `UI_${selfName}-box`,
         };
 
@@ -596,9 +596,9 @@ const UI = new class {
                     notice = document.createElement(`div`);
                     notice.uiData = {};
                     notice.uiData.componentBox = document.createElement(`div`);
-                    notice.uiData.componentBox.classList.add(UI.classes.bodyOverlay, classes.box);
+                    notice.uiData.componentBox.classList.add(UI.css.bodyOverlay, css.box);
                     notice.uiData.componentBox.prepend(notice);
-                    document.body.classList.add(UI.classes.bodyHideOverflow);
+                    document.body.classList.add(UI.css.bodyHideOverflow);
                     document.body.append(notice.uiData.componentBox);
                 }
                 // Повідомлення створено
@@ -621,7 +621,7 @@ const UI = new class {
             remove() {
                 if (!notice) return this;
                 notice.uiData.componentBox.remove();
-                document.body.classList.remove(UI.classes.bodyHideOverflow);
+                document.body.classList.remove(UI.css.bodyHideOverflow);
                 delete notice.uiData;
                 return this;
             }
@@ -648,8 +648,8 @@ const UI = new class {
         // Ім'я методу
         const selfName = `Popup`;
 
-        // CSS-класи які використовує метод
-        const classes = {
+        // CSS селектори які використовує метод
+        const css = {
             box: `UI_${selfName}-box`,
             show: `UI_${selfName}-show`,
             closeBtn: `UI_${selfName}-close-btn`,
@@ -678,10 +678,10 @@ const UI = new class {
                         pop.uiData = {};
                         pop.uiData.componentBox = document.createElement(`div`);
                         pop.uiData.closeBtn = document.createElement(`span`);
-                        pop.uiData.componentBox.classList.add(UI.classes.bodyOverlay, classes.box);
+                        pop.uiData.componentBox.classList.add(UI.css.bodyOverlay, css.box);
                         pop.uiData.componentBox.onclick = e =>
                             e.target === pop.uiData.componentBox ? this.hide() : null;
-                        pop.uiData.closeBtn.classList.add(classes.closeBtn, `fa-solid`, `fa-times-circle`);
+                        pop.uiData.closeBtn.classList.add(css.closeBtn, `fa-solid`, `fa-times-circle`);
                         pop.uiData.closeBtn.onclick = this.hide;
                         pop.prepend(pop.uiData.closeBtn);
                         pop.uiData.componentBox.prepend(pop);
@@ -704,8 +704,8 @@ const UI = new class {
                 const pop = collection.filter(el => UI.#isActivate(el, selfName) && el.id === id)[0];
                 if (!pop)
                     throw ReferenceError(`The transmitted argument "id" is not correct or element not found`);
-                pop.uiData.componentBox.classList.add(classes.show);
-                document.body.classList.add(UI.classes.bodyHideOverflow);
+                pop.uiData.componentBox.classList.add(css.show);
+                document.body.classList.add(UI.css.bodyHideOverflow);
                 return this;
             }
 
@@ -716,8 +716,8 @@ const UI = new class {
              */
             hide() {
                 collection.filter(el => UI.#isActivate(el, selfName))
-                    .forEach(pop => pop.uiData.componentBox.classList.remove(classes.show));
-                document.body.classList.remove(UI.classes.bodyHideOverflow);
+                    .forEach(pop => pop.uiData.componentBox.classList.remove(css.show));
+                document.body.classList.remove(UI.css.bodyHideOverflow);
                 return this;
             }
 
@@ -863,8 +863,8 @@ const UI = new class {
         // Ім'я методу
         const selfName = `InputFile`;
 
-        // CSS-класи які використовує метод
-        const classes = {
+        // CSS селектори які використовує метод
+        const css = {
             controlBox: `UI_${selfName}-control-box`,
             controlBoxItem: `UI_${selfName}-control-box-item`,
             controlBoxItemText: `UI_${selfName}-control-box-item-text`,
@@ -916,15 +916,15 @@ const UI = new class {
                     }
                     input.onchange = () => {
                         this.render(input);
-                        input.uiData.controlBox.classList.add(UI.classes.focusForm);
-                        input.uiData.controlBox.classList.remove(UI.classes.invalidForm);
+                        input.uiData.controlBox.classList.add(UI.css.focusForm);
+                        input.uiData.controlBox.classList.remove(UI.css.invalidForm);
                     };
-                    input.oninvalid = () => input.uiData.controlBox.classList.add(UI.classes.invalidForm);
-                    input.onblur = () => input.uiData.controlBox.classList.remove(UI.classes.focusForm);
-                    input.uiData.controlBox.classList.add(classes.controlBox, UI.classes.noScrollbar);
-                    input.uiData.selectBtn.classList.add(UI.classes.formComponentControl);
+                    input.oninvalid = () => input.uiData.controlBox.classList.add(UI.css.invalidForm);
+                    input.onblur = () => input.uiData.controlBox.classList.remove(UI.css.focusForm);
+                    input.uiData.controlBox.classList.add(css.controlBox, UI.css.noScrollbar);
+                    input.uiData.selectBtn.classList.add(UI.css.formComponentControl);
                     input.uiData.selectBtn.innerHTML = input.uiData.conf.selectIcon;
-                    input.uiData.placeholder.classList.add(classes.controlBoxPlaceholder);
+                    input.uiData.placeholder.classList.add(css.controlBoxPlaceholder);
                     input.uiData.placeholder.textContent = input.uiData.conf.placeholder;
                     input.after(input.uiData.selectBtn);
                     input.before(input.uiData.controlBox);
@@ -951,8 +951,8 @@ const UI = new class {
                         [...files].forEach(file => {
                             let controlBoxItem = document.createElement(`span`);
                             let controlBoxItemText = document.createElement(`span`);
-                            controlBoxItem.classList.add(classes.controlBoxItem);
-                            controlBoxItemText.classList.add(classes.controlBoxItemText);
+                            controlBoxItem.classList.add(css.controlBoxItem);
+                            controlBoxItemText.classList.add(css.controlBoxItemText);
                             controlBoxItemText.textContent = file.name;
                             controlBoxItem.append(controlBoxItemText);
                             input.uiData.controlBox.append(controlBoxItem);
@@ -962,8 +962,8 @@ const UI = new class {
                     } else {
                         input.uiData.controlBox.append(input.uiData.placeholder);
                     }
-                    input.uiData.controlBox.classList.toggle(UI.classes.requiredForm, input.required);
-                    input.uiData.componentBox.classList.toggle(UI.classes.disabledForm, input.disabled);
+                    input.uiData.controlBox.classList.toggle(UI.css.requiredForm, input.required);
+                    input.uiData.componentBox.classList.toggle(UI.css.disabledForm, input.disabled);
                 };
                 // Опрацювати всю колекцію якщо поле не передано
                 !(input instanceof HTMLElement) ? collection.forEach(worker) : worker(input);
@@ -1014,8 +1014,8 @@ const UI = new class {
         // Ім'я методу
         const selfName = `InputRange`;
 
-        // CSS-класи які використовує метод
-        const classes = {
+        // CSS селектори які використовує метод
+        const css = {
             infobox: `UI_${selfName}-infobox`,
         };
 
@@ -1053,11 +1053,11 @@ const UI = new class {
                     // Додати елементи, класи та слухачів подій
                     input.uiData.componentBox = UI.#formComponent.wrap(input);
                     input.uiData.infobox = document.createElement(`span`);
-                    input.uiData.infobox.classList.add(UI.classes.formComponentControl, classes.infobox);
+                    input.uiData.infobox.classList.add(UI.css.formComponentControl, css.infobox);
                     input.uiData.infobox.innerText = input.value || `0`;
                     input.after(input.uiData.infobox);
                     if (input.disabled) {
-                        input.uiData.componentBox.classList.add(UI.classes.disabledForm);
+                        input.uiData.componentBox.classList.add(UI.css.disabledForm);
                         input.value = parseFloat(input.min) || 0;
                     } else {
                         input.oninput = () => input.uiData.infobox.innerText = input.value;
@@ -1115,8 +1115,8 @@ const UI = new class {
         // Ім'я методу
         const selfName = `InputNumber`;
 
-        // CSS-класи які використовує метод
-        const classes = {
+        // CSS селектори які використовує метод
+        const css = {
             inc: `UI_${selfName}-inc`,
             dec: `UI_${selfName}-dec`,
         };
@@ -1166,8 +1166,8 @@ const UI = new class {
                     input.uiData.val = () => parseFloat(input.value);
                     input.uiData.up = () => input.uiData.val() + input.uiData.step();
                     input.uiData.down = () => input.uiData.val() - input.uiData.step();
-                    input.uiData.setValid = () => input.classList.remove(UI.classes.invalidForm);
-                    input.uiData.setInvalid = () => input.classList.add(UI.classes.invalidForm);
+                    input.uiData.setValid = () => input.classList.remove(UI.css.invalidForm);
+                    input.uiData.setInvalid = () => input.classList.add(UI.css.invalidForm);
                     input.uiData.initVal = () => {
                         if (!input.uiData.hasDisabled && isNaN(input.uiData.val())) {
                             input.value = (input.value || input.uiData.min() || input.uiData.max() || 0);
@@ -1175,8 +1175,8 @@ const UI = new class {
                     };
                     // Додати елементи, класи та слухачів подій
                     input.uiData.componentBox.title = input.uiData.conf.title;
-                    input.uiData.incBtn.classList.add(UI.classes.formComponentControl, classes.inc);
-                    input.uiData.decBtn.classList.add(UI.classes.formComponentControl, classes.dec);
+                    input.uiData.incBtn.classList.add(UI.css.formComponentControl, css.inc);
+                    input.uiData.decBtn.classList.add(UI.css.formComponentControl, css.dec);
                     input.uiData.incBtn.innerHTML = input.uiData.conf.incIcon;
                     input.uiData.decBtn.innerHTML = input.uiData.conf.decIcon;
                     input.after(input.uiData.decBtn, input.uiData.incBtn);
@@ -1289,8 +1289,8 @@ const UI = new class {
             delItemIcon: `<i class="fa-solid fa-xmark"></i>`,
         };
 
-        // CSS-класи які використовує метод
-        const classes = {
+        // CSS селектори які використовує метод
+        const css = {
             overlay: `UI_${selfName}-overlay`,
             dropdown: `UI_${selfName}-dropdown`,
             dropdownList: `UI_${selfName}-dropdown-list`,
@@ -1345,18 +1345,18 @@ const UI = new class {
                     select.uiData.dropdownItems = [];
                     select.uiData.controlBoxPlaceholder;
                     // Побудувати компонент
-                    select.uiData.dropdownShowBtn.classList.add(UI.classes.formComponentControl);
+                    select.uiData.dropdownShowBtn.classList.add(UI.css.formComponentControl);
                     select.uiData.dropdownShowBtn.innerHTML = select.uiData.conf.arrowIconDown;
-                    select.uiData.dropdown.classList.add(classes.dropdown);
-                    select.uiData.dropdownList.classList.add(classes.dropdownList, UI.classes.scrollbar);
-                    select.uiData.controlBox.classList.add(classes.controlBox, UI.classes.noScrollbar);
-                    select.uiData.overlay.classList.add(classes.overlay)
+                    select.uiData.dropdown.classList.add(css.dropdown);
+                    select.uiData.dropdownList.classList.add(css.dropdownList, UI.css.scrollbar);
+                    select.uiData.controlBox.classList.add(css.controlBox, UI.css.noScrollbar);
+                    select.uiData.overlay.classList.add(css.overlay)
                     select.before(select.uiData.controlBox);
                     select.after(select.uiData.dropdown, select.uiData.dropdownShowBtn);
                     select.uiData.dropdown.append(select.uiData.dropdownList);
                     if (select.uiData.hasSearch) {
                         select.uiData.searchInput.type = `text`;
-                        select.uiData.searchInput.classList.add(classes.selectSearchInput);
+                        select.uiData.searchInput.classList.add(css.selectSearchInput);
                         select.uiData.searchInput.placeholder = select.uiData.conf.searchPlaceholder;
                         select.uiData.searchInput.oninput = () => this.search(select.uiData.searchInput.value, select);
                         select.uiData.dropdown.prepend(select.uiData.searchInput);
@@ -1375,12 +1375,12 @@ const UI = new class {
                             select.uiData.dropdownShowBtn.firstChild,
                         ].includes(e.target);
                         if (control) {
-                            let show = select.uiData.dropdown.classList.contains(classes.dropdownShow);
+                            let show = select.uiData.dropdown.classList.contains(css.dropdownShow);
                             show ? this.hideDropdown(select) : this.showDropdown(select);
                         }
                     };
                     // Слухачі подій поля
-                    select.oninvalid = () => select.uiData.controlBox.classList.add(UI.classes.invalidForm);
+                    select.oninvalid = () => select.uiData.controlBox.classList.add(UI.css.invalidForm);
                     if (select.form) {
                         select.uiData.resetHandler = () => setTimeout(() => this.render(select), 100);
                         select.form.addEventListener(`reset`, select.uiData.resetHandler);
@@ -1404,7 +1404,7 @@ const UI = new class {
                     select.data = select.uiData.hasMultiple ? [] : ``;
                     select.uiData.controlBox.innerHTML = ``;
                     select.uiData.controlBoxPlaceholder = document.createElement(`span`);
-                    select.uiData.controlBoxPlaceholder.classList.add(classes.controlBoxPlaceholder);
+                    select.uiData.controlBoxPlaceholder.classList.add(css.controlBoxPlaceholder);
                     select.uiData.controlBoxPlaceholder.textContent = select.uiData.conf.selectPlaceholder;
                     select.uiData.controlBox.prepend(select.uiData.controlBoxPlaceholder);
                 }
@@ -1423,11 +1423,11 @@ const UI = new class {
                 const worker = select => {
                     if (select.uiData.hasDisabled || !select.uiData.dropdownItems.length) return;
                     document.body.append(select.uiData.overlay);
-                    select.uiData.componentBox.style.zIndex = UI.classes.bodyOverlayZIndex;
-                    select.uiData.controlBox.classList.contains(UI.classes.invalidForm)
-                        ? select.uiData.controlBox.classList.replace(UI.classes.invalidForm, UI.classes.focusForm)
-                        : select.uiData.controlBox.classList.add(UI.classes.focusForm);
-                    select.uiData.dropdown.classList.add(classes.dropdownShow);
+                    select.uiData.componentBox.style.zIndex = UI.css.bodyOverlayZIndex;
+                    select.uiData.controlBox.classList.contains(UI.css.invalidForm)
+                        ? select.uiData.controlBox.classList.replace(UI.css.invalidForm, UI.css.focusForm)
+                        : select.uiData.controlBox.classList.add(UI.css.focusForm);
+                    select.uiData.dropdown.classList.add(css.dropdownShow);
                     select.uiData.dropdownShowBtn.innerHTML = select.uiData.conf.arrowIconUp;
                 }
                 this.hideDropdown();
@@ -1447,8 +1447,8 @@ const UI = new class {
                     if (!select.uiData || select.uiData.hasDisabled) return;
                     select.uiData.overlay.remove();
                     select.uiData.componentBox.style.zIndex = `auto`;
-                    select.uiData.dropdown.classList.remove(classes.dropdownShow);
-                    select.uiData.controlBox.classList.remove(UI.classes.focusForm);
+                    select.uiData.dropdown.classList.remove(css.dropdownShow);
+                    select.uiData.controlBox.classList.remove(UI.css.focusForm);
                     select.uiData.dropdownShowBtn.innerHTML = select.uiData.conf.arrowIconDown;
                 };
                 // Опрацювати всю колекцію якщо поле не передано
@@ -1526,7 +1526,7 @@ const UI = new class {
                         // Додати опцію у dropdown
                         if (!option.selected && !option.disabled) {
                             let dropdownItem = document.createElement(`div`);
-                            dropdownItem.classList.add(classes.dropdownItem);
+                            dropdownItem.classList.add(css.dropdownItem);
                             dropdownItem.innerHTML = option.innerHTML;
                             dropdownItem.onclick = () => this.selected(true, [option.index], select);
                             select.uiData.dropdownItems[option.index] = dropdownItem;
@@ -1537,18 +1537,18 @@ const UI = new class {
                             let controlBoxItem = document.createElement(`span`);
                             let controlBoxItemText = document.createElement(`span`);
                             let controlBoxItemClass = select.uiData.hasMultiple
-                                ? classes.controlBoxItemMultiply
-                                : classes.controlBoxItem;
+                                ? css.controlBoxItemMultiply
+                                : css.controlBoxItem;
                             select.uiData.hasMultiple ? data.push(option.value) : data = select.value;
                             controlBoxItem.classList.add(controlBoxItemClass);
-                            controlBoxItemText.classList.add(classes.controlBoxItemText);
+                            controlBoxItemText.classList.add(css.controlBoxItemText);
                             controlBoxItemText.innerHTML = option.innerHTML;
                             controlBoxItemText.onclick = () => this.showDropdown(select);
                             controlBoxItem.append(controlBoxItemText);
                             select.uiData.controlBox.append(controlBoxItem);
                             if (select.uiData.hasMultiple) {
                                 let controlBoxItemDel = document.createElement(`span`);
-                                controlBoxItemDel.classList.add(classes.controlBoxItemDel);
+                                controlBoxItemDel.classList.add(css.controlBoxItemDel);
                                 controlBoxItemDel.innerHTML = select.uiData.conf.delItemIcon;
                                 controlBoxItemDel.onclick = () => this.selected(false, [option.index], select);
                                 controlBoxItem.append(controlBoxItemDel);
@@ -1558,8 +1558,8 @@ const UI = new class {
                     // Додати placeholder
                     if (!select.value) this.#addPlaceholder(select);
                     //
-                    select.uiData.controlBox.classList.toggle(UI.classes.requiredForm, select.required);
-                    select.uiData.componentBox.classList.toggle(UI.classes.disabledForm, select.uiData.hasDisabled);
+                    select.uiData.controlBox.classList.toggle(UI.css.requiredForm, select.required);
+                    select.uiData.componentBox.classList.toggle(UI.css.disabledForm, select.uiData.hasDisabled);
                     // Якщо є запит, показати результат пошуку
                     let searchVal = select.uiData.searchInput?.value;
                     if (searchVal) this.search(searchVal, select);
@@ -1614,8 +1614,8 @@ const UI = new class {
         // Ім'я методу
         const selfName = `Menu`;
 
-        // CSS-класи які використовує метод
-        const classes = {
+        // CSS селектори які використовує метод
+        const css = {
             show: `UI_${selfName}-show`,
             showBtn: `UI_${selfName}-show-btn`,
             showSubBtn: `UI_${selfName}-show-sub-btn`,
@@ -1656,14 +1656,14 @@ const UI = new class {
                     ul.uiData = {};
                     ul.uiData.conf = Object.assign({}, defConf, userConf, UI.#getDatasetConf(ul));
                     ul.uiData.showBtn = document.createElement(`i`);
-                    ul.uiData.showBtn.classList.add(classes.showBtn);
+                    ul.uiData.showBtn.classList.add(css.showBtn);
                     ul.uiData.showBtn.innerHTML = ul.uiData.conf.btnIcon;
                     ul.uiData.showBtn.onclick = () => this.toggleShow(null, ul);
                     ul.uiData.showSubBtns = [];
                     ul.after(ul.uiData.showBtn);
                     ul.querySelectorAll(`:scope ul`).forEach(subUl => {
                         const showSubBtn = document.createElement(`i`);
-                        showSubBtn.classList.add(classes.showSubBtn);
+                        showSubBtn.classList.add(css.showSubBtn);
                         showSubBtn.innerHTML = ul.uiData.conf.btnIcon;
                         showSubBtn.onclick = () => this.toggleShow(null, subUl);
                         ul.uiData.showSubBtns.push(showSubBtn);
@@ -1688,7 +1688,7 @@ const UI = new class {
                     const pageLocation = [`${location.pathname}${location.search}`, location.pathname, location.href];
                     ul.querySelectorAll(`:scope a`).forEach(a => {
                         if (pageLocation.includes(a.href))
-                            a.closest(`${ul.uiData.conf.selector} > li`).classList.add(classes.mark);
+                            a.closest(`${ul.uiData.conf.selector} > li`).classList.add(css.mark);
                     });
                 };
                 // Опрацювати всю колекцію якщо елемент не передано
@@ -1708,10 +1708,10 @@ const UI = new class {
             toggleShow(force = null, ul = null) {
                 const worker = ul => {
                     if (typeof force === `boolean`) {
-                        ul.classList.toggle(classes.show, force);
+                        ul.classList.toggle(css.show, force);
                         return;
                     }
-                    ul.classList.toggle(classes.show);
+                    ul.classList.toggle(css.show);
                 };
                 // Опрацювати всю колекцію якщо елемент не передано
                 !(ul instanceof HTMLElement) ? collection.forEach(worker) : worker(ul);
