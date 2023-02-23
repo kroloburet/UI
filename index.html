@@ -235,6 +235,7 @@
         <li><a data-anchor="methods">Методи UI</a>
             <ul>
                 <li><a data-anchor="disabledNodes">Блокування вузлів та елементів</a></li>
+                <li><a data-anchor="cssSelectorsInJs">Css селектори UI в сценаріях JS</a></li>
                 <li><a data-anchor="tabs">Таби</a></li>
                 <li><a data-anchor="toggle">Перемикання відображення елемента</a></li>
                 <li><a data-anchor="goTo">Перехід до елемента</a></li>
@@ -1583,6 +1584,19 @@ Form component with &quot;UI_contour UI_size-s UI_inline-form&quot;
         його дочірні елементи.</p>
 
     <!--
+    ########### Css селектори UI в сценаріях JS
+    -->
+
+    <h3 id="cssSelectorsInJs">Css селектори UI в сценаріях JS</h3>
+    <p>Можливо вам знадобиться маніпулювати css селекторами UI у своїх сценаріях. Наприклад: динамічно помітити поле як не валідне, додавши до нього клас <code>UI_invalid-form</code>. Звичайно, ви можете це зробити якось так: <code>field.classList.add('UI_invalid-form')</code>. Щоб зменшити залежність від використання в сценаріях рядків селекторів, в <code>UI.js</code> передбачена публічна властивість <code>UI.сss</code> яка представляє об'єкт. Користуйтеся полями цього об'єкту та додавайте свої поля. Тож, приклад з додаванням класу краще записати так: <code>field.classList.add(UI.css.invalidForm)</code>.</p>
+    <div class="code-style">
+        <i class="copy-fragment fa-solid fa-copy" title="Копіювати код"></i>
+        <pre id="fromJsCssFragment" class="fragment">
+        </pre>
+    </div>
+
+
+    <!--
     ########### UI.Tabs()
     -->
 
@@ -2837,7 +2851,11 @@ assumenda quas qui hic fugiat labore repellendus quos voluptatibus autem dolorem
 </html>
 
 <script>
-    (function () {
+    document.addEventListener(`DOMContentLoaded`, () => {
+        // Формат та вивід об'єкта UI.css
+        const fromJsCssFragment = document.querySelector(`#fromJsCssFragment`);
+        fromJsCssFragment.textContent = `UI.css = ` + JSON.stringify(UI.css, null, 2).replace(/"(.+)"(:)/g, `$1$2`);
+
         // Робота меню розділів сторінки
         document.querySelectorAll(`#asideMenu a`).forEach(a => {
             a.addEventListener('click', () => {
@@ -2862,5 +2880,5 @@ assumenda quas qui hic fugiat labore repellendus quos voluptatibus autem dolorem
                 });
             });
         });
-    })();
+    });
 </script>
