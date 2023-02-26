@@ -1457,8 +1457,9 @@ const UI = new class {
             }
 
             /**
-             * Шукати по запиту серед опцій
-             * компонента та залишити лише знайдені
+             * Шукати по запиту серед тексту опцій
+             * чи значень атрибутів "data-find-of" опцій.
+             * Залишити лише знайдені
              *
              * @param {string} query Рядок запиту
              * @param {HTMLElement|null} select Поле
@@ -1472,8 +1473,11 @@ const UI = new class {
                         !select.uiData.dropdownItems.length
                     ) return;
                     const q = query.toLowerCase();
-                    select.uiData.dropdownItems.forEach(item => {
-                        item.hidden = !(item.textContent.toLowerCase().indexOf(q) > -1);
+                    select.uiData.dropdownItems.forEach((item, index) => {
+                        item.hidden = !(
+                            item.textContent.toLowerCase().indexOf(q) > -1 ||
+                            select.options[index].dataset.findOf?.toLowerCase().indexOf(q) > -1
+                        );
                     });
                 };
                 // Опрацювати всю колекцію якщо поле не передано
