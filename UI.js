@@ -418,15 +418,14 @@ const UI = new class {
     /**
      * Перехід до елементу
      *
-     * @param {string|null} id id елемента або нічого
+     * @param {string|HTMLElement|null} target Селектор елемента чи елемент
      * @return {undefined|HTMLElement} Елемент
      */
-    GoTo(id = null) {
+    GoTo(target = null) {
         if (this.#isDisabledNode()) return;
-        // id елемента або хеш в url
-        const target = id || location.hash;
+        target = target ?? location.hash;
         if (!target) return;
-        const el = document.getElementById(target.replace(/^#/, ``));
+        const el = target instanceof HTMLElement ? target : document.querySelector(target);
         setTimeout(() => {
             el?.scrollIntoView({
                 behavior: `smooth`,
