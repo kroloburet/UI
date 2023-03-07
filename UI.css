@@ -1163,8 +1163,8 @@ a.UI_angle-up::after, .UI_button.UI_angle-up::after {
     line-height: 0;
     margin-left: .3rem;
     margin-right: .5rem;
-    width: var(--UI_form-required-image-size);
-    height: var(--UI_form-required-image-size);
+    min-width: var(--UI_form-required-image-size);
+    min-height: var(--UI_form-required-image-size);
     vertical-align: super;
 }
 
