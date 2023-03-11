@@ -1,6 +1,6 @@
 /**
  * Суперклас UI
- * Документацію з прикладами дивись в index.html
+ * see documentation https://kroloburet.github.io/UI/
  *
  * Copyright (c) Serhii Nyzhnyk. Contacts: <kroloburet@gmail.com>
  * License: http://opensource.org/licenses/MIT
@@ -31,6 +31,7 @@ const UI = new class {
      *
      * @type {Array}
      * @private
+     * @see https://kroloburet.github.io/UI/#disabledNodes
      */
     #disabledNodes = [`.UI_disabled-node`];
 
@@ -213,6 +214,7 @@ const UI = new class {
      * CSS селектори з файлу UI.css для використання в сценаріях
      *
      * @type {Object}
+     * @see https://kroloburet.github.io/UI/#cssSelectorsInJs
      */
     css = {
         elementsOverlayZIndex: getComputedStyle(document.body).getPropertyValue(`--UI_base-overlay-elements-z-index`),
@@ -255,8 +257,11 @@ const UI = new class {
      * Інтерфейс перемикання контенту (таби)
      *
      * @param {Object} userConf Конфігурація користувача
-     * @returns {Object}
-     * @constructor
+     * @param {string} [userConf.selector = `UI_Tabs`] Селектор dl елемента/тів для опрацювання
+     * @param {number} [userConf.showTabIndex = 0] Індекс вкладки, яку потрібно відкрити за замовчуванням
+     * @param {boolean} [userConf.smartShow = true] Дозволено чи ні за замовчуванням відкривати вкладку, передану в рядку uri
+     * @returns {Object} Клас-будівельник
+     * @see https://kroloburet.github.io/UI/#tabs
      */
     Tabs(userConf = {}) {
         // Ім'я методу
@@ -397,8 +402,9 @@ const UI = new class {
      * Перемикання відображення елемента
      *
      * @param {string} id Ідентифікатор елемента
-     * @param {string} display Значення CSS-властивості display видимого елемента
+     * @param {string} [display = `block`] Значення CSS-властивості display видимого елемента
      * @return {undefined|HTMLElement} Елемент
+     * @see https://kroloburet.github.io/UI/#toggle
      */
     Toggle(id, display = `block`) {
         if (this.#isDisabledNode()) return;
@@ -418,8 +424,9 @@ const UI = new class {
     /**
      * Перехід до елементу
      *
-     * @param {string|HTMLElement|null} target Селектор елемента чи елемент
+     * @param {string|HTMLElement|null} [target = null] Селектор елемента чи елемент
      * @return {undefined|HTMLElement} Елемент
+     * @see https://kroloburet.github.io/UI/#goTo
      */
     GoTo(target = null) {
         if (this.#isDisabledNode()) return;
@@ -439,9 +446,9 @@ const UI = new class {
      * Підказка що випливає
      *
      * @param {HTMLElement} el Елемент на якому буде викликано метод
-     * @param {string} hideEvent Подія, що приховує підказку
-     * @return {Object}
-     * @constructor
+     * @param {string} [hideEvent = `mouseout`] Подія, що приховує підказку
+     * @return {Object} Клас-будівельник
+     * @see https://kroloburet.github.io/UI/#hint
      */
     Hint(el, hideEvent = `mouseout`) {
         // Ім'я методу
@@ -553,8 +560,12 @@ const UI = new class {
      * Повідомлення
      *
      * @param {Object} userConf Конфігурація користувача
-     * @returns {Object}
-     * @constructor
+     * @param {string} [userConf.message = `processing...`] Текст/HTML повідомлення
+     * @param {string} [userConf.className = `UI_notice-process`] CSS-клас який буде застосовано до елемента підказки
+     * @param {number|null} [userConf.delay = null] Скільки мілісекунд буде показане повідомлення перед тим, як зникне
+     * @param {function|null} [userConf.callback = null] Функція, яка буде викликана після того, як час delay сплине
+     * @return {Object} Клас-будівельник
+     * @see https://kroloburet.github.io/UI/#notice
      */
     Notice(userConf = {}) {
         // Ім'я методу
@@ -567,7 +578,7 @@ const UI = new class {
 
         // Конфігурація за замовчуванням
         const defConf = {
-            text: `processing...`,
+            message: `processing...`,
             className: `UI_notice-process`,
             delay: null,
             callback: null,
@@ -602,7 +613,7 @@ const UI = new class {
                 }
                 // Повідомлення створено
                 notice.classList.add(`UI_${selfName}`, conf.className);
-                notice.innerHTML = conf.text;
+                notice.innerHTML = conf.message;
                 if (conf.delay) {
                     setTimeout(async () => {
                         this.remove();
@@ -639,9 +650,9 @@ const UI = new class {
     /**
      * Popup вікно
      *
-     * @param {string|null} id Ідентифікатор елемента або нічого
-     * @returns {Object}
-     * @constructor
+     * @param {string|null} [id = null] Ідентифікатор елемента або нічого
+     * @return {Object} Клас-будівельник
+     * @see https://kroloburet.github.io/UI/#popup
      */
     Popup(id = null) {
         // Ім'я методу
@@ -735,9 +746,9 @@ const UI = new class {
      * Обмеження радка вводу
      *
      * @param {HTMLElement} field Поле що опрацьовується
-     * @param {number|string} limit Символів дозволено
-     * @return {Object}
-     * @constructor
+     * @param {number|string} [limit = 50] Символів дозволено
+     * @return {Object} Клас-будівельник
+     * @see https://kroloburet.github.io/UI/#lim
      */
     Lim(field, limit = 50) {
         // Ім'я методу
@@ -855,8 +866,11 @@ const UI = new class {
      * управління полями через їх компоненти.
      *
      * @param {Object} userConf Конфігурація користувача
-     * @returns {Object}
-     * @constructor
+     * @param {string} [userConf.selector = `UI_InputFile`] Селектор input type="file" елемента/тів для опрацювання
+     * @param {string} [userConf.placeholder = `Choose a file`] Текст в полі компонента, якщо файл не обрано
+     * @param {string} [userConf.selectIcon = `📂`] Текст або HTML-іконки обрання файла/лів
+     * @return {Object} Клас-будівельник
+     * @see https://kroloburet.github.io/UI/#inputFile
      */
     InputFile(userConf = {}) {
         // Ім'я методу
@@ -1006,8 +1020,9 @@ const UI = new class {
      * управління полями через їх компоненти.
      *
      * @param {Object} userConf Конфігурація користувача
-     * @returns {Object}
-     * @constructor
+     * @param {string} [userConf.selector = `UI_InputRange`] Селектор input type="range" елемента/тів для опрацювання
+     * @return {Object} Клас-будівельник
+     * @see https://kroloburet.github.io/UI/#inputRange
      */
     InputRange(userConf = {}) {
         // Ім'я методу
@@ -1107,8 +1122,12 @@ const UI = new class {
      * управління полями через їх компоненти.
      *
      * @param {Object} userConf Конфігурація користувача
-     * @returns {Object}
-     * @constructor
+     * @param {string} [userConf.selector = `UI_InputNumber`] Селектор input type="number" елемента/тів для опрацювання
+     * @param {string} [userConf.incIcon = `➕`] Іконка на кнопці додавання. Може містити HTML
+     * @param {string} [userConf.decIcon = `➖`] Іконка на кнопці віднімання. Може містити HTML
+     * @param {string} [userConf.title = `Put the cursor in the field and scroll it ;)`] Текст атрибуту "title" компонента
+     * @return {Object} Клас-будівельник
+     * @see https://kroloburet.github.io/UI/#inputNumber
      */
     InputNumber(userConf = {}) {
         // Ім'я методу
@@ -1270,8 +1289,15 @@ const UI = new class {
      * управління полями через їх компоненти.
      *
      * @param {Object} userConf Конфігурація користувача
-     * @returns {Object}
-     * @constructor
+     * @param {string} [userConf.selector = `UI_Select`] Селектор select елемента/тів для опрацювання
+     * @param {boolean} [userConf.withSearch = true] Чи потрібен в компоненті пошук по опціях спаску
+     * @param {string} [userConf.selectPlaceholder = `Make a choice`] Заповнювач порожнього поля списку
+     * @param {string} [userConf.searchPlaceholder = `Search on the list`] Заповнювач порожнього поля пошуку по опціях списку
+     * @param {string} [userConf.arrowIconDown = `˅`] Іконка кнопки, що показує dropdown компонента. Може містити HTML
+     * @param {string} [userConf.arrowIconUp = `˄`] Іконка кнопки, що ховає dropdown компонента. Може містити HTML
+     * @param {string} [userConf.delItemIcon = `✖`] Іконка кнопки видалення обраної опції в multiple компоненті. Може містити HTML
+     * @return {Object} Клас-будівельник
+     * @see https://kroloburet.github.io/UI/#select
      */
     Select(userConf = {}) {
         // Ім'я методу
@@ -1607,11 +1633,14 @@ const UI = new class {
     /**
      * Меню
      * Метод будує компонент багаторівневого
-     * меню зі списків <ul>
+     * меню зі списків ul
      *
      * @param {Object} userConf Конфігурація користувача
-     * @returns {Object}
-     * @constructor
+     * @param {string} [userConf.selector = `UI_Menu`] Селектор ul елемента/тів для опрацювання
+     * @param {string} [userConf.btnIcon = `☰`] Іконка кнопки, яка покаже/сховає меню на малих пристроях. Може містити HTML.
+     * @param {boolean} [userConf.markLink = false] Чи позначати пункт меню якщо в ньому є посилання на поточну сторінку
+     * @return {Object} Клас-будівельник
+     * @see https://kroloburet.github.io/UI/#menu
      */
     Menu(userConf = {}) {
         // Ім'я методу
