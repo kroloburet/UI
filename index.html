@@ -1,6 +1,7 @@
 <!--
 ########### Copyright (c) Serhii Nyzhnyk. Contacts: <kroloburet@gmail.com>
 ########### License: http://opensource.org/licenses/MIT
+########### see documentation https://kroloburet.github.io/UI/
 -->
 
 <!DOCTYPE html>
@@ -2037,11 +2038,11 @@ UI.GoTo(element);
                 (() => {
                     let feedTheMurchik = () => {
                         UI.Notice({
-                            text: `&#128049; омномном...`,
+                            message: `&#128049; омномном...`,
                             delay: 3000,
                             callback: () => {
                                 UI.Notice({
-                                    text: `Мурчика погодовано &#128570;`,
+                                    message: `Мурчика погодовано &#128570;`,
                                     delay: 2000,
                                     className: `UI_notice-success`
                                 });
@@ -2062,11 +2063,11 @@ UI.GoTo(element);
 &lt;script&gt;
     let feedTheMurchik = () =&gt; {
         UI.Notice({
-            text: `&#128049; омномном...`,
+            message: `&#128049; омномном...`,
             delay: 3000,
             callback: () =&gt; {
                 UI.Notice({
-                    text: `Мурчика погодовано &#128570;`,
+                    message: `Мурчика погодовано &#128570;`,
                     delay: 2000,
                     className: `UI_notice-success`
                 });
@@ -2085,7 +2086,7 @@ UI.GoTo(element);
                 (створює та показує) повідомлення. Метод повертає екземпляр <q>класу-будівельника</q>.</p>
             <h4>Поля конфігурації метода</h4>
             <ol>
-                <li><code>text</code> (рядок, опціонально, за замовчуванням "processing..."). Текст або HTML в
+                <li><code>message</code> (рядок, опціонально, за замовчуванням "processing..."). Текст або HTML в
                     повідомленні.
                 </li>
                 <li><code>className</code> (рядок, опціонально, за замовчуванням "UI_notice-process"). Один або декілька
@@ -2896,7 +2897,7 @@ UI.GoTo(element);
             copyFragmentBtn.addEventListener(`click`, () => {
                 window.navigator.clipboard.writeText(copyFragmentBtn.fragment.textContent);
                 UI.Notice({
-                    text: `Скопійовано &#x1f60e;`,
+                    message: `Скопійовано &#x1f60e;`,
                     className: `UI_notice-success`,
                     delay: 2000,
                 });
