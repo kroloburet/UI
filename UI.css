@@ -971,9 +971,10 @@ a.UI_angle-up::after, .UI_button.UI_angle-up::after {
     button, [type=button], [type=submit], [type=reset], .UI_form-component-control
 ) {
     display: inline-block;
+    vertical-align: middle;
     text-align: center;
     align-items: center;
-    margin: 0 var(--UI_form-gap-right) var(--UI_form-gap-bottom) 0;
+    margin: var(--UI_form-gap-top) var(--UI_form-gap-right) var(--UI_form-gap-bottom) 0;
     padding: var(--UI_button-paddingY) var(--UI_button-paddingX);
     font-weight: 700;
     font-size: var(--UI_button-font-size);
