@@ -1,6 +1,6 @@
 /**
  * Суперклас UI
- * see documentation https://kroloburet.github.io/UI/
+ * see documentation https://kroloburet.github.io/UI
  *
  * Copyright (c) Serhii Nyzhnyk. Contacts: <kroloburet@gmail.com>
  * License: http://opensource.org/licenses/MIT
