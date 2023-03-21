@@ -1439,6 +1439,34 @@ const UI = new class {
             }
 
             /**
+             * Розташувати dropdown компонента
+             *
+             * @param {HTMLElement|null} select Поле
+             * @returns {undefined|this}
+             */
+            #setDropdownPosition(select = null) {
+                const worker = select => {
+                    if (select.uiData.hasDisabled || !select.uiData.dropdownItems.length) return;
+                    const dropdown = select.uiData.dropdown;
+                    const dropdownDistanceToBtm = window.innerHeight - dropdown.getBoundingClientRect().bottom;
+                    const dropdownDistanceToTop = dropdown.getBoundingClientRect().top;
+                    const dropdownBtmStyle = window.getComputedStyle(dropdown).bottom;
+                    const dropdownTopStyle = window.getComputedStyle(dropdown).top;
+                    // Розташувати dropdown
+                    if (dropdownDistanceToBtm <= 0) {
+                        dropdown.style.bottom = dropdownTopStyle;
+                        dropdown.style.top = `auto`;
+                    } else if (dropdownDistanceToTop <= 0) {
+                        dropdown.style.top = dropdownBtmStyle;
+                        dropdown.style.bottom = `auto`;
+                    }
+                }
+                // Опрацювати всю колекцію якщо поле не передано
+                !(select instanceof HTMLElement) ? collection.forEach(worker) : worker(select);
+                return this;
+            }
+
+            /**
              * Показати dropdown компонента
              *
              * @param {HTMLElement|null} select Поле
@@ -1454,6 +1482,7 @@ const UI = new class {
                         : select.uiData.controlBox.classList.add(UI.css.focusForm);
                     select.uiData.dropdown.classList.add(css.dropdownShow);
                     select.uiData.dropdownShowBtn.innerHTML = select.uiData.conf.arrowIconUp;
+                    this.#setDropdownPosition(select);
                 }
                 this.hideDropdown();
                 // Опрацювати всю колекцію якщо поле не передано
