@@ -194,6 +194,10 @@
     box-sizing: border-box;
 }
 
+::before, ::after {
+    display: inline-block;
+}
+
 html {
     line-sizing: normal;
     tab-size: 4;
@@ -338,7 +342,6 @@ p {
 a:where(:not(.UI_button)) {
     color: var(--UI_link-color);
     background-color: transparent;
-    border-bottom: var(--UI_base-border-width) solid transparent;
     cursor: pointer;
 }
 
@@ -348,7 +351,8 @@ a:where(:not(.UI_button):visited) {
 
 a:where(:not(.UI_button):hover) {
     color: var(--UI_link-hover-color);
-    border-bottom-color: inherit;
+    text-decoration: underline;
+    text-underline-position: under;
 }
 
 a:where(:not(.UI_button):active) {
@@ -1726,6 +1730,7 @@ dl.UI_Tabs-activated dd.UI_Tabs-show {
     white-space: nowrap;
     font-size: 1.2em;
     color: var(--UI_Menu-font-color);
+    text-decoration: none;
     border: none;
 }
 
