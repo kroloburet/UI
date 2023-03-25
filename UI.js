@@ -401,15 +401,15 @@ const UI = new class {
     /**
      * Перемикання відображення елемента
      *
-     * @param {string} id Ідентифікатор елемента
+     * @param {string|HTMLElement} target Елемент який треба перемикати
      * @param {string} [display = `block`] Значення CSS-властивості display видимого елемента
      * @return {undefined|HTMLElement} Елемент
      * @see https://kroloburet.github.io/UI/#toggle
      */
-    Toggle(id, display = `block`) {
+    Toggle(target, display = `block`) {
         if (this.#isDisabledNode()) return;
-        const el = document.getElementById(id);
-        if (!el) throw ReferenceError(`Element with id "${id}" not found.`);
+        const el = (target instanceof HTMLElement) ? target : document.getElementById(target);
+        if (!el) throw ReferenceError(`Element with id "${target}" not found.`);
         // Обробка відображення/приховування
         const visible = el.style.display || getComputedStyle(el, null).getPropertyValue('display');
         if (visible === `none` || el.hidden) {

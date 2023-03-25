@@ -1698,7 +1698,8 @@ Form component with &quot;UI_contour UI_size-s UI_inline-form&quot;
     -->
 
     <h3 id="toggle">Перемикання відображення елемента</h3>
-    <p>Метод <code>UI.Toggle()</code> показує/приховує елемент, id якого йому передадуть в аргументі.</p>
+    <p>Метод <code>UI.Toggle()</code> показує/приховує елемент який йому передадуть в аргументі. Цей елемент може бути
+        передано як HTMLElement або ідентифікатор цього елементу.</p>
 
     <dl class="UI_Tabs">
         <dt>Вигляд</dt>
@@ -1708,6 +1709,11 @@ Form component with &quot;UI_contour UI_size-s UI_inline-form&quot;
 
             <!--- або "повісити" опрацьовувач на подію
             <button type="button" class="UI_button" onclick="UI.Toggle('hidElem')">Докладніше</button>
+            --->
+
+            <!--- або "повісити" опрацьовувач на подію в сценарії
+            const myElem = document.getElementById(`hidElem`);
+            button.addEventListener(`click`, () => UI.Toggle(myElem));
             --->
 
             <div id="hidElem" hidden>
@@ -1728,6 +1734,11 @@ Form component with &quot;UI_contour UI_size-s UI_inline-form&quot;
 &lt;button type=&quot;button&quot; class=&quot;UI_button&quot; onclick=&quot;UI.Toggle('hidElem')&quot;&gt;Докладніше&lt;/button&gt;
 ---&gt;
 
+&lt;!--- або &quot;повісити&quot; опрацьовувач на подію в сценарії
+const myElem = document.getElementById(`hidElem`);
+button.addEventListener(`click`, () =&gt; UI.Toggle(myElem));
+---&gt;
+
 &lt;div id=&quot;hidElem&quot; hidden&gt;
     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae dignissimos doloremque ducimus et,
     fugiat in iure nemo odit quidem quo! Aliquid aspernatur assumenda consequuntur doloremque enim, fugiat
@@ -1738,9 +1749,10 @@ Form component with &quot;UI_contour UI_size-s UI_inline-form&quot;
         </dd>
         <dt>API</dt>
         <dd>
-            <p>Метод <code>UI.Toggle(id[, display])</code> перемикає відображення елемента з <code>id</code>. Щоб
+            <p>Метод <code>UI.Toggle(target[, display])</code> перемикає відображення елемента <code>target</code>. Щоб
                 елемент був прихованим від самого початку, додайте йому атрибут <code>hidden</code> або <code>display:
-                    none</code>. Метод повертає елемент з <code>id</code>. Якщо елемент не знайдено, буде видана помилка
+                    none</code>. Метод повертає елемент <code>target</code>. Якщо елемент не знайдено, буде видана
+                помилка
                 <code>ReferenceError</code>.</p>
             <blockquote>
                 <h5>Порада</h5>
@@ -1751,7 +1763,9 @@ Form component with &quot;UI_contour UI_size-s UI_inline-form&quot;
             </blockquote>
             <h4>Аргументи метода</h4>
             <ol>
-                <li><code>id</code> (рядок, обов'язковий). Елемент з цим id буде показано або приховано.</li>
+                <li><code>target</code> (рядок або HTMLElement, обов'язковий). Елемент або ідентифікатор елемента за
+                    яким треба його знайти. Цей елемент буде показано або приховано.
+                </li>
                 <li><code>display</code> (рядок, опціонально, за замовчуванням "block"). Значення CSS-властивості
                     "display" для видимого елемента. Прихований елемент отримує <code>display: none</code></li>
             </ol>
