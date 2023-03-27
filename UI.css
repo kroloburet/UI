@@ -52,23 +52,37 @@
     --UI_base-gapY: 2rem;
     --UI_base-overlay-body-z-index: 9999; /* Use number unit */
     --UI_base-overlay-elements-z-index: 1000; /* Use number unit */
+
     /*--- Color themes ---*/
     --UI_base-color: #E5CA00;
     --UI_primary-font-color: #FFFFFF;
     --UI_primary-bg-color: #0A78DE;
-    --UI_primary-hover-bg-color: #14B1FC;
-    --UI_primary-active-bg-color: #035EB4;
     --UI_primary-border-color: transparent;
+    --UI_primary-hover-font-color: #FFFFFF;
+    --UI_primary-hover-bg-color: #14B1FC;
+    --UI_primary-hover-border-color: transparent;
+    --UI_primary-active-font-color: #FFFFFF;
+    --UI_primary-active-bg-color: #035EB4;
+    --UI_primary-active-border-color: transparent;
     --UI_accent-font-color: #FFFFFF;
     --UI_accent-bg-color: #F8142F;
-    --UI_accent-hover-bg-color: #FF405A;
-    --UI_accent-active-bg-color: #D8041D;
     --UI_accent-border-color: transparent;
+    --UI_accent-hover-font-color: #FFFFFF;
+    --UI_accent-hover-bg-color: #FF405A;
+    --UI_accent-hover-border-color: transparent;
+    --UI_accent-active-font-color: #FFFFFF;
+    --UI_accent-active-bg-color: #D8041D;
+    --UI_accent-active-border-color: transparent;
     --UI_contour-font-color: #0A78DE;
     --UI_contour-bg-color: var(--UI_base-body-bg-color);
-    --UI_contour-hover-bg-color: var(--UI_base-body-bg-color);
-    --UI_contour-active-bg-color: var(--UI_base-body-bg-color);
     --UI_contour-border-color: #0A78DE;
+    --UI_contour-hover-font-color: #FFFFFF;
+    --UI_contour-hover-bg-color: #14B1FC;
+    --UI_contour-hover-border-color: transparent;
+    --UI_contour-active-font-color: #FFFFFF;
+    --UI_contour-active-bg-color: #0A78DE;
+    --UI_contour-active-border-color: transparent;
+
     /*--- Typography ---*/
     --UI_blockquote-border: 1px solid var(--UI_base-color);
     --UI_mark-bg-color: #FFE54D;
@@ -78,13 +92,16 @@
     --UI_link-hover-color: #0764E6;
     --UI_link-active-color: #0764E6;
     --UI_hr-border: 1px solid var(--UI_base-color);
+
     /*--- Grid ---*/
     --UI_grid-gapX: 2rem;
     --UI_grid-gapY: 2rem;
+
     /*--- Assistants ---*/
     --UI_scrollbar-width: 5px;
     --UI_scrollbar-thumb-bg-color: var(--UI_base-font-color);
     --UI_scrollbar-track-bg-color: transparent;
+
     /*--- Table ---*/
     --UI_table-font-color: var(--UI_base-font-color);
     --UI_table-bg-color: var(--UI_base-body-bg-color);
@@ -96,6 +113,7 @@
     --UI_table-td-padding: .5em 1em;
     --UI_table-td-border-color: transparent;
     --UI_table-tr-hover-bg-color: var(--UI_base-active-bg-color);
+
     /*--- Forms ---*/
     --UI_form-font-size: .875em;
     --UI_form-line-height: 1.572;
@@ -112,11 +130,15 @@
     --UI_form-border-radius: var(--UI_base-border-radius);
     --UI_form-shadow: 0 .125rem 0 rgba(69, 90, 100, .25);
     --UI_form-active-bg-color: rgba(198, 237, 255, .6);
-    --UI_form-component-control-bg-color: var(--UI_form-bg-color);
-    --UI_form-component-control-border-color: transparent;
     --UI_form-component-control-font-color: var(--UI_form-border-color);
+    --UI_form-component-control-bg-color: var(--UI_form-bg-color);
+    --UI_form-component-control-border-color: var(--UI_form-border-color);
+    --UI_form-component-control-hover-font-color: #525252;
     --UI_form-component-control-hover-bg-color: var(--UI_form-bg-color);
+    --UI_form-component-control-hover-border-color: var(--UI_form-border-color);
+    --UI_form-component-control-active-font-color: #525252;
     --UI_form-component-control-active-bg-color: var(--UI_form-bg-color);
+    --UI_form-component-control-active-border-color: var(--UI_form-border-color);
     --UI_form-focus-border-color: #0B3950;
     --UI_form-focus-shadow: 0 0 0 .188rem #C6EDFF;
     --UI_form-invalid-border-color: #FF405A;
@@ -127,17 +149,22 @@
     --UI_range-track-height: 1px;
     --UI_range-thumb-width: 1.5em;
     --UI_range-thumb-height: 1.5em;
-    --UI_button-font-color: var(--UI_primary-font-color);
     --UI_button-font-size: 1.0625em;
     --UI_button-line-height: 1.412;
     --UI_button-paddingY: .647em;
     --UI_button-paddingX: var(--UI_base-padding);
-    --UI_button-border-color: var(--UI_primary-border-color);
-    --UI_button-border-radius: var(--UI_base-border-radius);
-    --UI_button-bg-color: var(--UI_primary-bg-color);
+    --UI_button-border-radius: var(--UI_form-border-radius);
     --UI_button-shadow: 0 .125rem .25rem rgba(69, 90, 100, .25);
+    --UI_button-font-color: var(--UI_primary-font-color);
+    --UI_button-bg-color: var(--UI_primary-bg-color);
+    --UI_button-border-color: var(--UI_primary-border-color);
+    --UI_button-hover-font-color: var(--UI_primary-hover-font-color);
     --UI_button-hover-bg-color: var(--UI_primary-hover-bg-color);
+    --UI_button-hover-border-color: var(--UI_primary-hover-border-color);
+    --UI_button-active-font-color: var(--UI_primary-active-font-color);
     --UI_button-active-bg-color: var(--UI_primary-active-bg-color);
+    --UI_button-active-border-color: var(--UI_primary-active-border-color);
+
     /*--- UI methods ---*/
     --UI_Tabs-border-width: 1px;
     --UI_Tabs-border-color: var(--UI_base-color);
@@ -773,14 +800,6 @@ a.UI_angle-up::after, .UI_button.UI_angle-up::after {
     display: none;
 }
 
-.UI_table thead th:first-child {
-    border-top-left-radius: var(--UI_base-border-radius);
-}
-
-.UI_table thead th:last-child {
-    border-top-right-radius: var(--UI_base-border-radius);
-}
-
 .UI_table td, .UI_table th {
     width: 1%;
     min-width: max-content;
@@ -790,6 +809,14 @@ a.UI_angle-up::after, .UI_button.UI_angle-up::after {
     text-align: left;
 }
 
+.UI_table thead th:first-child {
+    border-top-left-radius: var(--UI_base-border-radius);
+}
+
+.UI_table thead th:last-child {
+    border-top-right-radius: var(--UI_base-border-radius);
+}
+
 .UI_table th {
     padding: var(--UI_table-th-padding);
     color: var(--UI_table-th-font-color);
@@ -797,7 +824,7 @@ a.UI_angle-up::after, .UI_button.UI_angle-up::after {
     border-color: var(--UI_table-th-border-color);
 }
 
-.UI_table tr:hover {
+.UI_table tbody tr:hover {
     background-color: var(--UI_table-tr-hover-bg-color);
 }
 
@@ -822,9 +849,8 @@ a.UI_angle-up::after, .UI_button.UI_angle-up::after {
 }
 
 .UI_table.UI_contour {
-    --UI_table-th-bg-color: var(--UI_table-bg-color);
-    --UI_table-th-font-color: var(--UI_contour-font-color);
-    --UI_table-th-border-color: var(--UI_contour-border-color);
+    --UI_table-th-bg-color: var(--UI_table-bg-color );
+    --UI_table-th-border-color: var(--UI_table-th-border-color);
 }
 
 /**************************
@@ -1006,16 +1032,18 @@ a.UI_angle-up::after, .UI_button.UI_angle-up::after {
 .UI_form-component :where(
     button:hover, [type=button]:hover, [type=submit]:hover, [type=reset]:hover
 ) {
+    color: var(--UI_button-hover-font-color);
     background-color: var(--UI_button-hover-bg-color);
-    color: var(--UI_button-font-color);
+    border-color: var(--UI_button-hover-border-color);
 }
 
 .UI_button:active,
 .UI_form-component :where(
     button:active, [type=button]:active, [type=submit]:active, [type=reset]:active
 ) {
+    color: var(--UI_button-active-font-color);
     background-color: var(--UI_button-active-bg-color);
-    color: var(--UI_button-font-color);
+    border-color: var(--UI_button-active-border-color);
 }
 
 /*---------------------------------------------- UI form component ---*/
@@ -1037,19 +1065,22 @@ a.UI_angle-up::after, .UI_button.UI_angle-up::after {
     box-shadow: none;
 }
 
-.UI_form-component:where(.UI_primary, .UI_accent, .UI_contour) .UI_form-component-control {
+.UI_form-component:where(.UI_primary, .UI_accent, .UI_contour) .UI_form-component-control,
+.UI_fieldset:where(.UI_primary, .UI_accent, .UI_contour) .UI_form-component .UI_form-component-control {
     border-left-width: var(--UI_form-border-width);
     border-right-width: var(--UI_form-border-width);
 }
 
 .UI_form-component-control:hover {
+    color: var(--UI_form-component-control-hover-font-color);
     background-color: var(--UI_form-component-control-hover-bg-color);
-    color: var(--UI_form-component-control-font-color);
+    border-color: var(--UI_form-component-control-hover-border-color);
 }
 
 .UI_form-component-control:active {
+    color: var(--UI_form-component-control-active-font-color);
     background-color: var(--UI_form-component-control-active-bg-color);
-    color: var(--UI_form-component-control-font-color);
+    border-color: var(--UI_form-component-control-active-border-color);
 }
 
 .UI_form-component :where(button, [type=button], [type=submit], [type=reset], .UI_button) {
@@ -1224,14 +1255,19 @@ a.UI_angle-up::after, .UI_button.UI_angle-up::after {
 .UI_form-component.UI_primary *,
 .UI_fieldset.UI_primary {
     --UI_button-font-color: var(--UI_primary-font-color);
-    --UI_button-border-color: var(--UI_primary-border-color);
     --UI_button-bg-color: var(--UI_primary-bg-color);
+    --UI_button-border-color: var(--UI_primary-border-color);
+    --UI_button-hover-font-color: var(--UI_primary-hover-font-color);
     --UI_button-hover-bg-color: var(--UI_primary-hover-bg-color);
+    --UI_button-hover-border-color: var(--UI_primary-hover-border-color);
+    --UI_button-active-font-color: var(--UI_primary-active-font-color);
     --UI_button-active-bg-color: var(--UI_primary-active-bg-color);
-    --UI_form-component-control-bg-color: var(--UI_primary-bg-color);
+    --UI_button-active-border-color: var(--UI_primary-active-border-color);
     --UI_form-component-control-font-color: var(--UI_primary-font-color);
-    --UI_form-component-control-border-color: var(--UI_primary-border-color);
+    --UI_form-component-control-bg-color: var(--UI_primary-bg-color);
+    --UI_form-component-control-hover-font-color: var(--UI_primary-hover-font-color);
     --UI_form-component-control-hover-bg-color: var(--UI_primary-hover-bg-color);
+    --UI_form-component-control-active-font-color: var(--UI_primary-active-font-color);
     --UI_form-component-control-active-bg-color: var(--UI_primary-active-bg-color);
 }
 
@@ -1239,14 +1275,19 @@ a.UI_angle-up::after, .UI_button.UI_angle-up::after {
 .UI_form-component.UI_accent *,
 .UI_fieldset.UI_accent {
     --UI_button-font-color: var(--UI_accent-font-color);
-    --UI_button-border-color: var(--UI_accent-border-color);
     --UI_button-bg-color: var(--UI_accent-bg-color);
+    --UI_button-border-color: var(--UI_accent-border-color);
+    --UI_button-hover-font-color: var(--UI_accent-hover-font-color);
     --UI_button-hover-bg-color: var(--UI_accent-hover-bg-color);
+    --UI_button-hover-border-color: var(--UI_accent-hover-border-color);
+    --UI_button-active-font-color: var(--UI_accent-active-font-color);
     --UI_button-active-bg-color: var(--UI_accent-active-bg-color);
-    --UI_form-component-control-bg-color: var(--UI_accent-bg-color);
+    --UI_button-active-border-color: var(--UI_accent-active-border-color);
     --UI_form-component-control-font-color: var(--UI_accent-font-color);
-    --UI_form-component-control-border-color: var(--UI_accent-border-color);
+    --UI_form-component-control-bg-color: var(--UI_accent-bg-color);
+    --UI_form-component-control-hover-font-color: var(--UI_accent-hover-font-color);
     --UI_form-component-control-hover-bg-color: var(--UI_accent-hover-bg-color);
+    --UI_form-component-control-active-font-color: var(--UI_accent-active-font-color);
     --UI_form-component-control-active-bg-color: var(--UI_accent-active-bg-color);
 }
 
@@ -1254,15 +1295,14 @@ a.UI_angle-up::after, .UI_button.UI_angle-up::after {
 .UI_form-component.UI_contour *,
 .UI_fieldset.UI_contour {
     --UI_button-font-color: var(--UI_contour-font-color);
-    --UI_button-border-color: var(--UI_contour-border-color);
     --UI_button-bg-color: var(--UI_contour-bg-color);
+    --UI_button-border-color: var(--UI_contour-border-color);
+    --UI_button-hover-font-color: var(--UI_contour-hover-font-color);
     --UI_button-hover-bg-color: var(--UI_contour-hover-bg-color);
+    --UI_button-hover-border-color: var(--UI_contour-hover-border-color);
+    --UI_button-active-font-color: var(--UI_contour-active-font-color);
     --UI_button-active-bg-color: var(--UI_contour-active-bg-color);
-    --UI_form-component-control-bg-color: var(--UI_contour-bg-color);
-    --UI_form-component-control-font-color: var(--UI_contour-font-color);
-    --UI_form-component-control-border-color: var(--UI_contour-border-color);
-    --UI_form-component-control-hover-bg-color: var(--UI_contour-hover-bg-color);
-    --UI_form-component-control-active-bg-color: var(--UI_contour-active-bg-color);
+    --UI_button-active-border-color: var(--UI_contour-active-border-color);
 }
 
 /**************************
@@ -1452,10 +1492,9 @@ dl.UI_Tabs-activated dd.UI_Tabs-show {
 }
 
 .UI_Tabs.UI_contour {
-    --UI_Tabs-border-color: var(--UI_contour-border-color);
-    --UI_Tabs-control-font-color: var(--UI_contour-font-color);
-    --UI_Tabs-control-bg-color: var(--UI_contour-bg-color);
-    --UI_Tabs-control-border-color: var(--UI_contour-border-color);
+    --UI_Tabs-border-color: var(--UI_Tabs-control-font-color);
+    --UI_Tabs-control-bg-color: var(--UI_Tabs-content-bg-color);
+    --UI_Tabs-control-border-color: var(--UI_Tabs-control-font-color);
 }
 
 /*---------------------------------------------- UI_InputFile ---*/
@@ -1630,6 +1669,7 @@ dl.UI_Tabs-activated dd.UI_Tabs-show {
 }
 
 .UI_Select-control-box-item-del:hover {
+    color: var(--UI_form-component-control-hover-font-color);
     background-color: var(--UI_form-component-control-hover-bg-color);
 }
 
@@ -1841,7 +1881,7 @@ dl.UI_Tabs-activated dd.UI_Tabs-show {
 .UI_Menu-activated.UI_contour,
 .UI_Menu-activated.UI_contour + .UI_Menu-show-btn {
     --UI_Menu-bg-color: var(--UI_base-body-bg-color);
-    --UI_Menu-font-color: var(--UI_contour-font-color);
+    --UI_Menu-font-color: var(--UI_base-font-color);
 }
 
 /**************************
