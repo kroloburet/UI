@@ -1222,7 +1222,7 @@ a.UI_angle-up::after, .UI_button.UI_angle-up::after {
 }
 
 /*---------------------------------------------- Disabled form ---*/
-.UI_disabled-form, [class^="UI_"]:disabled, [class^="UI_"] :disabled,
+.UI_disabled, .UI_disabled-form, [class^="UI_"]:disabled, [class^="UI_"] :disabled,
 :where(.UI_checkbox [type=checkbox], .UI_radio [type=radio]):disabled ~ * {
     opacity: .6;
     filter: grayscale(1);
