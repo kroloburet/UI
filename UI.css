@@ -1598,6 +1598,7 @@ dl.UI_Tabs-activated dd.UI_Tabs-show {
 }
 
 .UI_Select-activated {
+    display: none;
     pointer-events: none;
     position: absolute;
     opacity: 0;
