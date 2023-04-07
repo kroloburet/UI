@@ -613,6 +613,14 @@ sequi voluptatum. Ad autem, culpa cum explicabo, itaque laudantium nesciunt null
         <button class="UI_button UI_size-s">Заблокована кнопка</button> <a>Заблоковане посилання</a>
     </p>
 
+    <!--- UI_process --->
+    <p><code>UI_process</code> &mdash; <q>Заблокує</q> елемент та додасть <code>::after</code> псевдоелемент зі спінером. Це знадобиться, наприклад, на кнопках відправлення форми, щоб заблокувати елемент та водночас показати користувачу, що треба зачекати. Приклад:</p>
+    <p id="demoProcess">
+        <button type="button" class="UI_button">Полетіли</button>
+        <button type="button" class="UI_button UI_arrow-right">В майбутнє</button>
+        чи <a>☕ По каві</a>
+    </p>
+
     <!--- UI_full-width --->
     <p><code>UI_full-width</code> &mdash; <q>Розтягне</q> елемент на всю ширину батьківського елемента. Приклад:</p>
     <p>
@@ -2923,6 +2931,17 @@ UI.GoTo(element);
                     delay: 2000,
                 });
             });
+        });
+
+        // Демо UI_process
+        document.querySelector(`#demoProcess`).addEventListener(`click`, event => {
+            event.preventDefault();
+            if ([`BUTTON`, `A`].includes(event.target.tagName)) {
+                event.target.classList.add(UI.css.process);
+                setTimeout(() => {
+                    event.target.classList.remove(UI.css.process);
+                }, 3000);
+            }
         });
     });
 </script>

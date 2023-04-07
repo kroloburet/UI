@@ -223,6 +223,7 @@ const UI = new class {
         bodyHideOverflow: `UI_body-hide-overflow`,
         scrollbar: `UI_scrollbar`,
         noScrollbar: `UI_no-scrollbar`,
+        process: `UI_process`,
         disabled: `UI_disabled`,
         invalidForm: `UI_invalid-form`,
         focusForm: `UI_focus-form`,

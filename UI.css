@@ -652,6 +652,16 @@ a.UI_angle-up::after, .UI_button.UI_angle-up::after {
     display: none;
 }
 
+.UI_process::after {
+    content: "\f110" !important;
+    margin-left: .5em;
+    font-family: "Font Awesome 6 Free";
+    font-style: normal;
+    font-weight: 900;
+    -webkit-animation: fa-spin 2s linear infinite;
+    animation: fa-spin 2s linear infinite;
+}
+
 /*--- Color themes ---*/
 .UI_primary {
 }
@@ -703,7 +713,7 @@ a.UI_angle-up::after, .UI_button.UI_angle-up::after {
 .UI_notice-info *,
 .UI_notice-process * {
     --UI_base-gapX: 1em;
-    --UI_base-gapY: 1em
+    --UI_base-gapY: 1em;
 }
 
 .UI_notice-success hr,
@@ -1230,8 +1240,8 @@ a.UI_angle-up::after, .UI_button.UI_angle-up::after {
     cursor: default;
 }
 
-/*---------------------------------------------- Disabled form ---*/
-.UI_disabled, .UI_disabled-form, [class^="UI_"]:disabled, [class^="UI_"] :disabled,
+/*---------------------------------------------- Disabled elements and forms ---*/
+.UI_process, .UI_disabled, .UI_disabled-form, [class^="UI_"]:disabled, [class^="UI_"] :disabled,
 :where(.UI_checkbox [type=checkbox], .UI_radio [type=radio]):disabled ~ * {
     opacity: .6;
     filter: grayscale(1);
