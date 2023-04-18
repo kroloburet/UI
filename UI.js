@@ -1477,8 +1477,7 @@ const UI = new class {
             showDropdown(select = null) {
                 const worker = select => {
                     if (select.uiData.hasDisabled || !select.uiData.dropdownItems.length) return;
-                    document.body.append(select.uiData.overlay);
-                    select.uiData.componentBox.style.zIndex = UI.css.bodyOverlayZIndex;
+                    select.after(select.uiData.overlay);
                     select.uiData.controlBox.classList.contains(UI.css.invalidForm)
                         ? select.uiData.controlBox.classList.replace(UI.css.invalidForm, UI.css.focusForm)
                         : select.uiData.controlBox.classList.add(UI.css.focusForm);
