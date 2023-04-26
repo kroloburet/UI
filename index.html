@@ -609,12 +609,16 @@ sequi voluptatum. Ad autem, culpa cum explicabo, itaque laudantium nesciunt null
     <!--- UI_disable --->
     <p><code>UI_disable</code> &mdash; <q>Заблокує</q> елемент та його нащадків. Приклад:</p>
     <p class="demo-block UI_disabled">
-        Цей блок <q>заблоковано</q>. Користувач не може взаємодіяти з посиланнями, кнопками та будь-якими інтерактивними заблокованими елементами. Але може, наприклад, виділити та скопіювати текст.
-        <button class="UI_button UI_size-s">Заблокована кнопка</button> <a>Заблоковане посилання</a>
+        Цей блок <q>заблоковано</q>. Користувач не може взаємодіяти з посиланнями, кнопками та будь-якими інтерактивними
+        заблокованими елементами. Але може, наприклад, виділити та скопіювати текст.
+        <button class="UI_button UI_size-s">Заблокована кнопка</button>
+        <a>Заблоковане посилання</a>
     </p>
 
     <!--- UI_process --->
-    <p><code>UI_process</code> &mdash; <q>Заблокує</q> елемент та додасть <code>::after</code> псевдоелемент зі спінером. Це знадобиться, наприклад, на кнопках відправлення форми, щоб заблокувати елемент та водночас показати користувачу, що треба зачекати. Приклад:</p>
+    <p><code>UI_process</code> &mdash; <q>Заблокує</q> елемент та додасть <code>::after</code> псевдоелемент зі
+        спінером. Це знадобиться, наприклад, на кнопках відправлення форми, щоб заблокувати елемент та водночас показати
+        користувачу, що треба зачекати. Приклад:</p>
     <p id="demoProcess">
         <button type="button" class="UI_button">Полетіли</button>
         <button type="button" class="UI_button UI_arrow-right">В майбутнє</button>
@@ -2353,7 +2357,7 @@ UI.GoTo(element);
                 <code>UI.InputFile()</code>. Метод приймає необов'язковий аргумент &mdash; літерал об'єкта з
                 конфігурацією. Якщо конфігурація не передана, метод використає конфігурацію за замовчуванням. Така
                 поведінка стосується також полей об'єкту конфігурації. Метод повертає екземпляр
-                <q>класу-будівельника</q>.
+                <q>класу-будівельника</q>.</p>
             <h4>Поля об'єкту конфігурації</h4>
             <p>Слід зазначити, що всі або окремі перераховані нижче поля, окрім <code>selector</code>, можна передати
                 методу атрибутами <code>data-</code>. Це дозволить конфігурувати кожен окремий екземпляр. Передані таким
@@ -2433,7 +2437,7 @@ UI.GoTo(element);
                 <code>UI.InputRange()</code>. Метод приймає необов'язковий аргумент &mdash; літерал об'єкта з
                 конфігурацією. Якщо конфігурація не передана, метод використає конфігурацію за замовчуванням. Така
                 поведінка стосується також полей об'єкту конфігурації. Метод повертає екземпляр
-                <q>класу-будівельника</q>.
+                <q>класу-будівельника</q>.</p>
             <h4>Поля об'єкту конфігурації</h4>
             <ol>
                 <li><code>selector</code> (рядок, опціонально, за замовчуванням ".UI_InputRange"). CSS-селектор або
@@ -2493,7 +2497,7 @@ UI.GoTo(element);
                 <code>UI.InputNumber()</code>. Метод приймає необов'язковий аргумент &mdash; літерал об'єкта з
                 конфігурацією. Якщо конфігурація не передана, метод використає конфігурацію за замовчуванням. Така
                 поведінка стосується також полей об'єкту конфігурації. Метод повертає екземпляр
-                <q>класу-будівельника</q>.
+                <q>класу-будівельника</q>.</p>
             <h4>Поля об'єкту конфігурації</h4>
             <p>Слід зазначити, що всі або окремі перераховані нижче поля, окрім <code>selector</code>, можна передати
                 методу атрибутами <code>data-</code>. Це дозволить конфігурувати кожен окремий екземпляр. Передані таким
@@ -2560,37 +2564,47 @@ UI.GoTo(element);
             <!--- UI.Select() Multiple select with search --->
             <select class="UI_Select" id="mySelect"
                     data-with-search="true"
-                    data-select-placeholder="Шукай та обирай своїх героїв..)" multiple>
-                <option>Aquaman</option>
-                <option>Asterix</option>
-                <option>Batman</option>
-                <option>Black Panther</option>
-                <option>Captain America</option>
-                <option>Captain Marvel</option>
-                <option>Doctor Strange</option>
-                <option>Guardians of the Galaxy</option>
-                <option>Hellboy</option>
-                <option>Robin</option>
-                <option>Superman</option>
-                <option>Teenage Mutant Ninja Turtles</option>
-                <option>Thor</option>
+                    data-select-placeholder="Шукай та обирай своїх героїв..)"
+                    data-search-placeholder="Наприклад, за запитом &quot;magic&quot; знайдеться &quot;Doctor Strange&quot;" multiple>
+                <option data-find-of="water swim" value="aquaman">Aquaman</option>
+                <option data-find-of="gall" value="asterix">Asterix</option>
+                <option data-find-of="fly" value="batman">Batman</option>
+                <option data-find-of="jump" value="black panther">Black Panther</option>
+                <option data-find-of="fly power" value="captain america">Captain America</option>
+                <option data-find-of="fly power" value="captain marvel">Captain Marvel</option>
+                <option data-find-of="magic" value="doctor strange">Doctor Strange</option>
+                <option data-find-of="team" value="guardians of the galaxy">Guardians of the Galaxy</option>
+                <option data-find-of="rage" value="hellboy">Hellboy</option>
+                <option data-find-of="antihero" value="robin">Robin</option>
+                <option data-find-of="fly power" value="superman">Superman</option>
+                <option data-find-of="jump swim team" value="tmnt">Teenage Mutant Ninja Turtles</option>
+                <option data-find-of="power" value="thor">Thor</option>
             </select>
 
             <!--- UI.Select() Simple inline select --->
             <select class="UI_Select UI_inline-form">
-                <option>Aquaman</option>
-                <option>Asterix</option>
-                <option>Batman</option>
-                <option>Black Panther</option>
-                <option>Captain America</option>
-                <option>Captain Marvel</option>
-                <option>Doctor Strange</option>
-                <option>Guardians of the Galaxy</option>
-                <option>Hellboy</option>
-                <option>Robin</option>
-                <option>Superman</option>
-                <option>Teenage Mutant Ninja Turtles</option>
-                <option>Thor</option>
+                <option value="aquaman">Aquaman</option>
+                <option value="asterix">Asterix</option>
+                <option value="batman">Batman</option>
+                <option value="black panther">Black Panther</option>
+                <option value="captain america">Captain America</option>
+                <option value="captain marvel">Captain Marvel</option>
+                <option value="doctor strange">Doctor Strange</option>
+                <option value="guardians of the galaxy">Guardians of the Galaxy</option>
+                <option value="hellboy">Hellboy</option>
+                <option value="robin">Robin</option>
+                <option value="superman">Superman</option>
+                <option value="tmnt">Teenage Mutant Ninja Turtles</option>
+                <option value="thor">Thor</option>
+            </select>
+
+            <!--- UI.Select() with data-content attributes --->
+            <select class="UI_Select UI_inline-form" data-select-placeholder="">
+                <option data-content="<i class='fa-brands fa-instagram'></i> Instagram" value="instagram"></option>
+                <option data-content="<i class='fa-brands fa-facebook'></i> Facebook" value="facebook"></option>
+                <option data-content="<i class='fa-brands fa-twitter'></i> Twitter" value="twitter"></option>
+                <option data-content="<i class='fa-brands fa-youtube'></i> You Tube" value="youtube"></option>
+                <option value="none">I don't have an account</option>
             </select>
         </dd>
         <dt>Код</dt>
@@ -2600,37 +2614,47 @@ UI.GoTo(element);
 &lt;!--- UI.Select() Multiple select with search ---&gt;
 &lt;select class=&quot;UI_Select&quot; id=&quot;mySelect&quot;
         data-with-search=&quot;true&quot;
-        data-select-placeholder=&quot;Шукай та обирай своїх героїв..)&quot; multiple&gt;
-    &lt;option&gt;Aquaman&lt;/option&gt;
-    &lt;option&gt;Asterix&lt;/option&gt;
-    &lt;option&gt;Batman&lt;/option&gt;
-    &lt;option&gt;Black Panther&lt;/option&gt;
-    &lt;option&gt;Captain America&lt;/option&gt;
-    &lt;option&gt;Captain Marvel&lt;/option&gt;
-    &lt;option&gt;Doctor Strange&lt;/option&gt;
-    &lt;option&gt;Guardians of the Galaxy&lt;/option&gt;
-    &lt;option&gt;Hellboy&lt;/option&gt;
-    &lt;option&gt;Robin&lt;/option&gt;
-    &lt;option&gt;Superman&lt;/option&gt;
-    &lt;option&gt;Teenage Mutant Ninja Turtles&lt;/option&gt;
-    &lt;option&gt;Thor&lt;/option&gt;
+        data-select-placeholder=&quot;Шукай та обирай своїх героїв..)&quot;
+        data-search-placeholder=&quot;Наприклад, за запитом &amp;quot;magic&amp;quot; знайдеться &amp;quot;Doctor Strange&amp;quot;&quot; multiple&gt;
+    &lt;option data-find-of=&quot;water swim&quot; value=&quot;aquaman&quot;&gt;Aquaman&lt;/option&gt;
+    &lt;option data-find-of=&quot;gall&quot; value=&quot;asterix&quot;&gt;Asterix&lt;/option&gt;
+    &lt;option data-find-of=&quot;fly&quot; value=&quot;batman&quot;&gt;Batman&lt;/option&gt;
+    &lt;option data-find-of=&quot;jump&quot; value=&quot;black panther&quot;&gt;Black Panther&lt;/option&gt;
+    &lt;option data-find-of=&quot;fly power&quot; value=&quot;captain america&quot;&gt;Captain America&lt;/option&gt;
+    &lt;option data-find-of=&quot;fly power&quot; value=&quot;captain marvel&quot;&gt;Captain Marvel&lt;/option&gt;
+    &lt;option data-find-of=&quot;magic&quot; value=&quot;doctor strange&quot;&gt;Doctor Strange&lt;/option&gt;
+    &lt;option data-find-of=&quot;team&quot; value=&quot;guardians of the galaxy&quot;&gt;Guardians of the Galaxy&lt;/option&gt;
+    &lt;option data-find-of=&quot;rage&quot; value=&quot;hellboy&quot;&gt;Hellboy&lt;/option&gt;
+    &lt;option data-find-of=&quot;antihero&quot; value=&quot;robin&quot;&gt;Robin&lt;/option&gt;
+    &lt;option data-find-of=&quot;fly power&quot; value=&quot;superman&quot;&gt;Superman&lt;/option&gt;
+    &lt;option data-find-of=&quot;jump swim team&quot; value=&quot;tmnt&quot;&gt;Teenage Mutant Ninja Turtles&lt;/option&gt;
+    &lt;option data-find-of=&quot;power&quot; value=&quot;thor&quot;&gt;Thor&lt;/option&gt;
 &lt;/select&gt;
 
 &lt;!--- UI.Select() Simple inline select ---&gt;
 &lt;select class=&quot;UI_Select UI_inline-form&quot;&gt;
-    &lt;option&gt;Aquaman&lt;/option&gt;
-    &lt;option&gt;Asterix&lt;/option&gt;
-    &lt;option&gt;Batman&lt;/option&gt;
-    &lt;option&gt;Black Panther&lt;/option&gt;
-    &lt;option&gt;Captain America&lt;/option&gt;
-    &lt;option&gt;Captain Marvel&lt;/option&gt;
-    &lt;option&gt;Doctor Strange&lt;/option&gt;
-    &lt;option&gt;Guardians of the Galaxy&lt;/option&gt;
-    &lt;option&gt;Hellboy&lt;/option&gt;
-    &lt;option&gt;Robin&lt;/option&gt;
-    &lt;option&gt;Superman&lt;/option&gt;
-    &lt;option&gt;Teenage Mutant Ninja Turtles&lt;/option&gt;
-    &lt;option&gt;Thor&lt;/option&gt;
+    &lt;option value=&quot;aquaman&quot;&gt;Aquaman&lt;/option&gt;
+    &lt;option value=&quot;asterix&quot;&gt;Asterix&lt;/option&gt;
+    &lt;option value=&quot;batman&quot;&gt;Batman&lt;/option&gt;
+    &lt;option value=&quot;black panther&quot;&gt;Black Panther&lt;/option&gt;
+    &lt;option value=&quot;captain america&quot;&gt;Captain America&lt;/option&gt;
+    &lt;option value=&quot;captain marvel&quot;&gt;Captain Marvel&lt;/option&gt;
+    &lt;option value=&quot;doctor strange&quot;&gt;Doctor Strange&lt;/option&gt;
+    &lt;option value=&quot;guardians of the galaxy&quot;&gt;Guardians of the Galaxy&lt;/option&gt;
+    &lt;option value=&quot;hellboy&quot;&gt;Hellboy&lt;/option&gt;
+    &lt;option value=&quot;robin&quot;&gt;Robin&lt;/option&gt;
+    &lt;option value=&quot;superman&quot;&gt;Superman&lt;/option&gt;
+    &lt;option value=&quot;tmnt&quot;&gt;Teenage Mutant Ninja Turtles&lt;/option&gt;
+    &lt;option value=&quot;thor&quot;&gt;Thor&lt;/option&gt;
+&lt;/select&gt;
+
+&lt;!--- UI.Select() with data-content attributes ---&gt;
+&lt;select class=&quot;UI_Select UI_inline-form&quot; data-select-placeholder=&quot;&quot;&gt;
+    &lt;option data-content=&quot;&lt;i class='fa-brands fa-instagram'&gt;&lt;/i&gt; Instagram&quot; value=&quot;instagram&quot;&gt;&lt;/option&gt;
+    &lt;option data-content=&quot;&lt;i class='fa-brands fa-facebook'&gt;&lt;/i&gt; Facebook&quot; value=&quot;facebook&quot;&gt;&lt;/option&gt;
+    &lt;option data-content=&quot;&lt;i class='fa-brands fa-twitter'&gt;&lt;/i&gt; Twitter&quot; value=&quot;twitter&quot;&gt;&lt;/option&gt;
+    &lt;option data-content=&quot;&lt;i class='fa-brands fa-youtube'&gt;&lt;/i&gt; You Tube&quot; value=&quot;youtube&quot;&gt;&lt;/option&gt;
+    &lt;option value=&quot;none&quot;&gt;I don't have an account&lt;/option&gt;
 &lt;/select&gt;
 
 &lt;script&gt;
@@ -2648,7 +2672,14 @@ UI.GoTo(element);
                 з класом <code>UI_Select</code>. Це вже спрацювало, бо в кінці файлу <code>UI.js</code> викликано
                 <code>UI.Select()</code>.Метод приймає необов'язковий аргумент &mdash; літерал об'єкта з конфігурацією.
                 Якщо конфігурація не передана, метод використає конфігурацію за замовчуванням. Така поведінка стосується
-                також полей об'єкту конфігурації. Метод повертає екземпляр <q>класу-будівельника</q>.
+                також полей об'єкту конфігурації. Метод повертає екземпляр <q>класу-будівельника</q>.</p>
+            <p>Нажаль, браузери не підтримують HTML в <code>option</code> списків що випадають. Але оскільки <code>UI.Select()</code>
+                будує компонент навколо звичайного <code>select</code>, ви можете передати атрибутом
+                <code>data-content</code> навіть HTML. Приклад: <code>&lt;option
+                    data-content="&lt;i class='fa-brands fa-facebook'&gt;&lt;/i&gt;"&gt;Text&lt;/option&gt;</code>. При
+                побудові компонента і формуванні елементів списку вміст цього атрибуту буде мати пріоритет над вмістом
+                <code>option</code>. В цьому прикладі вміст <q>Text</q>
+                буде проігноровано.</p>
             <h4>Поля об'єкту конфігурації</h4>
             <p>Слід зазначити, що всі або окремі перераховані нижче поля, окрім <code>selector</code>, можна передати
                 методу атрибутами <code>data-</code>. Це дозволить конфігурувати кожен окремий екземпляр. Передані таким
@@ -2839,7 +2870,7 @@ UI.GoTo(element);
                 з класом <code>UI_Menu</code>. Це вже спрацювало, бо в кінці файлу <code>UI.js</code> викликано
                 <code>UI.Menu()</code>. Метод приймає необов'язковий аргумент &mdash; літерал об'єкта з конфігурацією.
                 Якщо конфігурація не передана, метод використає конфігурацію за замовчуванням. Така поведінка стосується
-                також полей об'єкту конфігурації. Метод повертає екземпляр <q>класу-будівельника</q>.
+                також полей об'єкту конфігурації. Метод повертає екземпляр <q>класу-будівельника</q>.</p>
             <h4>Поля об'єкту конфігурації</h4>
             <p>Слід зазначити, що всі або окремі перераховані нижче поля, окрім <code>selector</code>, можна передати
                 методу атрибутами <code>data-</code>. Це дозволить конфігурувати кожен окремий екземпляр. Передані таким

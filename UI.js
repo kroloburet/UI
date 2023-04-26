@@ -1586,7 +1586,7 @@ const UI = new class {
                         if (!option.selected && !option.disabled) {
                             let dropdownItem = document.createElement(`div`);
                             dropdownItem.classList.add(css.dropdownItem);
-                            dropdownItem.innerHTML = option.innerHTML;
+                            dropdownItem.innerHTML = option.dataset.content || option.textContent;
                             dropdownItem.onclick = () => this.selected(true, [option.index], select);
                             select.uiData.dropdownItems[option.index] = dropdownItem;
                             select.uiData.dropdownList.append(dropdownItem);
@@ -1601,7 +1601,7 @@ const UI = new class {
                             select.uiData.hasMultiple ? data.push(option.value) : data = select.value;
                             controlBoxItem.classList.add(controlBoxItemClass);
                             controlBoxItemText.classList.add(css.controlBoxItemText);
-                            controlBoxItemText.innerHTML = option.innerHTML;
+                            controlBoxItemText.innerHTML = option.dataset.content || option.textContent;
                             controlBoxItemText.onclick = () => this.showDropdown(select);
                             controlBoxItem.append(controlBoxItemText);
                             select.uiData.controlBox.append(controlBoxItem);
