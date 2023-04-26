@@ -366,23 +366,23 @@ p {
     margin-bottom: var(--UI_base-gapY);
 }
 
-a:where(:not(.UI_button)) {
+a:where(:not(.UI_button, .UI_form-component-control)) {
     color: var(--UI_link-color);
     background-color: transparent;
     cursor: pointer;
 }
 
-a:where(:not(.UI_button):visited) {
+a:where(:not(.UI_button, .UI_form-component-control):visited) {
     color: var(--UI_link-visited-color);
 }
 
-a:where(:not(.UI_button):hover) {
+a:where(:not(.UI_button, .UI_form-component-control):hover) {
     color: var(--UI_link-hover-color);
     text-decoration: underline;
     text-underline-position: under;
 }
 
-a:where(:not(.UI_button):active) {
+a:where(:not(.UI_button, .UI_form-component-control):active) {
     color: var(--UI_link-active-color);
 }
 
@@ -1039,6 +1039,7 @@ a.UI_angle-up::after, .UI_button.UI_angle-up::after {
     background-color: var(--UI_form-component-control-bg-color);
     border-color: var(--UI_form-component-control-border-color);
     border-radius: 0;
+    text-decoration: none;
 }
 
 .UI_button:hover,
@@ -1184,8 +1185,8 @@ a.UI_angle-up::after, .UI_button.UI_angle-up::after {
 
 /*---------------------------------------------- Focus form ---*/
 .UI_focus-form,
-[class^="UI_"]:where(:not(button, [type=button], [type=submit], [type=reset], .UI_form-component-control .UI_button)):focus,
-[class^="UI_"] :where(:not(button, [type=button], [type=submit], [type=reset], .UI_form-component-control .UI_button)):focus,
+[class^="UI_"]:where(:not(button, [type=button], [type=submit], [type=reset], .UI_form-component-control, .UI_button)):focus,
+[class^="UI_"] :where(:not(button, [type=button], [type=submit], [type=reset], .UI_form-component-control, .UI_button)):focus,
 :where(.UI_checkbox [type=checkbox], .UI_radio [type=radio]):focus + .UI_checkmark {
     --UI_form-border-color: var(--UI_form-focus-border-color);
     --UI_form-shadow: var(--UI_form-focus-shadow);
