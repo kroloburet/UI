@@ -12,7 +12,7 @@
  * Імпорт залежностей UI
  **************************/
 
-@import "https://use.fontawesome.com/releases/v6.2.1/css/all.css";
+@import url("https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css");
 @import "https://fonts.googleapis.com/css2?family=Manrope&display=swap";
 
 /**************************
@@ -576,9 +576,7 @@ a.UI_arrow-right::after, .UI_button.UI_arrow-right::after,
 a.UI_angle-right::after, .UI_button.UI_angle-right::after,
 a.UI_angle-down::after, .UI_button.UI_angle-down::after,
 a.UI_angle-up::after, .UI_button.UI_angle-up::after {
-    font-family: "Font Awesome 6 Free";
-    font-style: normal;
-    font-weight: 900;
+    font: var(--fa-font-solid);
     margin-left: .5em;
 }
 
@@ -655,9 +653,7 @@ a.UI_angle-up::after, .UI_button.UI_angle-up::after {
 .UI_process::after {
     content: "\f110" !important;
     margin-left: .5em;
-    font-family: "Font Awesome 6 Free";
-    font-style: normal;
-    font-weight: 900;
+    font: var(--fa-font-solid);
     -webkit-animation: fa-spin 2s linear infinite;
     animation: fa-spin 2s linear infinite;
 }
@@ -748,10 +744,8 @@ a.UI_angle-up::after, .UI_button.UI_angle-up::after {
     top: 50%;
     left: 1em;
     min-width: var(--UI_Notice-icon-font-size);
-    font-family: "Font Awesome 6 Free";
+    font: var(--fa-font-solid);
     font-size: var(--UI_Notice-icon-font-size);
-    font-style: normal;
-    font-weight: 900;
     line-height: 0;
     text-align: center;
 }
