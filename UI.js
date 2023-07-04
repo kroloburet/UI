@@ -626,6 +626,18 @@ const UI = new class {
             }
 
             /**
+             * Вставити елемент/елементи в повідомлення
+             *
+             * @return {this}
+             */
+            insert(...nodes) {
+                if (!notice) return this;
+                notice.innerHTML = null;
+                notice.append(...nodes);
+                return this;
+            }
+
+            /**
              * Деактивувати повідомлення
              *
              * @return {this}

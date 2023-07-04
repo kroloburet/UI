@@ -304,21 +304,24 @@
             <label class="UI_form-component UI_size-s">
                 <span class="fragment UI_input">https://cdn.jsdelivr.net/gh/kroloburet/UI/</span>
                 <i class="copy-fragment UI_form-component-control fa-solid fa-copy" title="Копіювати посилання"></i>
-                <a href="https://purge.jsdelivr.net/gh/kroloburet/UI/" target="_blank" class="UI_form-component-control fa-solid fa-broom" title="Очистити кеш ресурсу"></a>
+                <a href="https://purge.jsdelivr.net/gh/kroloburet/UI/" target="_blank"
+                   class="UI_form-component-control fa-solid fa-broom" title="Очистити кеш ресурсу"></a>
             </label>
         </li>
         <li>UI.min.css cdn:&nbsp;
             <label class="UI_form-component UI_size-s">
                 <span class="fragment UI_input">https://cdn.jsdelivr.net/gh/kroloburet/UI/UI.min.css</span>
                 <i class="copy-fragment UI_form-component-control fa-solid fa-copy" title="Копіювати посилання"></i>
-                <a href="https://purge.jsdelivr.net/gh/kroloburet/UI/UI.min.css" target="_blank" class="UI_form-component-control fa-solid fa-broom" title="Очистити кеш ресурсу"></a>
+                <a href="https://purge.jsdelivr.net/gh/kroloburet/UI/UI.min.css" target="_blank"
+                   class="UI_form-component-control fa-solid fa-broom" title="Очистити кеш ресурсу"></a>
             </label>
         </li>
         <li>UI.min.js cdn:&nbsp;
             <label class="UI_form-component UI_size-s">
                 <span class="fragment UI_input">https://cdn.jsdelivr.net/gh/kroloburet/UI/UI.min.js</span>
                 <i class="copy-fragment UI_form-component-control fa-solid fa-copy" title="Копіювати посилання"></i>
-                <a href="https://purge.jsdelivr.net/gh/kroloburet/UI/UI.min.js" target="_blank" class="UI_form-component-control fa-solid fa-broom" title="Очистити кеш ресурсу"></a>
+                <a href="https://purge.jsdelivr.net/gh/kroloburet/UI/UI.min.js" target="_blank"
+                   class="UI_form-component-control fa-solid fa-broom" title="Очистити кеш ресурсу"></a>
             </label>
         </li>
     </ul>
@@ -2144,6 +2147,9 @@ UI.GoTo(element);
                 ланцюгових викликів допоміжних публічних методів та властивостей.</p>
             <h5>Властивості та методи <q>класу-будівельника</q></h5>
             <ul>
+                <li>Метод <code>insert(...nodes)</code> вставляє елемент/елементи в повідомлення. Перед вставкою контент
+                    повідомлення буде видалений. Повертає <q>клас-будівельник</q>.
+                </li>
                 <li>Метод <code>remove()</code> приховує повідомлення. Повертає <q>клас-будівельник</q>.</li>
                 <li>Властивість <code>get</code> повертає динамічно створений елемент повідомлення
                     <code>UI.Notice()</code>. Повинен бути викликаний останнім в ланцюгу викликів.
@@ -2568,7 +2574,8 @@ UI.GoTo(element);
             <select class="UI_Select" id="mySelect"
                     data-with-search="true"
                     data-select-placeholder="Шукай та обирай своїх героїв..)"
-                    data-search-placeholder="Наприклад, за запитом &quot;magic&quot; знайдеться &quot;Doctor Strange&quot;" multiple>
+                    data-search-placeholder="Наприклад, за запитом &quot;magic&quot; знайдеться &quot;Doctor Strange&quot;"
+                    multiple>
                 <option data-find-of="water swim" value="aquaman">Aquaman</option>
                 <option data-find-of="gall" value="asterix">Asterix</option>
                 <option data-find-of="fly" value="batman">Batman</option>
