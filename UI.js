@@ -1464,6 +1464,8 @@ const UI = new class {
                     const dropdown = select.uiData.dropdown;
                     const dropdownDistanceToBtm = window.innerHeight - dropdown.getBoundingClientRect().bottom;
                     const dropdownDistanceToTop = dropdown.getBoundingClientRect().top;
+                    const dropdownDistanceToLeft = dropdown.getBoundingClientRect().left;
+                    const dropdownDistanceToRight = dropdown.getBoundingClientRect().right;
                     const dropdownBtmStyle = window.getComputedStyle(dropdown).bottom;
                     const dropdownTopStyle = window.getComputedStyle(dropdown).top;
                     // Розташувати dropdown
@@ -1473,6 +1475,13 @@ const UI = new class {
                     } else if (dropdownDistanceToTop <= 0) {
                         dropdown.style.top = dropdownBtmStyle;
                         dropdown.style.bottom = `auto`;
+                    }
+                    if (dropdownDistanceToLeft <= 0) {
+                        dropdown.style.left = 0;
+                        dropdown.style.right = `auto`;
+                    } else if (dropdownDistanceToRight >= window.innerWidth) {
+                        dropdown.style.right = 0;
+                        dropdown.style.left = `auto`;
                     }
                 }
                 // Опрацювати всю колекцію якщо поле не передано

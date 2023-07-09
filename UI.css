@@ -1693,7 +1693,7 @@ dl.UI_Tabs-activated dd.UI_Tabs-show {
     display: none;
     position: absolute;
     top: calc(100% + 10px);
-    width: 100%;
+    min-width: 100%;
     font-size: var(--UI_form-font-size);
     line-height: var(--UI_form-line-height);
     color: var(--UI_form-font-color);
@@ -1724,6 +1724,7 @@ dl.UI_Tabs-activated dd.UI_Tabs-show {
 }
 
 .UI_Select-dropdown .UI_Select-search-input {
+    min-width: 100%;
     border: none;
     border-bottom: inherit;
     border-radius: 0;
