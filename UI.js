@@ -434,14 +434,18 @@ const UI = new class {
         if (this.#isDisabledNode()) return;
         target = target ?? location.hash;
         if (!target) return;
-        const el = target instanceof HTMLElement ? target : document.querySelector(target);
-        setTimeout(() => {
-            el?.scrollIntoView({
-                behavior: `smooth`,
-                block: `start`,
-            });
-        }, 200);
-        return el;
+        try {
+            const el = target instanceof HTMLElement ? target : document.querySelector(target);
+            setTimeout(() => {
+                el?.scrollIntoView({
+                    behavior: `smooth`,
+                    block: `start`,
+                });
+            }, 200);
+            return el;
+        } catch (e) {
+            // Error
+        }
     }
 
     /**
