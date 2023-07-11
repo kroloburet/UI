@@ -1138,11 +1138,15 @@ a.UI_angle-up::after, .UI_button.UI_angle-up::after {
     flex-wrap: wrap;
     align-items: center;
     justify-content: flex-start;
-    margin: var(--UI_form-gap-top) calc(var(--UI_form-gap-right) * -1) 0 0;
+    margin: var(--UI_form-gap-top) 0 0 0;
 }
 
 .UI_fieldset > * {
     margin: 0 var(--UI_form-gap-right) var(--UI_form-gap-bottom) 0;
+}
+
+.UI_fieldset :last-child {
+    margin-right: 0;
 }
 
 .UI_fieldset :where(
