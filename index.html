@@ -8,13 +8,96 @@
 <html lang="uk">
 <head>
     <meta charset="utf-8">
+    <meta name="author" content="Development by kroloburet@gmail.com">
+    <meta name="description" content="Мінімалістичний UI фреймворк для дизайну, побудови та керування веб-інтерфейсом">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="robots" content="none">
+    <meta name="robots" content="all">
+    <link rel="icon" href="https://kroloburet.github.io/img/myicon_share.jpg">
     <link href="UI.css" rel="stylesheet">
     <script src="UI.js" defer></script>
     <title>UI фреймворк | Kroloburet</title>
+
+
+    <!--
+    ########### Meta Data
+    -->
+
+    <!--- google --->
+    <meta itemprop="name" content="UI фреймворк | Kroloburet">
+    <meta itemprop="description" content="Мінімалістичний UI фреймворк для дизайну, побудови та керування веб-інтерфейсом">
+    <meta itemprop="image" content="https://kroloburet.github.io/img/myicon_share.jpg">
+    <!--- twitter --->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="UI фреймворк | Kroloburet">
+    <meta name="twitter:title" content="UI фреймворк | Kroloburet">
+    <meta name="twitter:description" content="Мінімалістичний UI фреймворк для дизайну, побудови та керування веб-інтерфейсом">
+    <meta name="twitter:image:src" content="https://kroloburet.github.io/img/myicon_share.jpg">
+    <meta name="twitter:domain" content="https://kroloburet.github.io/UI">
+    <!--- facebook --->
+    <meta property="og:title" content="UI фреймворк | Kroloburet">
+    <meta property="og:description" content="Мінімалістичний UI фреймворк для дизайну, побудови та керування веб-інтерфейсом">
+    <meta property="og:image" content="https://kroloburet.github.io/img/myicon_share.jpg">
+    <meta property="og:image:width" content="600">
+    <meta property="og:image:height" content="600">
+    <meta property="og:url" content="https://kroloburet.github.io/UI">
+    <meta property="og:site_name" content="UI фреймворк | Kroloburet">
+    <!--- інші --->
+    <link rel="image_src" href="https://kroloburet.github.io/img/myicon_share.jpg">
+    <!---  розмітка контактів --->
+    <script type="application/ld+json">
+        {
+            "@context": "http://schema.org",
+            "@type": "Person",
+            "email": "mailto:kroloburet@gmail.com",
+            "image": "https://kroloburet.github.io/img/myicon_share.jpg",
+            "jobTitle": "Web development and design",
+            "name": "Kroloburet",
+            "sameAs": "https://kroloburet.github.io"
+        }
+    </script>
+
     <style>
+        /*--- Page Preload ---*/
+        #pagePreloaderBox {
+            display: block;
+            position: fixed;
+            z-index: 9999999;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+        }
+
+        #pagePreloader {
+            box-sizing: border-box;
+            margin: -50px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            border: 7px solid rgba(180, 180, 180, .2);
+            border-left-color: var(--UI_base-color);
+            transform: translateZ(0);
+            animation: preloader 1s infinite linear;
+        }
+
+        #pagePreloader, #pagePreloader::after {
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+        }
+
+        @keyframes preloader {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /*--- Page Styles ---*/
         :root {
             --aside-bg-color: var(--UI_base-body-bg-color);
             --aside-border-color: #999999;
@@ -208,8 +291,16 @@
             }
         }
     </style>
+    <script>
+        window.onload = () => document.getElementById('pagePreloaderBox').style.display = 'none';
+    </script>
 </head>
 <body class="UI_scrollbar">
+
+<div id="pagePreloaderBox">
+    <div id="pagePreloader"></div>
+</div>
+
 <span class="page-control">
     <a class="fa-solid fa-bars" data-toggle="asideMenu" title="Зміст сторінки"></a>
     <a class="fa-solid fa-circle-half-stroke" onclick="toggleTheme()" title="Змінити тему сторінки"></a>
