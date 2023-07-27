@@ -1806,6 +1806,24 @@ Form component with &quot;UI_contour UI_size-s UI_inline-form&quot;
                     останнім в ланцюгу викликів.
                 </li>
             </ul>
+            <h4>Події</h4>
+            <code>UI.Tabs()</code> генерує перераховані нижче події. Підписуватись на ці події слід встановлюючи опрацьовувач на елемент <code>dl</code> який активується.
+            <ul>
+                <li><code>UI.activated</code> компонент активовано.</li>
+                <li><code>UI.unactivated</code> компонент деактивовано.</li>
+                <li><code>UI.beforeRemove</code> компонент буде видалено та деактивовано.</li>
+                <li><code>UI.removed</code> компонент видалено та деактивовано.</li>
+                <li><code>UI.beforeShow</code> вкладку буде відкрито.
+                    <ol>
+                        <li><code>event.detail.tabIndex</code> (ціле число) індекс вкладки.</li>
+                    </ol>
+                </li>
+                <li><code>UI.showed</code> вкладку відкрито.
+                    <ol>
+                        <li><code>event.detail.tabIndex</code> (ціле число) індекс вкладки.</li>
+                    </ol>
+                </li>
+            </ul>
         </dd>
     </dl>
 
@@ -1885,6 +1903,14 @@ button.addEventListener(`click`, () =&gt; UI.Toggle(myElem));
                 <li><code>display</code> (рядок, опціонально, за замовчуванням "block"). Значення CSS-властивості
                     "display" для видимого елемента. Прихований елемент отримує <code>display: none</code></li>
             </ol>
+            <h4>Події</h4>
+            <code>UI.Toggle()</code> генерує перераховані нижче події. Підписуватись на ці події слід встановлюючи опрацьовувач на елемент <code>target</code>.
+            <ul>
+                <li><code>UI.beforeShow</code> елемент буде показано.</li>
+                <li><code>UI.showed</code> елемент показано.</li>
+                <li><code>UI.beforeHide</code> елемент буде приховано.</li>
+                <li><code>UI.hidden</code> елемент приховано.</li>
+            </ul>
         </dd>
     </dl>
 
@@ -2147,6 +2173,14 @@ UI.GoTo(element);
                     <code>UI.Hint()</code>. Повинен бути викликаний останнім в ланцюгу викликів.
                 </li>
             </ul>
+            <h4>Події</h4>
+            <code>UI.Hint()</code> генерує перераховані нижче події. Підписуватись на ці події слід встановлюючи опрацьовувач на елемент <code>el</code>.
+            <ul>
+                <li><code>UI.beforeShow</code> підказку буде показано.</li>
+                <li><code>UI.showed</code> підказку показано.</li>
+                <li><code>UI.beforeHide</code> підказку буде приховано.</li>
+                <li><code>UI.hidden</code> підказку приховано.</li>
+            </ul>
         </dd>
     </dl>
 
@@ -2246,6 +2280,16 @@ UI.GoTo(element);
                     <code>UI.Notice()</code>. Повинен бути викликаний останнім в ланцюгу викликів.
                 </li>
             </ul>
+            <h4>Події</h4>
+            <code>UI.Notice()</code> генерує перераховані нижче події. Підписуватись на ці події слід встановлюючи опрацьовувач на елемент повідомлення <code>UI.Notice().get.addEventListener(...)</code>.
+            <ul>
+                <li><code>UI.created</code> повідомлення створено.</li>
+                <li><code>UI.activated</code> повідомлення активовано (показано).</li>
+                <li><code>UI.beforeInsert</code> в повідомлення буде вставлено елемент.</li>
+                <li><code>UI.inserted</code> в повідомлення вставлено елемент.</li>
+                <li><code>UI.beforeRemove</code> повідомлення буде видалено.</li>
+                <li><code>UI.removed</code> повідомлення видалено.</li>
+            </ul>
         </dd>
     </dl>
 
@@ -2335,6 +2379,16 @@ UI.GoTo(element);
                     <code>UI.Popup()</code>. Повинен бути викликаним останнім в ланцюгу викликів.
                 </li>
             </ul>
+            <h4>Події</h4>
+            <code>UI.Popup()</code> генерує перераховані нижче події. Підписуватись на ці події слід встановлюючи опрацьовувач на елемент вікна <code>UI.Popup([id]).get[index].addEventListener(...)</code>.
+            <ul>
+                <li><code>UI.activated</code> вікно активовано.</li>
+                <li><code>UI.unactivated</code> вікно деактивовано.</li>
+                <li><code>UI.beforeShow</code> вікно буде показано.</li>
+                <li><code>UI.showed</code> вікно показано.</li>
+                <li><code>UI.beforeHide</code> вікно буде приховано.</li>
+                <li><code>UI.hidden</code> вікно приховано.</li>
+            </ul>
         </dd>
     </dl>
 
@@ -2418,6 +2472,19 @@ UI.GoTo(element);
                     <code>UI.Lim()</code>. Повинен бути викликаний останнім в ланцюгу викликів.
                 </li>
             </ul>
+            <h4>Події</h4>
+            <code>UI.Lim()</code> генерує перераховані нижче події. Підписуватись на ці події слід встановлюючи опрацьовувач на елемент <code>field</code>.
+            <ul>
+                <li><code>UI.created</code> лічильник створено.</li>
+                <li><code>UI.beforeShow</code> лічильник буде показано.</li>
+                <li><code>UI.showed</code> лічильник показано.</li>
+                <li><code>UI.beforeHide</code> лічильник буде приховано.</li>
+                <li><code>UI.hidden</code> лічильник приховано.</li>
+                <li><code>UI.beforeCut</code> рядок в полі буде обрізано.</li>
+                <li><code>UI.cut</code> рядок в полі обрізано.</li>
+                <li><code>UI.beforeRemove</code> лічильник буде видалено.</li>
+                <li><code>UI.removed</code> лічильник видалено.</li>
+            </ul>
         </dd>
     </dl>
 
@@ -2499,6 +2566,16 @@ UI.GoTo(element);
                     останнім в ланцюгу викликів.
                 </li>
             </ul>
+            <h4>Події</h4>
+            <code>UI.InputFile()</code> генерує перераховані нижче події. Підписуватись на ці події слід встановлюючи опрацьовувач на <code>&lt;input type=&quot;file&quot;&gt;</code> на якому активовано компонент.
+            <ul>
+                <li><code>UI.activated</code> компонент активовано.</li>
+                <li><code>UI.unactivated</code> компонент деактивовано.</li>
+                <li><code>UI.beforeRender</code> обрані файли будуть показані у компоненті.</li>
+                <li><code>UI.rendered</code> обрані файли показані у компоненті.</li>
+                <li><code>UI.beforeRemove</code> компонент буде видалено та деактивовано.</li>
+                <li><code>UI.removed</code> компонент видалено та деактивовано.</li>
+            </ul>
         </dd>
     </dl>
 
@@ -2557,6 +2634,16 @@ UI.GoTo(element);
                 <li>Властивість <code>get</code> повертає масив активованих елементів колекції. Повинен бути викликаний
                     останнім в ланцюгу викликів.
                 </li>
+            </ul>
+            <h4>Події</h4>
+            <code>UI.InputRange()</code> генерує перераховані нижче події. Підписуватись на ці події слід встановлюючи опрацьовувач на <code>&lt;input type=&quot;range&quot;&gt;</code> на якому активовано компонент.
+            <ul>
+                <li><code>UI.activated</code> компонент активовано.</li>
+                <li><code>UI.unactivated</code> компонент деактивовано.</li>
+                <li><code>UI.beforeRender</code> обране значення буде показано у компоненті.</li>
+                <li><code>UI.rendered</code> обране значення буде показано у компоненті.</li>
+                <li><code>UI.beforeRemove</code> компонент буде видалено та деактивовано.</li>
+                <li><code>UI.removed</code> компонент видалено та деактивовано.</li>
             </ul>
         </dd>
     </dl>
@@ -2622,7 +2709,7 @@ UI.GoTo(element);
                 </li>
             </ol>
             <h4><q>клас-будівельник</q></h4>
-            <p><code>UI.InputFile()</code> повертає екземпляр безіменного <q>класу-будівельника</q> для подальших
+            <p><code>UI.InputNumber()</code> повертає екземпляр безіменного <q>класу-будівельника</q> для подальших
                 ланцюгових викликів допоміжних публічних методів та властивостей.</p>
             <h5>Властивості та методи <q>класу-будівельника</q></h5>
             <ul>
@@ -2646,6 +2733,20 @@ UI.GoTo(element);
                     останнім в ланцюгу викликів.
                 </li>
             </ul>
+            <h4>Події</h4>
+            <code>UI.InputNumber()</code> генерує перераховані нижче події. Підписуватись на ці події слід встановлюючи опрацьовувач на <code>&lt;input type=&quot;number&quot;&gt;</code> на якому активовано компонент.
+            <ul>
+                <li><code>UI.activated</code> компонент активовано.</li>
+                <li><code>UI.unactivated</code> компонент деактивовано.</li>
+                <li><code>UI.beforeSetVal</code> значення буде встановлено.</li>
+                <li><code>UI.setVal</code> значення встановлено.</li>
+                <li><code>UI.beforeInc</code> значення на крок меньше буде встановлено.</li>
+                <li><code>UI.inc</code> значення на крок меньше встановлено.</li>
+                <li><code>UI.beforeDec</code> значення на крок більше буде встановлено.</li>
+                <li><code>UI.dec</code> значення на крок більше встановлено.</li>
+                <li><code>UI.beforeRemove</code> компонент буде видалено та деактивовано.</li>
+                <li><code>UI.removed</code> компонент видалено та деактивовано.</li>
+            </ul>
         </dd>
     </dl>
 
@@ -2654,7 +2755,7 @@ UI.GoTo(element);
     -->
 
     <h3 id="select">Список, що випадає</h3>
-    <p>Метод <code>UI.Select()</code> будує <a #="#formComponent">компонент форми</a> зі зручним
+    <p>Метод <code>UI.Select()</code> будує <a data-go-to="#formComponent">компонент форми</a> зі зручним
         інтерфейсом навколо звичайного поля <code>&lt;select&gt;...&lt;/select&gt;</code> та забезпечує управління
         полем через цей компонент.</p>
 
@@ -2883,6 +2984,34 @@ UI.GoTo(element);
                     останнім в ланцюгу викликів.
                 </li>
             </ul>
+            <h4>Події</h4>
+            <code>UI.Select()</code> генерує перераховані нижче події. Підписуватись на ці події слід встановлюючи опрацьовувач на <code>&lt;select&gt;</code> на якому активовано компонент.
+            <ul>
+                <li><code>UI.activated</code> компонент активовано.</li>
+                <li><code>UI.unactivated</code> компонент деактивовано.</li>
+                <li><code>UI.beforeDropdownShow</code> dropdown буде показано.</li>
+                <li><code>UI.dropdownShowed</code> dropdown показано.</li>
+                <li><code>UI.beforeDropdownHide</code> dropdown буде приховано.</li>
+                <li><code>UI.dropdownHidden</code> dropdown приховано.</li>
+                <li><code>UI.beforeSearch</code> буде здійснено пошук.</li>
+                <li><code>UI.searched</code> пошук здійснено.</li>
+                <li><code>UI.beforeSelected</code> значення буде встановлено.
+                    <ol>
+                        <li><code>event.detail.indexes</code> (масив) масив індексів опцій в полі.</li>
+                        <li><code>event.detail.selected</code> (булево) true або false для значення атрибуту <q>selected</q>.</li>
+                    </ol>
+                </li>
+                <li><code>UI.selected</code> значення встановлено.
+                    <ol>
+                        <li><code>event.detail.indexes</code> (масив) масив індексів опцій в полі.</li>
+                        <li><code>event.detail.selected</code> (булево) true або false для значення атрибуту <q>selected</q>.</li>
+                    </ol>
+                </li>
+                <li><code>UI.beforeRender</code> компонент буде синхронізовано з полем.</li>
+                <li><code>UI.rendered</code> компонент синхронізовано з полем.</li>
+                <li><code>UI.beforeRemove</code> компонент буде видалено та деактивовано.</li>
+                <li><code>UI.removed</code> компонент видалено та деактивовано.</li>
+            </ul>
         </dd>
     </dl>
 
@@ -3006,12 +3135,35 @@ UI.GoTo(element);
                         </li>
                     </ol>
                 </li>
+                <li>Метод <code>toggleShow([force, ul])</code> Перемикає видимість всього меню чи подменю на малих пристроях. Повертає
+                    <q>клас-будівельник</q>.
+                    <ol>
+                        <li>Аргумент <code>force</code> (булево, опціонально, за замовчуванням null). Значення true показує меню або подменю, значення false приховує меню або подменю.
+                        </li>
+                        <li>Аргумент <code>ul</code> (HTMLElement, опціонально, за замовчуванням null). Елемент з
+                            колекції або <code>ul</code> подменю, який потрібно опрацювати. Якщо аргумент не передано, будуть опрацьовані всі
+                            елементи колекції.
+                        </li>
+                    </ol>
+                </li>
                 <li>Метод <code>remove()</code> деактивує всі активовані елементи колекції та повертає звичайний вигляд
                     <code>ul</code>. Повертає <q>клас-будівельник</q>.
                 </li>
                 <li>Властивість <code>get</code> повертає масив активованих елементів колекції. Повинна бути викликана
                     останнім в ланцюгу викликів.
                 </li>
+            </ul>
+            <h4>Події</h4>
+            <code>UI.Menu()</code> генерує перераховані нижче події. Підписуватись на ці події слід встановлюючи опрацьовувач на <code>&lt;ul&gt;</code> на якому активовано компонент.
+            <ul>
+                <li><code>UI.activated</code> компонент активовано.</li>
+                <li><code>UI.unactivated</code> компонент деактивовано.</li>
+                <li><code>UI.beforeShow</code> все меню чи подменю буде показано.</li>
+                <li><code>UI.showed</code> все меню чи подменю показано.</li>
+                <li><code>UI.beforeHide</code> все меню чи подменю буде приховано.</li>
+                <li><code>UI.hidden</code> все меню чи подменю приховано.</li>
+                <li><code>UI.beforeRemove</code> компонент буде видалено та деактивовано.</li>
+                <li><code>UI.removed</code> компонент видалено та деактивовано.</li>
             </ul>
         </dd>
     </dl>

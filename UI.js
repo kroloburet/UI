@@ -60,6 +60,9 @@ const UI = new class {
 
     /**
      * Встановити мітку активації метода UI на елементі
+     * та генерувати подію
+     *
+     * @event UI.activated
      *
      * @param {HTMLElement} el Елемент на якому встановлюється мітка
      * @param {string} selfName Ім'я метода
@@ -67,11 +70,15 @@ const UI = new class {
      */
     #markActivate(el, selfName) {
         el.classList.add(`UI_${selfName}-activated`);
+        el.dispatchEvent(new CustomEvent(`UI.activated`));
     }
 
     /**
      * Видалити мітку активації метода UI на елементі
-     * разом з динамічно створеними CSS-класами
+     * разом з динамічно створеними CSS-класами,
+     * генерувати подію
+     *
+     * @event UI.unactivated
      *
      * @param {HTMLElement} el Елемент в якому видалятиметься мітка
      * @param {string} selfName Ім'я метода
@@ -84,6 +91,7 @@ const UI = new class {
             if (!child.className) child.removeAttribute(`class`);
         });
         el.classList.remove(`UI_${selfName}-activated`);
+        el.dispatchEvent(new CustomEvent(`UI.unactivated`));
     }
 
     /**
@@ -258,6 +266,13 @@ const UI = new class {
     /**
      * Інтерфейс перемикання контенту (таби)
      *
+     * @event UI.activated
+     * @event UI.unactivated
+     * @event UI.beforeRemove
+     * @event UI.removed
+     * @event UI.beforeShow event.detail = {tabIndex: int}
+     * @event UI.showed event.detail = {tabIndex: int}
+     *
      * @param {Object} userConf Конфігурація користувача
      * @param {string} [userConf.selector = `UI_Tabs`] Селектор dl елемента/тів для опрацювання
      * @param {number} [userConf.showTabIndex = 0] Індекс вкладки, яку потрібно відкрити за замовчуванням
@@ -301,7 +316,7 @@ const UI = new class {
              * @private
              */
             #activate() {
-                // Отримати з uri хешу данні про id табів та індекси вкладок які потрібно відкрити
+                // Отримати з uri хешу дані про id табів та індекси вкладок які потрібно відкрити
                 // Приклад: example.com#tabsId1=2&tabsId2=3
                 const smartSowTabs = {};
                 location.hash.replace(/^#/, ``).split(`&`).forEach(item => {
@@ -358,12 +373,14 @@ const UI = new class {
                             tabs.uiData.ddList[index].classList.remove(css.show);
                         }
                     });
+                    tabs.dispatchEvent(new CustomEvent(`UI.beforeShow`, {detail: {tabIndex}}));
                     // Перевірити, чи існує вкладка за індексом та відкрити
                     tabIndex = tabs.uiData.dtList[tabIndex]
                         ? tabIndex
                         : (tabs.uiData.dtList[tabs.uiData.conf.showTabIndex] ? tabs.uiData.conf.showTabIndex : 0);
                     tabs.uiData.dtList[tabIndex].classList.add(css.show);
                     tabs.uiData.ddList[tabIndex].classList.add(css.show);
+                    tabs.dispatchEvent(new CustomEvent(`UI.sowed`, {detail: {tabIndex}}));
                 };
                 // Опрацювати всю колекцію якщо компонент не передано
                 !(tabs instanceof HTMLElement) ? collection.forEach(worker) : worker(tabs);
@@ -377,6 +394,7 @@ const UI = new class {
              */
             remove() {
                 collection.filter(el => UI.#isActivate(el, selfName)).forEach(tabs => {
+                    tabs.dispatchEvent(new CustomEvent(`UI.beforeRemove`));
                     // Видалити прив'язку подій та повернути HTML-структуру списку визначень
                     tabs.uiData.dtList.forEach((dt, index) => {
                         dt.onclick = null;
@@ -385,6 +403,7 @@ const UI = new class {
                     tabs.uiData.controlBox.remove();
                     UI.#unmarkActivate(tabs, selfName);
                     delete tabs.uiData;
+                    tabs.dispatchEvent(new CustomEvent(`UI.removed`));
                 });
                 return this;
             }
@@ -403,6 +422,11 @@ const UI = new class {
     /**
      * Перемикання відображення елемента
      *
+     * @event UI.beforeShow
+     * @event UI.showed
+     * @event UI.beforeHide
+     * @event UI.hidden
+     *
      * @param {string|HTMLElement} target Елемент який треба перемикати
      * @param {string} [display = `block`] Значення CSS-властивості display видимого елемента
      * @return {undefined|HTMLElement} Елемент
@@ -415,10 +439,14 @@ const UI = new class {
         // Обробка відображення/приховування
         const visible = el.style.display || getComputedStyle(el, null).getPropertyValue('display');
         if (visible === `none` || el.hidden) {
+            el.dispatchEvent(new CustomEvent(`UI.beforeShow`));
             el.style.display = display;
             el.hidden = false;
+            el.dispatchEvent(new CustomEvent(`UI.showed`));
         } else {
+            el.dispatchEvent(new CustomEvent(`UI.beforeHide`));
             el.style.display = `none`;
+            el.dispatchEvent(new CustomEvent(`UI.hidden`));
         }
         return el;
     }
@@ -450,6 +478,11 @@ const UI = new class {
 
     /**
      * Підказка що випливає
+     *
+     * @event UI.beforeShow
+     * @event UI.showed
+     * @event UI.beforeHide
+     * @event UI.hidden
      *
      * @param {HTMLElement} el Елемент на якому буде викликано метод
      * @param {string} [hideEvent = `mouseout`] Подія, що приховує підказку
@@ -527,7 +560,9 @@ const UI = new class {
              * @returns {this}
              */
             show() {
+                el.dispatchEvent(new CustomEvent(`UI.beforeShow`));
                 el.uiData.hint.classList.add(css.show);
+                el.dispatchEvent(new CustomEvent(`UI.showed`));
                 return this;
             }
 
@@ -537,7 +572,9 @@ const UI = new class {
              * @returns {this}
              */
             hide() {
+                el.dispatchEvent(new CustomEvent(`UI.beforeHide`));
                 el.uiData.hint.classList.remove(css.show);
+                el.dispatchEvent(new CustomEvent(`UI.hidden`));
                 return this;
             }
 
@@ -564,6 +601,13 @@ const UI = new class {
 
     /**
      * Повідомлення
+     *
+     * @event UI.created
+     * @event UI.activated
+     * @event UI.beforeInsert
+     * @event UI.inserted
+     * @event UI.beforeRemove
+     * @event UI.removed
      *
      * @param {Object} userConf Конфігурація користувача
      * @param {string} [userConf.message = `processing...`] Текст/HTML повідомлення
@@ -616,6 +660,7 @@ const UI = new class {
                     notice.uiData.componentBox.prepend(notice);
                     document.body.classList.add(UI.css.bodyHideOverflow);
                     document.body.append(notice.uiData.componentBox);
+                    notice.dispatchEvent(new CustomEvent(`UI.created`));
                 }
                 // Повідомлення створено
                 notice.classList.add(`UI_${selfName}`, conf.className);
@@ -626,6 +671,7 @@ const UI = new class {
                         if (typeof conf.callback === `function`) await conf.callback();
                     }, conf.delay)
                 }
+                notice.dispatchEvent(new CustomEvent(`UI.activated`));
                 return this;
             }
 
@@ -636,8 +682,10 @@ const UI = new class {
              */
             insert(...nodes) {
                 if (!notice) return this;
+                notice.dispatchEvent(new CustomEvent(`UI.beforeInsert`));
                 notice.innerHTML = null;
                 notice.append(...nodes);
+                notice.dispatchEvent(new CustomEvent(`UI.inserted`));
                 return this;
             }
 
@@ -648,9 +696,11 @@ const UI = new class {
              */
             remove() {
                 if (!notice) return this;
+                notice.dispatchEvent(new CustomEvent(`UI.beforeRemove`));
                 notice.uiData.componentBox.remove();
                 document.body.classList.remove(UI.css.bodyHideOverflow);
                 delete notice.uiData;
+                notice.dispatchEvent(new CustomEvent(`UI.removed`));
                 return this;
             }
 
@@ -667,6 +717,13 @@ const UI = new class {
 
     /**
      * Popup вікно
+     *
+     * @event UI.activated
+     * @event UI.unactivated
+     * @event UI.beforeShow
+     * @event UI.showed
+     * @event UI.beforeHide
+     * @event UI.hidden
      *
      * @param {string|null} [id = null] Ідентифікатор елемента або нічого
      * @return {Object} Клас-будівельник
@@ -732,8 +789,10 @@ const UI = new class {
                 const pop = collection.filter(el => UI.#isActivate(el, selfName) && el.id === id)[0];
                 if (!pop)
                     throw ReferenceError(`The transmitted argument "id" is not correct or element not found`);
+                pop.dispatchEvent(new CustomEvent(`UI.beforeShow`));
                 pop.uiData.componentBox.classList.add(css.show);
                 document.body.classList.add(UI.css.bodyHideOverflow);
+                pop.dispatchEvent(new CustomEvent(`UI.showed`));
                 return this;
             }
 
@@ -743,8 +802,11 @@ const UI = new class {
              * @returns {this}
              */
             hide() {
-                collection.filter(el => UI.#isActivate(el, selfName))
-                    .forEach(pop => pop.uiData.componentBox.classList.remove(css.show));
+                collection.filter(el => UI.#isActivate(el, selfName)).forEach(pop => {
+                    pop.dispatchEvent(new CustomEvent(`UI.beforeHide`));
+                    pop.uiData.componentBox.classList.remove(css.show);
+                    pop.dispatchEvent(new CustomEvent(`UI.hidden`));
+                });
                 document.body.classList.remove(UI.css.bodyHideOverflow);
                 return this;
             }
@@ -762,6 +824,16 @@ const UI = new class {
 
     /**
      * Обмеження радка вводу
+     *
+     * @event UI.created
+     * @event UI.beforeShow
+     * @event UI.showed
+     * @event UI.beforeHide
+     * @event UI.hidden
+     * @event UI.beforeCut
+     * @event UI.cut
+     * @event UI.beforeRemove
+     * @event UI.removed
      *
      * @param {HTMLElement} field Поле що опрацьовується
      * @param {number|string} [limit = 50] Символів дозволено
@@ -802,6 +874,7 @@ const UI = new class {
                     field.addEventListener('blur', () => {
                         this.cut().hide();
                     });
+                    field.dispatchEvent(new CustomEvent(`UI.created`));
                 }
                 // Опрацювати поле
                 return this.run();
@@ -829,8 +902,10 @@ const UI = new class {
              * @returns {this}
              */
             show() {
+                field.dispatchEvent(new CustomEvent(`UI.beforeShow`));
                 field.after(field.uiData.counter);
                 field.focus();
+                field.dispatchEvent(new CustomEvent(`UI.showed`));
                 return this;
             }
 
@@ -840,7 +915,9 @@ const UI = new class {
              * @returns {this}
              */
             hide() {
+                field.dispatchEvent(new CustomEvent(`UI.beforeHide`));
                 field.uiData.counter.remove();
+                field.dispatchEvent(new CustomEvent(`UI.hidden`));
                 return this;
             }
 
@@ -850,8 +927,10 @@ const UI = new class {
              * @returns {this}
              */
             cut() {
+                field.dispatchEvent(new CustomEvent(`UI.beforeCut`));
                 field.value = field.value.substring(0, field.uiData.limit);
                 field.uiData.counter.textContent = `0`;
+                field.dispatchEvent(new CustomEvent(`UI.cut`));
                 return this;
             }
 
@@ -861,8 +940,10 @@ const UI = new class {
              * @returns {this}
              */
             remove() {
+                field.dispatchEvent(new CustomEvent(`UI.beforeRemove`));
                 UI.#formComponent.unwrap(field);
                 delete field.uiData;
+                field.dispatchEvent(new CustomEvent(`UI.removed`));
                 return this;
             }
 
@@ -882,6 +963,13 @@ const UI = new class {
      * Метод будує компонент навколо полів
      * <input type="file"> з collection та забезпечує
      * управління полями через їх компоненти.
+     *
+     * @event UI.activated
+     * @event UI.unactivated
+     * @event UI.beforeRender
+     * @event UI.rendered
+     * @event UI.beforeRemove
+     * @event UI.removed
      *
      * @param {Object} userConf Конфігурація користувача
      * @param {string} [userConf.selector = `UI_InputFile`] Селектор input type="file" елемента/тів для опрацювання
@@ -974,6 +1062,7 @@ const UI = new class {
              */
             render(input = null) {
                 const worker = input => {
+                    input.dispatchEvent(new CustomEvent(`UI.beforeRender`));
                     input.uiData.controlBox.innerHTML = ``;
                     input.uiData.componentBox.removeAttribute(`title`);
                     let files = input.files;
@@ -995,6 +1084,7 @@ const UI = new class {
                     }
                     input.uiData.controlBox.classList.toggle(UI.css.requiredForm, input.required);
                     input.uiData.componentBox.classList.toggle(UI.css.disabledForm, input.disabled);
+                    input.dispatchEvent(new CustomEvent(`UI.rendered`));
                 };
                 // Опрацювати всю колекцію якщо поле не передано
                 !(input instanceof HTMLElement) ? collection.forEach(worker) : worker(input);
@@ -1008,6 +1098,7 @@ const UI = new class {
              */
             remove() {
                 collection.filter(el => UI.#isActivate(el, selfName)).forEach(input => {
+                    input.dispatchEvent(new CustomEvent(`UI.beforeRemove`));
                     // Повернути елементи в стан до активації
                     input.onchange = null;
                     input.oninvalid = null;
@@ -1016,6 +1107,7 @@ const UI = new class {
                     UI.#unmarkActivate(input, selfName);
                     UI.#formComponent.unwrap(input);
                     delete input.uiData;
+                    input.dispatchEvent(new CustomEvent(`UI.removed`));
                 });
                 return this;
             }
@@ -1036,6 +1128,13 @@ const UI = new class {
      * Метод будує компонент навколо полів
      * <input type="range"> з collection та забезпечує
      * управління полями через їх компоненти.
+     *
+     * @event UI.activated
+     * @event UI.unactivated
+     * @event UI.beforeRender
+     * @event UI.rendered
+     * @event UI.beforeRemove
+     * @event UI.removed
      *
      * @param {Object} userConf Конфігурація користувача
      * @param {string} [userConf.selector = `UI_InputRange`] Селектор input type="range" елемента/тів для опрацювання
@@ -1092,7 +1191,11 @@ const UI = new class {
                         input.uiData.componentBox.classList.add(UI.css.disabledForm);
                         input.value = parseFloat(input.min) || 0;
                     } else {
-                        input.oninput = () => input.uiData.infobox.innerText = input.value;
+                        input.oninput = () => {
+                            input.dispatchEvent(new CustomEvent(`UI.beforeRender`));
+                            input.uiData.infobox.innerText = input.value;
+                            input.dispatchEvent(new CustomEvent(`UI.rendered`));
+                        }
                     }
                     if (input.form) {
                         input.uiData.resetHandler = () =>
@@ -1112,12 +1215,14 @@ const UI = new class {
              */
             remove() {
                 collection.filter(el => UI.#isActivate(el, selfName)).forEach(input => {
+                    input.dispatchEvent(new CustomEvent(`UI.beforeRemove`));
                     // Повернути елементи в стан до активації
                     input.oninput = null;
                     if (input.form) input.form.removeEventListener(`reset`, input.uiData.resetHandler)
                     UI.#unmarkActivate(input, selfName);
                     UI.#formComponent.unwrap(input);
                     delete input.uiData;
+                    input.dispatchEvent(new CustomEvent(`UI.removed`));
                 });
                 return this;
             }
@@ -1138,6 +1243,17 @@ const UI = new class {
      * Метод будує компонент навколо полів
      * <input type="number"> з collection та забезпечує
      * управління полями через їх компоненти.
+     *
+     * @event UI.activated
+     * @event UI.unactivated
+     * @event UI.beforeSetVal
+     * @event UI.setVal
+     * @event UI.beforeInc
+     * @event UI.inc
+     * @event UI.beforeDec
+     * @event UI.dec
+     * @event UI.beforeRemove
+     * @event UI.removed
      *
      * @param {Object} userConf Конфігурація користувача
      * @param {string} [userConf.selector = `UI_InputNumber`] Селектор input type="number" елемента/тів для опрацювання
@@ -1194,7 +1310,6 @@ const UI = new class {
                     input.uiData.componentBox = UI.#formComponent.wrap(input);
                     input.uiData.incBtn = document.createElement(`span`);
                     input.uiData.decBtn = document.createElement(`span`);
-                    input.uiData.changeEvent = new Event(`change`);
                     input.uiData.hasDisabled = (input.disabled || input.readOnly);
                     input.uiData.step = () => parseFloat(input.step) || 1;
                     input.uiData.max = () => parseFloat(input.max);
@@ -1256,17 +1371,23 @@ const UI = new class {
                     if (input.uiData.hasDisabled) return;
                     input.uiData.initVal();
                     input.uiData.setValid();
+                    input.dispatchEvent(new CustomEvent(`UI.beforeSetVal`));
                     if (action === `inc`) {
+                        input.dispatchEvent(new CustomEvent(`UI.beforeInc`));
                         let max = input.uiData.max();
                         let up = input.uiData.up();
                         input.value = isNaN(max) ? up : max > up ? up : max;
+                        input.dispatchEvent(new CustomEvent(`UI.inc`));
                     } else if (action === `dec`) {
+                        input.dispatchEvent(new CustomEvent(`UI.beforeDec`));
                         let min = input.uiData.min();
                         let down = input.uiData.down();
                         input.value = isNaN(min) ? down : min < down ? down : min;
+                        input.dispatchEvent(new CustomEvent(`UI.dec`));
                     }
-                    input.dispatchEvent(input.uiData.changeEvent);
+                    input.dispatchEvent(new Event(`change`));
                     input.focus();
+                    input.dispatchEvent(new CustomEvent(`UI.setVal`));
                 };
                 // Опрацювати всю колекцію якщо поле не передано
                 !(input instanceof HTMLElement) ? collection.forEach(worker) : worker(input);
@@ -1280,11 +1401,13 @@ const UI = new class {
              */
             remove() {
                 collection.filter(el => UI.#isActivate(el, selfName)).forEach(input => {
+                    input.dispatchEvent(new CustomEvent(`UI.beforeRemove`));
                     // Повернути елементи в стан до активації
                     input.oninput = null;
                     UI.#unmarkActivate(input, selfName);
                     UI.#formComponent.unwrap(input);
                     delete input.uiData;
+                    input.dispatchEvent(new CustomEvent(`UI.removed`));
                 });
                 return this;
             }
@@ -1305,6 +1428,21 @@ const UI = new class {
      * Метод будує компонент навколо полів
      * <select> з collection та забезпечує
      * управління полями через їх компоненти.
+     *
+     * @event UI.activated
+     * @event UI.unactivated
+     * @event UI.beforeDropdownShow
+     * @event UI.dropdownShowed
+     * @event UI.beforeDropdownHide
+     * @event UI.dropdownHidden
+     * @event UI.beforeSearch
+     * @event UI.searched
+     * @event UI.beforeSelected event.detail = {indexes: array, selected: boolean}
+     * @event UI.selected event.detail = {indexes: array, selected: boolean}
+     * @event UI.beforeRender
+     * @event UI.rendered
+     * @event UI.beforeRemove
+     * @event UI.removed
      *
      * @param {Object} userConf Конфігурація користувача
      * @param {string} [userConf.selector = `UI_Select`] Селектор select елемента/тів для опрацювання
@@ -1381,7 +1519,6 @@ const UI = new class {
                     select.uiData.dropdown = document.createElement(`div`);
                     select.uiData.dropdownList = document.createElement(`div`);
                     select.uiData.dropdownShowBtn = document.createElement(`span`);
-                    select.uiData.changeEvent = new Event(`change`);
                     select.uiData.hasDisabled = select.disabled;
                     select.uiData.hasMultiple = select.multiple;
                     select.uiData.hasSearch = select.uiData.conf.withSearch;
@@ -1502,6 +1639,7 @@ const UI = new class {
             showDropdown(select = null) {
                 const worker = select => {
                     if (select.uiData.hasDisabled || !select.uiData.dropdownItems.length) return;
+                    select.dispatchEvent(new CustomEvent(`UI.beforeDropdownShow`));
                     select.after(select.uiData.overlay);
                     select.uiData.controlBox.classList.contains(UI.css.invalidForm)
                         ? select.uiData.controlBox.classList.replace(UI.css.invalidForm, UI.css.focusForm)
@@ -1509,6 +1647,7 @@ const UI = new class {
                     select.uiData.dropdown.classList.add(css.dropdownShow);
                     select.uiData.dropdownShowBtn.innerHTML = select.uiData.conf.arrowIconUp;
                     this.#setDropdownPosition(select);
+                    select.dispatchEvent(new CustomEvent(`UI.dropdownShowed`));
                 }
                 this.hideDropdown();
                 // Опрацювати всю колекцію якщо поле не передано
@@ -1525,11 +1664,13 @@ const UI = new class {
             hideDropdown(select = null) {
                 const worker = select => {
                     if (!select.uiData || select.uiData.hasDisabled) return;
+                    select.dispatchEvent(new CustomEvent(`UI.beforeDropdownHide`));
                     select.uiData.overlay.remove();
                     select.uiData.componentBox.style.zIndex = `auto`;
                     select.uiData.dropdown.classList.remove(css.dropdownShow);
                     select.uiData.controlBox.classList.remove(UI.css.focusForm);
                     select.uiData.dropdownShowBtn.innerHTML = select.uiData.conf.arrowIconDown;
+                    select.dispatchEvent(new CustomEvent(`UI.dropdownHidden`));
                 };
                 // Опрацювати всю колекцію якщо поле не передано
                 !(select instanceof HTMLElement) ? collection.forEach(worker) : worker(select);
@@ -1552,6 +1693,7 @@ const UI = new class {
                         !select.uiData.hasSearch ||
                         !select.uiData.dropdownItems.length
                     ) return;
+                    select.dispatchEvent(new CustomEvent(`UI.beforeSearch`));
                     const q = query.toLowerCase();
                     select.uiData.dropdownItems.forEach((item, index) => {
                         item.hidden = !(
@@ -1559,6 +1701,7 @@ const UI = new class {
                             select.options[index].dataset.findOf?.toLowerCase().indexOf(q) > -1
                         );
                     });
+                    select.dispatchEvent(new CustomEvent(`UI.searched`));
                 };
                 // Опрацювати всю колекцію якщо поле не передано
                 !(select instanceof HTMLElement) ? collection.forEach(worker) : worker(select);
@@ -1579,6 +1722,7 @@ const UI = new class {
                 if (!indexes.length) throw TypeError(`Argument "indexes" is empty!`);
                 const worker = select => {
                     if (select.uiData.hasDisabled) return;
+                    select.dispatchEvent(new CustomEvent(`UI.beforeSelected`, {detail: {indexes, selected: val}}));
                     for (let index of indexes) {
                         let option = select.item(index);
                         if (option.disabled || (!select.uiData.hasMultiple && index !== indexes[0])) break;
@@ -1586,7 +1730,8 @@ const UI = new class {
                     }
                     this.render(select);
                     if (!select.uiData.hasMultiple || !select.uiData.dropdownItems.length) this.hideDropdown(select);
-                    select.dispatchEvent(select.uiData.changeEvent);
+                    select.dispatchEvent(new Event(`change`));
+                    select.dispatchEvent(new CustomEvent(`UI.selected`, {detail: {indexes, selected: val}}));
                 };
                 // Опрацювати всю колекцію якщо поле не передано
                 !(select instanceof HTMLElement) ? collection.forEach(worker) : worker(select);
@@ -1601,6 +1746,7 @@ const UI = new class {
              */
             render(select = null) {
                 const worker = select => {
+                    select.dispatchEvent(new CustomEvent(`UI.beforeRender`));
                     // Обнулити дані
                     let data = select.uiData.hasMultiple ? [] : ``;
                     select.uiData.controlBox.innerHTML = ``;
@@ -1649,6 +1795,7 @@ const UI = new class {
                     if (searchVal) this.search(searchVal, select);
                     // Додати властивість полю для отримання значення {Array|String}
                     select.data = data;
+                    select.dispatchEvent(new CustomEvent(`UI.rendered`));
                 };
                 // Опрацювати всю колекцію якщо поле не передано
                 !(select instanceof HTMLElement) ? collection.forEach(worker) : worker(select);
@@ -1663,6 +1810,7 @@ const UI = new class {
              */
             remove() {
                 collection.filter(el => UI.#isActivate(el, selfName)).forEach(select => {
+                    select.dispatchEvent(new CustomEvent(`UI.beforeRemove`));
                     // Повернути елементи в стан до активації
                     select.oninvalid = null;
                     if (select.form) select.form.removeEventListener(`reset`, select.uiData.resetHandler);
@@ -1670,6 +1818,7 @@ const UI = new class {
                     UI.#formComponent.unwrap(select);
                     delete select.data;
                     delete select.uiData;
+                    select.dispatchEvent(new CustomEvent(`UI.removed`));
                 });
                 return this;
             }
@@ -1689,6 +1838,15 @@ const UI = new class {
      * Меню
      * Метод будує компонент багаторівневого
      * меню зі списків ul
+     *
+     * @event UI.activated
+     * @event UI.unactivated
+     * @event UI.beforeShow
+     * @event UI.showed
+     * @event UI.beforeHide
+     * @event UI.hidden
+     * @event UI.beforeRemove
+     * @event UI.removed
      *
      * @param {Object} userConf Конфігурація користувача
      * @param {string} [userConf.selector = `UI_Menu`] Селектор ul елемента/тів для опрацювання
@@ -1794,11 +1952,19 @@ const UI = new class {
              */
             toggleShow(force = null, ul = null) {
                 const worker = ul => {
+                    let eventName;
                     if (typeof force === `boolean`) {
+                        eventName = force ? `UI.beforeShow` : `UI.beforeHide`;
+                        ul.dispatchEvent(new CustomEvent(eventName));
                         ul.classList.toggle(css.show, force);
+                        eventName = force ? `UI.showed` : `UI.hidden`;
+                        ul.dispatchEvent(new CustomEvent(eventName));
                         return;
                     }
-                    ul.classList.toggle(css.show);
+                    eventName = ui.classList.contains(css.show) ? `UI.beforeHide` : `UI.beforeShow`;
+                    ul.classList.toggle(css.show)
+                        ? ul.dispatchEvent(new CustomEvent(`UI.showed`))
+                        : ul.dispatchEvent(new CustomEvent(`UI.hidden`));
                 };
                 // Опрацювати всю колекцію якщо елемент не передано
                 !(ul instanceof HTMLElement) ? collection.forEach(worker) : worker(ul);
@@ -1812,10 +1978,13 @@ const UI = new class {
              */
             remove() {
                 collection.filter(el => UI.#isActivate(el, selfName)).forEach(ul => {
+                    ul.dispatchEvent(new CustomEvent(`UI.beforeRemove`));
+                    // Повернути елементи в стан до активації
                     ul.uiData.showBtn.remove();
                     ul.uiData.showSubBtns.forEach(btn => btn.remove());
                     UI.#unmarkActivate(ul, selfName);
                     delete ul.uiData;
+                    ul.dispatchEvent(new CustomEvent(`UI.removed`));
                 });
                 return this;
             }
