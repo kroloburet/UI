@@ -518,7 +518,10 @@ const UI = new class {
                     el.uiData = {};
                     el.uiData.hint = el.nextElementSibling;
                     el.addEventListener(`mousemove`, this.setPosition);
-                    document.addEventListener(hideEvent, () => this.hide());
+                    document.addEventListener(hideEvent, event => {
+                        if (event.type === `click` && event.target === el) return;
+                        this.hide();
+                    });
                 }
                 this.show();
                 return this;
