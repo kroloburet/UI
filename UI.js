@@ -533,27 +533,29 @@ const UI = new class {
              * @param {Event|HTMLElement} e Екземпляр події або елемент
              * @returns {this}
              */
-            setPosition(e = el) {
+            setPosition(e) {
                 const gap = 16;
                 const win = window;
-                const cursor = {x: e.pageX, y: e.pageY};
+                const rect = el.offsetParent.getBoundingClientRect();
+                const offsetParentCursorPos = {x: e.clientX - rect.left, y: e.clientY - rect.top};
+                const winCursorPos = {x: e.pageX, y: e.pageY};
                 const hintWidth = el.uiData.hint.offsetWidth;
                 const hintHeight = el.uiData.hint.offsetHeight;
-                // Відстань курсора до правого та нижнього краю
+                // Відстань курсора до правого та нижнього краю вікна
                 const distance = {
-                    right: win.innerWidth - (cursor.x - win.scrollX),
-                    bottom: win.innerHeight - (cursor.y - win.scrollY)
+                    right: win.innerWidth - (winCursorPos.x - win.scrollX),
+                    bottom: win.innerHeight - (winCursorPos.y - win.scrollY)
                 };
                 // Розмістити зліва від курсора, якщо близько до правого краю
                 el.uiData.hint.style.left = distance.right < hintWidth
-                    ? cursor.x - hintWidth < 0
+                    ? (winCursorPos.x - hintWidth) < 0
                         ? 0 // Закріпити з лівого краю, якщо значення від'ємне
-                        : `${cursor.x - hintWidth}px`
-                    : `${cursor.x + gap}px`;
+                        : `${offsetParentCursorPos.x - hintWidth}px`
+                    : `${offsetParentCursorPos.x + gap}px`;
                 // Розмістити над курсором, якщо близько до нижнього краю
                 el.uiData.hint.style.top = distance.bottom < (hintHeight + gap)
-                    ? `${(cursor.y - gap) - hintHeight}px`
-                    : `${cursor.y + gap}px`;
+                    ? `${(offsetParentCursorPos.y - gap) - hintHeight}px`
+                    : `${offsetParentCursorPos.y + gap}px`;
                 return this;
             }
 
@@ -1964,7 +1966,7 @@ const UI = new class {
                         ul.dispatchEvent(new CustomEvent(eventName));
                         return;
                     }
-                    eventName = ui.classList.contains(css.show) ? `UI.beforeHide` : `UI.beforeShow`;
+                    eventName = ul.classList.contains(css.show) ? `UI.beforeHide` : `UI.beforeShow`;
                     ul.classList.toggle(css.show)
                         ? ul.dispatchEvent(new CustomEvent(`UI.showed`))
                         : ul.dispatchEvent(new CustomEvent(`UI.hidden`));
