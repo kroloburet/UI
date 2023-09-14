@@ -187,11 +187,11 @@
     --UI_Notice-border-color: var(--UI_base-body-bg-color);
     --UI_Notice-border-width: 1px;
     --UI_Notice-icon-font-size: 1.3em;
-    --UI_Notice-error-bg-color: #F87B8A;
-    --UI_Notice-warning-bg-color: #FFE54D;
-    --UI_Notice-success-bg-color: #0EE4B4;
-    --UI_Notice-info-bg-color: #14B1FC;
-    --UI_Notice-process-bg-color: #E3E3E3;
+    --UI_Notice-error-bg-color: #FFD6D6;
+    --UI_Notice-warning-bg-color: #FFF5BA;
+    --UI_Notice-success-bg-color: #AFFFD2;
+    --UI_Notice-info-bg-color: #C5E4FF;
+    --UI_Notice-process-bg-color: #E8E8E8;
     --UI_Popup-font-color: var(--UI_base-font-color);
     --UI_Popup-padding: var(--UI_base-padding);
     --UI_Popup-bg-color: var(--UI_base-body-bg-color);
