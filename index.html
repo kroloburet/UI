@@ -44,7 +44,7 @@
     <meta property="og:site_name" content="UI фреймворк | Kroloburet">
     <!--- інші --->
     <link rel="image_src" href="https://kroloburet.github.io/img/myicon_share.jpg">
-    <!---  розмітка контактів --->
+    <!--- розмітка контактів --->
     <script type="application/ld+json">
         {
             "@context": "http://schema.org",
@@ -256,6 +256,10 @@
             overflow: auto;
         }
 
+        #fromCssRootFragment {
+            max-height: 70vh;
+        }
+
         footer {
             display: flex;
             flex-direction: column;
@@ -445,6 +449,13 @@
         перевизначити їхнє значення у своєму файлі стилів, щоб, наприклад, легко <a
                 onclick="toggleTheme()">змінити тему сторінки</a>. Отже, перевизначайте та користуйтеся у своїх файлах
         цими змінними, щоб керувати виглядом UI.</p>
+
+    <div class="code-style">
+        <i class="copy-fragment fa-solid fa-copy" title="Копіювати код"></i>
+        <pre id="fromCssRootFragment" class="fragment">
+        </pre>
+    </div>
+
     <p><code>UI.js</code> містить суперклас <code>UI</code> з <a data-go-to="#methods">методами</a> для
         забезпечення роботи вебкомпонентів, таких як вікна, що випливають, таби та інших. Деякі методи, що змінюють
         елементи, повинні бути викликані одразу після завантаження сторінки. Тому у файлі одразу ініціюється клас
@@ -1632,7 +1643,7 @@ Fieldset group with UI_inline-form
             <!--- Form component with "UI_contour UI_readonly-form" --->
             Form component with "UI_contour UI_readonly-form"
             <div class="UI_form-component UI_contour UI_readonly-form">
-                <select class="UI_Select" data-select-icon="&#8628;">
+                <select class="UI_Select" data-open-icon="&duarr;">
                     <option>Option1</option>
                     <option>Option2</option>
                     <option>Option3</option>
@@ -1646,7 +1657,7 @@ Fieldset group with UI_inline-form
             <!--- Form component with "UI_contour UI_size-s UI_inline-form" --->
             Form component with "UI_contour UI_size-s UI_inline-form"
             <div class="UI_form-component UI_contour UI_size-s UI_inline-form">
-                <select class="UI_Select" data-arrow-icon-down="&#10549;" data-arrow-icon-up="&#10548;">
+                <select class="UI_Select" data-open-icon="&#10549;" data-close-icon="&#10548;">
                     <option>Option1</option>
                     <option>Option2</option>
                     <option>Option3</option>
@@ -1697,7 +1708,7 @@ Search form component with &quot;UI_disabled-form&quot;
 &lt;!--- Form component with &quot;UI_contour UI_readonly-form&quot; ---&gt;
 Form component with &quot;UI_contour UI_readonly-form&quot;
 &lt;div class=&quot;UI_form-component UI_contour UI_readonly-form&quot;&gt;
-    &lt;select class=&quot;UI_Select&quot; data-select-icon=&quot;&amp;#8628;&quot;&gt;
+    &lt;select class=&quot;UI_Select&quot; data-open-icon=&quot;&amp;duarr;&quot;&gt;
         &lt;option&gt;Option1&lt;/option&gt;
         &lt;option&gt;Option2&lt;/option&gt;
         &lt;option&gt;Option3&lt;/option&gt;
@@ -1711,7 +1722,7 @@ Form component with &quot;UI_contour UI_readonly-form&quot;
 &lt;!--- Form component with &quot;UI_contour UI_size-s UI_inline-form&quot; ---&gt;
 Form component with &quot;UI_contour UI_size-s UI_inline-form&quot;
 &lt;div class=&quot;UI_form-component UI_contour UI_size-s UI_inline-form&quot;&gt;
-    &lt;select class=&quot;UI_Select&quot; data-arrow-icon-down=&quot;&#10549;&quot; data-arrow-icon-up=&quot;&#10548;&quot;&gt;
+    &lt;select class=&quot;UI_Select&quot; data-open-icon=&quot;&#10549;&quot; data-close-icon=&quot;&#10548;&quot;&gt;
         &lt;option&gt;Option1&lt;/option&gt;
         &lt;option&gt;Option2&lt;/option&gt;
         &lt;option&gt;Option3&lt;/option&gt;
@@ -1882,6 +1893,8 @@ Form component with &quot;UI_contour UI_size-s UI_inline-form&quot;
                     </ol>
                 </li>
             </ul>
+            <h4>Поглиблений доступ</h4>
+            Як тільки компонент буде активовано на елементі, елемент отримає об'єкт <code>UI</code>. В цьому об'єкті доступні поля корисні для роботи з компонентом. Наприклад, <code>myDl.UI.component</code> щоб отримати сам елемент компонента.
         </dd>
     </dl>
 
@@ -2239,6 +2252,8 @@ UI.GoTo(element);
                 <li><code>UI.beforeHide</code> підказку буде приховано.</li>
                 <li><code>UI.hidden</code> підказку приховано.</li>
             </ul>
+            <h4>Поглиблений доступ</h4>
+            Як тільки компонент буде активовано на елементі, елемент отримає об'єкт <code>UI</code>. В цьому об'єкті доступні поля корисні для роботи з компонентом. Наприклад, <code>myTrigger.UI.hint</code> щоб отримати елемент підказки.
         </dd>
     </dl>
 
@@ -2348,6 +2363,8 @@ UI.GoTo(element);
                 <li><code>UI.beforeRemove</code> повідомлення буде видалено.</li>
                 <li><code>UI.removed</code> повідомлення видалено.</li>
             </ul>
+            <h4>Поглиблений доступ</h4>
+            Як тільки компонент буде активовано, ви зможете мати доступ до об'єкта <code>UI</code>. В цьому об'єкті доступні поля корисні для роботи з компонентом. Наприклад, <code>UI.Notice({...}).get.UI.component</code> щоб активувати компонент та одразу отримати елемент компонента.
         </dd>
     </dl>
 
@@ -2438,7 +2455,7 @@ UI.GoTo(element);
                 </li>
             </ul>
             <h4>Події</h4>
-            <code>UI.Popup()</code> генерує перераховані нижче події. Підписуватись на ці події слід встановлюючи опрацьовувач на елемент вікна <code>UI.Popup([id]).get[index].addEventListener(...)</code>.
+            <code>UI.Popup()</code> генерує перераховані нижче події. Підписуватись на ці події слід встановлюючи опрацьовувач на елемент вікна <code>myPopup.addEventListener(...)</code>.
             <ul>
                 <li><code>UI.activated</code> вікно активовано.</li>
                 <li><code>UI.unactivated</code> вікно деактивовано.</li>
@@ -2447,6 +2464,8 @@ UI.GoTo(element);
                 <li><code>UI.beforeHide</code> вікно буде приховано.</li>
                 <li><code>UI.hidden</code> вікно приховано.</li>
             </ul>
+            <h4>Поглиблений доступ</h4>
+            Як тільки компонент буде активовано, елемент вікна отримає об'єкт <code>UI</code>. В цьому об'єкті доступні поля корисні для роботи з компонентом. Наприклад, <code>myPopup.UI.closeButton</code> щоб отримати елемент кнопки що ховає вікно.
         </dd>
     </dl>
 
@@ -2543,6 +2562,8 @@ UI.GoTo(element);
                 <li><code>UI.beforeRemove</code> лічильник буде видалено.</li>
                 <li><code>UI.removed</code> лічильник видалено.</li>
             </ul>
+            <h4>Поглиблений доступ</h4>
+            Як тільки компонент буде активовано на елементі, елемент отримає об'єкт <code>UI</code>. В цьому об'єкті доступні поля корисні для роботи з компонентом. Наприклад, <code>myTextarea.UI.counter</code> щоб отримати елемент лічильника.
         </dd>
     </dl>
 
@@ -2599,7 +2620,7 @@ UI.GoTo(element);
                 <li><code>placeholder</code> (рядок, опціонально, за замовчуванням "Choose a file"). Текст в полі
                     компонента, якщо файл не обрано.
                 </li>
-                <li><code>selectIcon</code> (рядок, опціонально, за замовчуванням "&lt;i class='fa-solid fa-folder-open'&gt;").
+                <li><code>choiceIcon</code> (рядок, опціонально, за замовчуванням "&lt;i class='fa-solid fa-folder-open'&gt;&lt;/i&gt;").
                     Текст або HTML-іконки обрання файла/лів.
                 </li>
             </ol>
@@ -2634,6 +2655,8 @@ UI.GoTo(element);
                 <li><code>UI.beforeRemove</code> компонент буде видалено та деактивовано.</li>
                 <li><code>UI.removed</code> компонент видалено та деактивовано.</li>
             </ul>
+            <h4>Поглиблений доступ</h4>
+            Як тільки компонент буде активовано на елементі, елемент отримає об'єкт <code>UI</code>. В цьому об'єкті доступні поля корисні для роботи з компонентом. Наприклад, <code>myInput.UI.component</code> щоб отримати сам елемент компонента.
         </dd>
     </dl>
 
@@ -2703,6 +2726,8 @@ UI.GoTo(element);
                 <li><code>UI.beforeRemove</code> компонент буде видалено та деактивовано.</li>
                 <li><code>UI.removed</code> компонент видалено та деактивовано.</li>
             </ul>
+            <h4>Поглиблений доступ</h4>
+            Як тільки компонент буде активовано на елементі, елемент отримає об'єкт <code>UI</code>. В цьому об'єкті доступні поля корисні для роботи з компонентом. Наприклад, <code>myInput.UI.infobox</code> щоб отримати інформаційний елемент компонента.
         </dd>
     </dl>
 
@@ -2756,10 +2781,10 @@ UI.GoTo(element);
                     за тегом <code>input type="number"</code> в колекцію. Саме ця колекція буде надалі опрацьована
                     методом.
                 </li>
-                <li><code>incIcon</code> (рядок, опціонально, за замовчуванням "&lt;i class='fa-solid fa-plus'&gt;").
+                <li><code>incIcon</code> (рядок, опціонально, за замовчуванням "&lt;i class='fa-solid fa-plus'&gt;&lt;/i&gt;").
                     Іконка на кнопці додавання. Може містити HTML.
                 </li>
-                <li><code>decIcon</code> (рядок, опціонально, за замовчуванням "&lt;i class='fa-solid fa-minus'&gt;").
+                <li><code>decIcon</code> (рядок, опціонально, за замовчуванням "&lt;i class='fa-solid fa-minus'&gt;&lt;/i&gt;").
                     Іконка на кнопці віднімання. Може містити HTML.
                 </li>
                 <li><code>title</code> (рядок, опціонально, за замовчуванням "Put the cursor in the field and scroll it
@@ -2805,6 +2830,8 @@ UI.GoTo(element);
                 <li><code>UI.beforeRemove</code> компонент буде видалено та деактивовано.</li>
                 <li><code>UI.removed</code> компонент видалено та деактивовано.</li>
             </ul>
+            <h4>Поглиблений доступ</h4>
+            Як тільки компонент буде активовано на елементі, елемент отримає об'єкт <code>UI</code>. В цьому об'єкті доступні поля корисні для роботи з компонентом. Наприклад, <code>myInput.UI.decButton</code> щоб отримати елемент кнопки зменшення значення.
         </dd>
     </dl>
 
@@ -2921,7 +2948,7 @@ UI.GoTo(element);
     // Динамічно отримувати значення multiple поля
     let select = document.querySelector('#mySelect');
     select.addEventListener('change', () =&gt; {
-        console.log(select.data); // Array [ &quot;Aquaman&quot;, &quot;Asterix&quot; ]
+        console.log(select.UI.value); // Array [ &quot;Aquaman&quot;, &quot;Asterix&quot; ]
     });
 &lt;/script&gt;
             </pre>
@@ -2933,7 +2960,7 @@ UI.GoTo(element);
                 <code>UI.Select()</code>.Метод приймає необов'язковий аргумент &mdash; літерал об'єкта з конфігурацією.
                 Якщо конфігурація не передана, метод використає конфігурацію за замовчуванням. Така поведінка стосується
                 також полей об'єкту конфігурації. Метод повертає екземпляр <q>класу-будівельника</q>.</p>
-            <p>Нажаль, браузери не підтримують HTML в <code>option</code> списків що випадають. Але оскільки <code>UI.Select()</code>
+            <p>На жаль, браузери не підтримують HTML в <code>option</code> списків що випадають. Але оскільки <code>UI.Select()</code>
                 будує компонент навколо звичайного <code>select</code>, ви можете передати атрибутом
                 <code>data-content</code> навіть HTML. Приклад: <code>&lt;option
                     data-content="&lt;i class='fa-brands fa-facebook'&gt;&lt;/i&gt;"&gt;Text&lt;/option&gt;</code>. При
@@ -2961,13 +2988,13 @@ UI.GoTo(element);
                 <li><code>searchPlaceholder</code> (рядок, опціонально, за замовчуванням "Search on the list").
                     Заповнювач порожнього поля пошуку по опціях списку.
                 </li>
-                <li><code>arrowIconDown</code> (рядок, опціонально, за замовчуванням "&lt;i class='fa-solid
-                    fa-chevron-down'&gt;"). Іконка кнопки, що показує dropdown компонента. Може містити HTML.
+                <li><code>openIcon</code> (рядок, опціонально, за замовчуванням "&lt;i class='fa-solid
+                    fa-chevron-down'&gt;&lt;/i&gt;"). Іконка кнопки, що показує dropdown компонента. Може містити HTML.
                 </li>
-                <li><code>arrowIconUp</code> (рядок, опціонально, за замовчуванням "&lt;i class='fa-solid
-                    fa-chevron-up'&gt;"). Іконка кнопки, що ховає dropdown компонента. Може містити HTML.
+                <li><code>closeIcon</code> (рядок, опціонально, за замовчуванням "&lt;i class='fa-solid
+                    fa-chevron-up'&gt;&lt;/i&gt;"). Іконка кнопки, що ховає dropdown компонента. Може містити HTML.
                 </li>
-                <li><code>delItemIcon</code> (рядок, опціонально, за замовчуванням "&lt;i class='fa-solid fa-xmark'&gt;").
+                <li><code>delItemIcon</code> (рядок, опціонально, за замовчуванням "&lt;i class='fa-solid fa-xmark'&gt;&lt;/i&gt;").
                     Іконка кнопки видалення обраної опції в multiple компоненті. Може містити HTML.
                 </li>
             </ol>
@@ -3070,6 +3097,8 @@ UI.GoTo(element);
                 <li><code>UI.beforeRemove</code> компонент буде видалено та деактивовано.</li>
                 <li><code>UI.removed</code> компонент видалено та деактивовано.</li>
             </ul>
+            <h4>Поглиблений доступ</h4>
+            Як тільки компонент буде активовано на елементі, елемент отримає об'єкт <code>UI</code>. В цьому об'єкті доступні поля корисні для роботи з компонентом. Наприклад, <code>mySelect.UI.dropdown</code> щоб отримати елемент списку що випадає. А так <code>mySelect.UI.value</code> можна легко отримати значення multiple списку одразу в масиві, чи рядком, якщо список не multiple.
         </dd>
     </dl>
 
@@ -3171,8 +3200,8 @@ UI.GoTo(element);
                     комбінація селекторів, за якою будуть знайдені елементи на сторінці. Елементи будуть відфільтровані
                     за тегом <code>ul</code> в колекцію. Саме ця колекція буде надалі опрацьована методом.
                 </li>
-                <li><code>btnIcon</code> (рядок, опціонально, за замовчуванням "&#8801;"). Іконка кнопки, яка
-                    покаже/сховає все меню чи вкладені пункти на малих пристроях. Може містити HTML.
+                <li><code>toggleIcon</code> (рядок, опціонально, за замовчуванням "&lt;i class='fa-solid
+                    fa-bars'&gt;&lt;/i&gt;"). Іконка кнопки, яка покаже/сховає все меню чи вкладені пункти на малих пристроях. Може містити HTML.
                 </li>
                 <li><code>markLink</code> (булево, опціонально, за замовчуванням false). Якщо uri поточної сторінки
                     збігається зі значенням <code>href</code> посилання на будь-якому рівні вкладеності, метод знайде
@@ -3223,6 +3252,8 @@ UI.GoTo(element);
                 <li><code>UI.beforeRemove</code> компонент буде видалено та деактивовано.</li>
                 <li><code>UI.removed</code> компонент видалено та деактивовано.</li>
             </ul>
+            <h4>Поглиблений доступ</h4>
+            Як тільки компонент буде активовано на елементі, елемент отримає об'єкт <code>UI</code>. В цьому об'єкті доступні поля корисні для роботи з компонентом. Наприклад, <code>myUl.UI.toggleButton</code> щоб отримати елемент кнопки що розвертає/звертає меню.
         </dd>
     </dl>
 
@@ -3247,7 +3278,13 @@ UI.GoTo(element);
 
 <script>
     document.addEventListener(`DOMContentLoaded`, () => {
-        // Формат та вивід об'єкта UI.css
+        // Формат та вивід фрагмента ":root" з файла UI.css
+        const fromCssRootFragment = document.querySelector(`#fromCssRootFragment`);
+        fromCssRootFragment.textContent = [...document.styleSheets[0].cssRules]
+            .filter(rule => rule.cssText.split(" ")[0] === ":root")[0]
+            .cssText.replace(/(\s)(--UI)/g, `\n  $2`).replace(/(\})/g, `\n$1`);
+
+        // Формат та вивід об'єкта UI.css з файла UI.js
         const fromJsCssFragment = document.querySelector(`#fromJsCssFragment`);
         fromJsCssFragment.textContent = `UI.css = ` + JSON.stringify(UI.css, null, 2).replace(/"(.+)"(:)/g, `$1$2`);
 
@@ -3260,8 +3297,8 @@ UI.GoTo(element);
         });
 
         // Перемикання теми сторінки
-        const root = document.querySelector(`:root`);
-        window.toggleTheme = () => root.classList.toggle(`dark-theme`);
+        window.toggleTheme = () => document.documentElement.classList.toggle(`dark-theme`);
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) toggleTheme();
 
         // Копіювати фрагмент
         document.querySelectorAll(`.copy-fragment`).forEach(copyFragmentBtn => {

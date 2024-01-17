@@ -1457,7 +1457,7 @@ dl.UI_Tabs-activated {
     margin: 0 0 var(--UI_base-gapY) 0;
 }
 
-dl.UI_Tabs-activated .UI_Tabs-control-box {
+dl.UI_Tabs-activated .UI_Tabs-control {
     display: flex;
     overflow-x: auto;
 }
@@ -1528,11 +1528,11 @@ dl.UI_Tabs-activated dd.UI_Tabs-show {
     height: .1px;
 }
 
-.UI_InputFile-control-box {
-    --control-box-item-gap: 10px;
+.UI_InputFile-control {
+    --control-item-gap: 10px;
     display: flex;
     flex-grow: 1;
-    padding: calc(var(--UI_form-field-paddingY) - var(--control-box-item-gap)) var(--UI_form-field-paddingX);
+    padding: calc(var(--UI_form-field-paddingY) - var(--control-item-gap)) var(--UI_form-field-paddingX);
     font-size: var(--UI_form-font-size);
     line-height: var(--UI_form-line-height);
     color: var(--UI_form-font-color);
@@ -1541,30 +1541,30 @@ dl.UI_Tabs-activated dd.UI_Tabs-show {
     overflow-x: auto;
 }
 
-.UI_InputFile-control-box-placeholder {
-    padding: var(--control-box-item-gap) 0;
+.UI_InputFile-control-placeholder {
+    padding: var(--control-item-gap) 0;
     color: var(--UI_form-placeholder-color);
     line-height: var(--UI_form-line-height);
     opacity: .5;
 }
 
-.UI_InputFile-control-box-item-text,
-.UI_InputFile-control-box-placeholder {
+.UI_InputFile-control-item-text,
+.UI_InputFile-control-placeholder {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
     cursor: auto;
 }
 
-.UI_InputFile-control-box-item {
+.UI_InputFile-control-item {
     display: flex;
     align-items: center;
-    margin: calc((var(--control-box-item-gap) / 2) - var(--UI_form-border-width)) var(--control-box-item-gap);
+    margin: calc((var(--control-item-gap) / 2) - var(--UI_form-border-width)) var(--control-item-gap);
     margin-left: 0;
 }
 
-.UI_InputFile-control-box-item .UI_InputFile-control-box-item-text {
-    padding: calc(var(--control-box-item-gap) / 2) var(--control-box-item-gap);
+.UI_InputFile-control-item .UI_InputFile-control-item-text {
+    padding: calc(var(--control-item-gap) / 2) var(--control-item-gap);
     border: var(--UI_form-border-width) solid var(--UI_form-border-color);
     border-radius: var(--UI_form-border-radius);
 }
@@ -1625,11 +1625,11 @@ dl.UI_Tabs-activated dd.UI_Tabs-show {
     height: .1px;
 }
 
-.UI_Select-control-box {
-    --control-box-item-gap: 10px;
+.UI_Select-control {
+    --control-item-gap: 10px;
     display: flex;
     flex-grow: 1;
-    padding: calc(var(--UI_form-field-paddingY) - var(--control-box-item-gap)) var(--UI_form-field-paddingX);
+    padding: calc(var(--UI_form-field-paddingY) - var(--control-item-gap)) var(--UI_form-field-paddingX);
     font-size: var(--UI_form-font-size);
     line-height: var(--UI_form-line-height);
     color: var(--UI_form-font-color);
@@ -1638,44 +1638,44 @@ dl.UI_Tabs-activated dd.UI_Tabs-show {
     overflow-x: auto;
 }
 
-.UI_Select-control-box-item,
-.UI_Select-control-box-placeholder {
-    padding: var(--control-box-item-gap) 0;
+.UI_Select-control-item,
+.UI_Select-control-placeholder {
+    padding: var(--control-item-gap) 0;
 }
 
-.UI_Select-control-box-placeholder {
+.UI_Select-control-placeholder {
     color: var(--UI_form-placeholder-color);
     opacity: .5;
 }
 
-.UI_Select-control-box-item-text,
-.UI_Select-control-box-placeholder {
+.UI_Select-control-item-text,
+.UI_Select-control-placeholder {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
     cursor: pointer;
 }
 
-.UI_Select-control-box-item-multiple {
+.UI_Select-control-item-multiple {
     display: flex;
     align-items: center;
-    margin: calc((var(--control-box-item-gap) / 2) - var(--UI_form-border-width)) var(--control-box-item-gap);
+    margin: calc((var(--control-item-gap) / 2) - var(--UI_form-border-width)) var(--control-item-gap);
     margin-left: 0;
 }
 
-.UI_Select-control-box-item-multiple .UI_Select-control-box-item-text {
-    padding: calc(var(--control-box-item-gap) / 2) var(--control-box-item-gap);
+.UI_Select-control-item-multiple .UI_Select-control-item-text {
+    padding: calc(var(--control-item-gap) / 2) var(--control-item-gap);
     border: var(--UI_form-border-width) solid var(--UI_form-border-color);
     border-right-width: 0;
     border-radius: var(--UI_form-border-radius) 0 0 var(--UI_form-border-radius);
 }
 
-.UI_Select-control-box-item-del {
+.UI_Select-control-item-del {
     display: flex;
     align-items: center;
     justify-content: center;
     align-self: stretch;
-    padding: calc(var(--control-box-item-gap) / 2) var(--control-box-item-gap);
+    padding: calc(var(--control-item-gap) / 2) var(--control-item-gap);
     color: var(--UI_form-component-control-font-color);
     background-color: var(--UI_form-component-control-bg-color);
     border: var(--UI_form-border-width) solid var(--UI_form-border-color);
@@ -1684,11 +1684,11 @@ dl.UI_Tabs-activated dd.UI_Tabs-show {
     cursor: pointer;
 }
 
-:where(.UI_primary, .UI_accent, .UI_contour) .UI_Select-control-box-item-del {
+:where(.UI_primary, .UI_accent, .UI_contour) .UI_Select-control-item-del {
     border-left-width: var(--UI_form-border-width);
 }
 
-.UI_Select-control-box-item-del:hover {
+.UI_Select-control-item-del:hover {
     color: var(--UI_form-component-control-hover-font-color);
     background-color: var(--UI_form-component-control-hover-bg-color);
 }
@@ -1813,15 +1813,15 @@ dl.UI_Tabs-activated dd.UI_Tabs-show {
     display: block;
 }
 
-.UI_Menu-show-btn {
+.UI_Menu-toggle-btn {
     display: none;
-    padding: .5em;
+    padding: .2em;
     margin-bottom: var(--UI_base-gapY);
-    font-size: 300%;
+    font-size: 250%;
     background-color: var(--UI_Menu-bg-color);
 }
 
-.UI_Menu-activated .UI_Menu-show-sub-btn {
+.UI_Menu-activated .UI_Menu-sub-toggle-btn {
     display: none;
     padding: .6em;
     font-size: 150%;
@@ -1834,8 +1834,8 @@ dl.UI_Tabs-activated dd.UI_Tabs-show {
         margin-bottom: 0;
     }
 
-    .UI_Menu-show-btn,
-    .UI_Menu-activated .UI_Menu-show-sub-btn {
+    .UI_Menu-toggle-btn,
+    .UI_Menu-activated .UI_Menu-sub-toggle-btn {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -1890,19 +1890,19 @@ dl.UI_Tabs-activated dd.UI_Tabs-show {
 
 /*---------------------------------------------- Menu color themes ---*/
 .UI_Menu-activated.UI_primary,
-.UI_Menu-activated.UI_primary + .UI_Menu-show-btn {
+.UI_Menu-activated.UI_primary + .UI_Menu-toggle-btn {
     --UI_Menu-bg-color: var(--UI_primary-bg-color);
     --UI_Menu-font-color: var(--UI_primary-font-color);
 }
 
 .UI_Menu-activated.UI_accent,
-.UI_Menu-activated.UI_accent + .UI_Menu-show-btn {
+.UI_Menu-activated.UI_accent + .UI_Menu-toggle-btn {
     --UI_Menu-bg-color: var(--UI_accent-bg-color);
     --UI_Menu-font-color: var(--UI_accent-font-color);
 }
 
 .UI_Menu-activated.UI_contour,
-.UI_Menu-activated.UI_contour + .UI_Menu-show-btn {
+.UI_Menu-activated.UI_contour + .UI_Menu-toggle-btn {
     --UI_Menu-bg-color: var(--UI_base-body-bg-color);
     --UI_Menu-font-color: var(--UI_base-font-color);
 }

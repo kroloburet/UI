@@ -192,8 +192,8 @@ const UI = new class {
             const className = el.className;
             const component = document.createElement('label');
             const componentClassList = [...el.classList].filter(item => !denyClasses.includes(item));
-            el.uiData ??= {};
-            el.uiData.oldClasses = className;
+            el.UI ??= {};
+            el.UI.oldClasses = className;
             el.classList.remove(...componentClassList);
             component.classList.add(UI.css.formComponent, ...componentClassList);
             el.before(component);
@@ -208,9 +208,9 @@ const UI = new class {
          * @param {HTMLElement} el Елемент форми
          */
         unwrap(el) {
-            el.className = el.uiData.oldClasses;
-            el.uiData.componentBox.before(el);
-            el.uiData.componentBox.remove();
+            el.className = el.UI.oldClasses;
+            el.UI.component.before(el);
+            el.UI.component.remove();
         },
     }
 
@@ -286,7 +286,7 @@ const UI = new class {
 
         // CSS селектори які використовує метод
         const css = {
-            controlBox: `UI_${selfName}-control-box`,
+            control: `UI_${selfName}-control`,
             show: `UI_${selfName}-show`,
         };
 
@@ -328,31 +328,31 @@ const UI = new class {
                 // Деактивувати активовані, щоб оновити конфігурацію
                 this.remove();
                 // Активувати колекцію
-                collection.forEach(tabs => {
+                collection.forEach(dl => {
                     // Об'єкт з публічними полями елемента колекції
-                    tabs.uiData = {};
-                    tabs.uiData.conf = Object.assign({}, defConf, userConf, UI.#getDatasetConf(tabs));
-                    tabs.uiData.componentBox = tabs;
-                    tabs.uiData.controlBox = document.createElement(`div`);
-                    tabs.uiData.dtList = tabs.querySelectorAll(`:scope dt`);
-                    tabs.uiData.ddList = tabs.querySelectorAll(`:scope dd`);
+                    dl.UI = {};
+                    dl.UI.conf = Object.assign({}, defConf, userConf, UI.#getDatasetConf(dl));
+                    dl.UI.component = dl;
+                    dl.UI.control = document.createElement(`div`);
+                    dl.UI.tabsList = dl.querySelectorAll(`:scope dt`);
+                    dl.UI.contentsList = dl.querySelectorAll(`:scope dd`);
                     // Додати елементи, класи та слухачів подій
-                    tabs.uiData.controlBox.classList.add(css.controlBox, UI.css.noScrollbar);
-                    tabs.uiData.controlBox.append(...tabs.uiData.dtList);
-                    tabs.uiData.componentBox.prepend(tabs.uiData.controlBox);
-                    tabs.uiData.dtList.forEach(
-                        (dt, index) => dt.onclick = () => this.show(index, tabs)
+                    dl.UI.control.classList.add(css.control, UI.css.noScrollbar);
+                    dl.UI.control.append(...dl.UI.tabsList);
+                    dl.UI.component.prepend(dl.UI.control);
+                    dl.UI.tabsList.forEach(
+                        (dt, index) => dt.onclick = () => this.show(index, dl)
                     );
                     // Відкрити вкладку по хешу в uri чи зазначену в конфігурації
-                    let showTabIndex = tabs.uiData.conf.showTabIndex;
-                    if (tabs.uiData.conf.smartShow && tabs.uiData.componentBox.id && Object.keys(smartSowTabs).length) {
-                        if (smartSowTabs[tabs.uiData.componentBox.id]) {
-                            showTabIndex = smartSowTabs[tabs.uiData.componentBox.id];
+                    let showTabIndex = dl.UI.conf.showTabIndex;
+                    if (dl.UI.conf.smartShow && dl.UI.component.id && Object.keys(smartSowTabs).length) {
+                        if (smartSowTabs[dl.UI.component.id]) {
+                            showTabIndex = smartSowTabs[dl.UI.component.id];
                         }
                     }
-                    this.show(showTabIndex, tabs);
+                    this.show(showTabIndex, dl);
                     // Помітити елемент як активований
-                    UI.#markActivate(tabs, selfName);
+                    UI.#markActivate(dl, selfName);
                 });
                 return this;
             }
@@ -367,19 +367,19 @@ const UI = new class {
             show(tabIndex, tabs = null) {
                 const worker = tabs => {
                     // Закрити всі вкладки
-                    tabs.uiData.dtList.forEach((dt, index) => {
+                    tabs.UI.tabsList.forEach((dt, index) => {
                         if (dt.classList.contains(css.show)) {
-                            tabs.uiData.dtList[index].classList.remove(css.show);
-                            tabs.uiData.ddList[index].classList.remove(css.show);
+                            tabs.UI.tabsList[index].classList.remove(css.show);
+                            tabs.UI.contentsList[index].classList.remove(css.show);
                         }
                     });
                     tabs.dispatchEvent(new CustomEvent(`UI.beforeShow`, {detail: {tabIndex}}));
                     // Перевірити, чи існує вкладка за індексом та відкрити
-                    tabIndex = tabs.uiData.dtList[tabIndex]
+                    tabIndex = tabs.UI.tabsList[tabIndex]
                         ? tabIndex
-                        : (tabs.uiData.dtList[tabs.uiData.conf.showTabIndex] ? tabs.uiData.conf.showTabIndex : 0);
-                    tabs.uiData.dtList[tabIndex].classList.add(css.show);
-                    tabs.uiData.ddList[tabIndex].classList.add(css.show);
+                        : (tabs.UI.tabsList[tabs.UI.conf.showTabIndex] ? tabs.UI.conf.showTabIndex : 0);
+                    tabs.UI.tabsList[tabIndex].classList.add(css.show);
+                    tabs.UI.contentsList[tabIndex].classList.add(css.show);
                     tabs.dispatchEvent(new CustomEvent(`UI.sowed`, {detail: {tabIndex}}));
                 };
                 // Опрацювати всю колекцію якщо компонент не передано
@@ -396,13 +396,13 @@ const UI = new class {
                 collection.filter(el => UI.#isActivate(el, selfName)).forEach(tabs => {
                     tabs.dispatchEvent(new CustomEvent(`UI.beforeRemove`));
                     // Видалити прив'язку подій та повернути HTML-структуру списку визначень
-                    tabs.uiData.dtList.forEach((dt, index) => {
+                    tabs.UI.tabsList.forEach((dt, index) => {
                         dt.onclick = null;
-                        tabs.uiData.ddList[index].before(dt);
+                        tabs.UI.contentsList[index].before(dt);
                     });
-                    tabs.uiData.controlBox.remove();
+                    tabs.UI.control.remove();
                     UI.#unmarkActivate(tabs, selfName);
-                    delete tabs.uiData;
+                    delete tabs.UI;
                     tabs.dispatchEvent(new CustomEvent(`UI.removed`));
                 });
                 return this;
@@ -512,11 +512,11 @@ const UI = new class {
              */
             #activate() {
                 if (UI.#isDisabledNode(el)) return;
-                if (!el.uiData) {
+                if (!el.UI) {
                     if (!el.nextElementSibling.classList.contains(`UI_${selfName}`))
                         throw ReferenceError(`Hint element mast contain css class "UI_${selfName}"!`);
-                    el.uiData = {};
-                    el.uiData.hint = el.nextElementSibling;
+                    el.UI = {};
+                    el.UI.hint = el.nextElementSibling;
                     el.addEventListener(`mousemove`, this.setPosition);
                     document.addEventListener(hideEvent, event => {
                         if (event.type === `click` && event.target === el) return;
@@ -539,21 +539,21 @@ const UI = new class {
                 const rect = el.offsetParent.getBoundingClientRect();
                 const offsetParentCursorPos = {x: e.clientX - rect.left, y: e.clientY - rect.top};
                 const winCursorPos = {x: e.pageX, y: e.pageY};
-                const hintWidth = el.uiData.hint.offsetWidth;
-                const hintHeight = el.uiData.hint.offsetHeight;
+                const hintWidth = el.UI.hint.offsetWidth;
+                const hintHeight = el.UI.hint.offsetHeight;
                 // Відстань курсора до правого та нижнього краю вікна
                 const distance = {
                     right: win.innerWidth - (winCursorPos.x - win.scrollX),
                     bottom: win.innerHeight - (winCursorPos.y - win.scrollY)
                 };
                 // Розмістити зліва від курсора, якщо близько до правого краю
-                el.uiData.hint.style.left = distance.right < hintWidth
+                el.UI.hint.style.left = distance.right < hintWidth
                     ? (winCursorPos.x - hintWidth) < 0
                         ? 0 // Закріпити з лівого краю, якщо значення від'ємне
                         : `${offsetParentCursorPos.x - hintWidth}px`
                     : `${offsetParentCursorPos.x + gap}px`;
                 // Розмістити над курсором, якщо близько до нижнього краю
-                el.uiData.hint.style.top = distance.bottom < (hintHeight + gap)
+                el.UI.hint.style.top = distance.bottom < (hintHeight + gap)
                     ? `${(offsetParentCursorPos.y - gap) - hintHeight}px`
                     : `${offsetParentCursorPos.y + gap}px`;
                 return this;
@@ -566,7 +566,7 @@ const UI = new class {
              */
             show() {
                 el.dispatchEvent(new CustomEvent(`UI.beforeShow`));
-                el.uiData.hint.classList.add(css.show);
+                el.UI.hint.classList.add(css.show);
                 el.dispatchEvent(new CustomEvent(`UI.showed`));
                 return this;
             }
@@ -578,7 +578,7 @@ const UI = new class {
              */
             hide() {
                 el.dispatchEvent(new CustomEvent(`UI.beforeHide`));
-                el.uiData.hint.classList.remove(css.show);
+                el.UI.hint.classList.remove(css.show);
                 el.dispatchEvent(new CustomEvent(`UI.hidden`));
                 return this;
             }
@@ -589,7 +589,7 @@ const UI = new class {
              * @returns {this}
              */
             remove() {
-                delete el.uiData;
+                delete el.UI;
                 return this;
             }
 
@@ -659,12 +659,12 @@ const UI = new class {
                 // Повідомлення ще не створено
                 if (!notice) {
                     notice = document.createElement(`div`);
-                    notice.uiData = {};
-                    notice.uiData.componentBox = document.createElement(`div`);
-                    notice.uiData.componentBox.classList.add(UI.css.bodyOverlay, css.box);
-                    notice.uiData.componentBox.prepend(notice);
+                    notice.UI = {};
+                    notice.UI.component = document.createElement(`div`);
+                    notice.UI.component.classList.add(UI.css.bodyOverlay, css.box);
+                    notice.UI.component.prepend(notice);
                     document.body.classList.add(UI.css.bodyHideOverflow);
-                    document.body.append(notice.uiData.componentBox);
+                    document.body.append(notice.UI.component);
                     notice.dispatchEvent(new CustomEvent(`UI.created`));
                 }
                 // Повідомлення створено
@@ -702,9 +702,9 @@ const UI = new class {
             remove() {
                 if (!notice) return this;
                 notice.dispatchEvent(new CustomEvent(`UI.beforeRemove`));
-                notice.uiData.componentBox.remove();
+                notice.UI.component.remove();
                 document.body.classList.remove(UI.css.bodyHideOverflow);
-                delete notice.uiData;
+                delete notice.UI;
                 notice.dispatchEvent(new CustomEvent(`UI.removed`));
                 return this;
             }
@@ -742,7 +742,7 @@ const UI = new class {
         const css = {
             box: `UI_${selfName}-box`,
             show: `UI_${selfName}-show`,
-            closeBtn: `UI_${selfName}-close-btn`,
+            closeButton: `UI_${selfName}-close-btn`,
         };
 
         // Колекція елементів для опрацювання
@@ -765,17 +765,17 @@ const UI = new class {
                     // Активувати колекцію
                     collection.filter(el => !UI.#isActivate(el, selfName)).forEach(pop => {
                         // Додати обгортку, кнопки та події
-                        pop.uiData = {};
-                        pop.uiData.componentBox = document.createElement(`div`);
-                        pop.uiData.closeBtn = document.createElement(`span`);
-                        pop.uiData.componentBox.classList.add(UI.css.bodyOverlay, css.box);
-                        pop.uiData.componentBox.onclick = e =>
-                            e.target === pop.uiData.componentBox ? this.hide() : null;
-                        pop.uiData.closeBtn.classList.add(css.closeBtn, `fa-solid`, `fa-times-circle`);
-                        pop.uiData.closeBtn.onclick = this.hide;
-                        pop.prepend(pop.uiData.closeBtn);
-                        pop.uiData.componentBox.prepend(pop);
-                        document.body.append(pop.uiData.componentBox);
+                        pop.UI = {};
+                        pop.UI.component = document.createElement(`div`);
+                        pop.UI.closeButton = document.createElement(`span`);
+                        pop.UI.component.classList.add(UI.css.bodyOverlay, css.box);
+                        pop.UI.component.onclick = e =>
+                            e.target === pop.UI.component ? this.hide() : null;
+                        pop.UI.closeButton.classList.add(css.closeButton, `fa-solid`, `fa-times-circle`);
+                        pop.UI.closeButton.onclick = this.hide;
+                        pop.prepend(pop.UI.closeButton);
+                        pop.UI.component.prepend(pop);
+                        document.body.append(pop.UI.component);
                         // Помітити елемент як активований
                         UI.#markActivate(pop, selfName);
                     });
@@ -795,7 +795,7 @@ const UI = new class {
                 if (!pop)
                     throw ReferenceError(`The transmitted argument "id" is not correct or element not found`);
                 pop.dispatchEvent(new CustomEvent(`UI.beforeShow`));
-                pop.uiData.componentBox.classList.add(css.show);
+                pop.UI.component.classList.add(css.show);
                 document.body.classList.add(UI.css.bodyHideOverflow);
                 pop.dispatchEvent(new CustomEvent(`UI.showed`));
                 return this;
@@ -809,7 +809,7 @@ const UI = new class {
             hide() {
                 collection.filter(el => UI.#isActivate(el, selfName)).forEach(pop => {
                     pop.dispatchEvent(new CustomEvent(`UI.beforeHide`));
-                    pop.uiData.componentBox.classList.remove(css.show);
+                    pop.UI.component.classList.remove(css.show);
                     pop.dispatchEvent(new CustomEvent(`UI.hidden`));
                 });
                 document.body.classList.remove(UI.css.bodyHideOverflow);
@@ -863,19 +863,19 @@ const UI = new class {
              */
             #activate() {
                 // Компонент не створено -- створити
-                if (!field.uiData) {
+                if (!field.UI) {
                     if (![`INPUT`, `TEXTAREA`].includes(field.tagName) && ![`text`, `textarea`].includes(field.type))
                         throw TypeError(`Expected: HTMLElement INPUT or TEXTAREA in "trigger" argument.`);
                     if (isNaN(limit))
                         throw TypeError(`Expected: type number in "limit" argument.`);
                     if (UI.#isDisabledNode(field)) return;
-                    field.uiData = {};
-                    field.uiData.limit = parseInt(limit, 10);
-                    field.uiData.componentBox = UI.#formComponent.wrap(field);
-                    field.uiData.counter = document.createElement(`span`);
-                    field.uiData.counter.textContent = limit.toString();
-                    field.uiData.counter.classList.add(`UI_${selfName}`);
-                    field.after(field.uiData.counter);
+                    field.UI = {};
+                    field.UI.limit = parseInt(limit, 10);
+                    field.UI.component = UI.#formComponent.wrap(field);
+                    field.UI.counter = document.createElement(`span`);
+                    field.UI.counter.textContent = limit.toString();
+                    field.UI.counter.classList.add(`UI_${selfName}`);
+                    field.after(field.UI.counter);
                     field.addEventListener('blur', () => {
                         this.cut().hide();
                     });
@@ -893,8 +893,8 @@ const UI = new class {
              */
             run() {
                 this.show();
-                if (field.value.length <= field.uiData.limit) {
-                    field.uiData.counter.textContent = (field.uiData.limit - field.value.length).toString();
+                if (field.value.length <= field.UI.limit) {
+                    field.UI.counter.textContent = (field.UI.limit - field.value.length).toString();
                 } else {
                     this.cut();
                 }
@@ -908,7 +908,7 @@ const UI = new class {
              */
             show() {
                 field.dispatchEvent(new CustomEvent(`UI.beforeShow`));
-                field.after(field.uiData.counter);
+                field.after(field.UI.counter);
                 field.focus();
                 field.dispatchEvent(new CustomEvent(`UI.showed`));
                 return this;
@@ -921,7 +921,7 @@ const UI = new class {
              */
             hide() {
                 field.dispatchEvent(new CustomEvent(`UI.beforeHide`));
-                field.uiData.counter.remove();
+                field.UI.counter.remove();
                 field.dispatchEvent(new CustomEvent(`UI.hidden`));
                 return this;
             }
@@ -933,8 +933,8 @@ const UI = new class {
              */
             cut() {
                 field.dispatchEvent(new CustomEvent(`UI.beforeCut`));
-                field.value = field.value.substring(0, field.uiData.limit);
-                field.uiData.counter.textContent = `0`;
+                field.value = field.value.substring(0, field.UI.limit);
+                field.UI.counter.textContent = `0`;
                 field.dispatchEvent(new CustomEvent(`UI.cut`));
                 return this;
             }
@@ -947,7 +947,7 @@ const UI = new class {
             remove() {
                 field.dispatchEvent(new CustomEvent(`UI.beforeRemove`));
                 UI.#formComponent.unwrap(field);
-                delete field.uiData;
+                delete field.UI;
                 field.dispatchEvent(new CustomEvent(`UI.removed`));
                 return this;
             }
@@ -979,7 +979,7 @@ const UI = new class {
      * @param {Object} userConf Конфігурація користувача
      * @param {string} [userConf.selector = `UI_InputFile`] Селектор input type="file" елемента/тів для опрацювання
      * @param {string} [userConf.placeholder = `Choose a file`] Текст в полі компонента, якщо файл не обрано
-     * @param {string} [userConf.selectIcon = `📂`] Текст або HTML-іконки обрання файла/лів
+     * @param {string} [userConf.choiceIcon = `📂`] Текст або HTML-іконки обрання файла/лів
      * @return {Object} Клас-будівельник
      * @see https://kroloburet.github.io/UI/#inputFile
      */
@@ -989,17 +989,17 @@ const UI = new class {
 
         // CSS селектори які використовує метод
         const css = {
-            controlBox: `UI_${selfName}-control-box`,
-            controlBoxItem: `UI_${selfName}-control-box-item`,
-            controlBoxItemText: `UI_${selfName}-control-box-item-text`,
-            controlBoxPlaceholder: `UI_${selfName}-control-box-placeholder`,
+            control: `UI_${selfName}-control`,
+            controlItem: `UI_${selfName}-control-item`,
+            controlItemText: `UI_${selfName}-control-item-text`,
+            controlPlaceholder: `UI_${selfName}-control-placeholder`,
         };
 
         // Конфігурація за замовчуванням
         const defConf = {
             selector: `.UI_${selfName}`,
             placeholder: `Choose a file`,
-            selectIcon: `<i class="fa-solid fa-folder-open">`,
+            choiceIcon: `<i class="fa-solid fa-folder-open">`,
         };
 
         // Селектор пошуку елементів для опрацювання
@@ -1026,32 +1026,32 @@ const UI = new class {
                 // Активувати колекцію
                 collection.forEach(input => {
                     // Об'єкт з публічними полями елемента колекції
-                    input.uiData = {};
-                    input.uiData.conf = Object.assign({}, defConf, userConf, UI.#getDatasetConf(input));
-                    input.uiData.componentBox = UI.#formComponent.wrap(input);
-                    input.uiData.selectBtn = document.createElement(`span`);
-                    input.uiData.controlBox = document.createElement(`div`);
-                    input.uiData.placeholder = document.createElement(`span`);
-                    input.uiData.hasMultiple = input.multiple;
+                    input.UI = {};
+                    input.UI.conf = Object.assign({}, defConf, userConf, UI.#getDatasetConf(input));
+                    input.UI.component = UI.#formComponent.wrap(input);
+                    input.UI.choiceButton = document.createElement(`span`);
+                    input.UI.control = document.createElement(`div`);
+                    input.UI.placeholder = document.createElement(`span`);
+                    input.UI.hasMultiple = input.multiple;
                     // Додати елементи, класи та слухачів подій
                     if (input.form) {
-                        input.uiData.resetHandler = () => setTimeout(() => this.render(input), 100);
-                        input.form.addEventListener(`reset`, input.uiData.resetHandler);
+                        input.UI.resetHandler = () => setTimeout(() => this.render(input), 100);
+                        input.form.addEventListener(`reset`, input.UI.resetHandler);
                     }
                     input.onchange = () => {
                         this.render(input);
-                        input.uiData.controlBox.classList.add(UI.css.focusForm);
-                        input.uiData.controlBox.classList.remove(UI.css.invalidForm);
+                        input.UI.control.classList.add(UI.css.focusForm);
+                        input.UI.control.classList.remove(UI.css.invalidForm);
                     };
-                    input.oninvalid = () => input.uiData.controlBox.classList.add(UI.css.invalidForm);
-                    input.onblur = () => input.uiData.controlBox.classList.remove(UI.css.focusForm);
-                    input.uiData.controlBox.classList.add(css.controlBox, UI.css.noScrollbar);
-                    input.uiData.selectBtn.classList.add(UI.css.formComponentControl);
-                    input.uiData.selectBtn.innerHTML = input.uiData.conf.selectIcon;
-                    input.uiData.placeholder.classList.add(css.controlBoxPlaceholder);
-                    input.uiData.placeholder.textContent = input.uiData.conf.placeholder;
-                    input.after(input.uiData.selectBtn);
-                    input.before(input.uiData.controlBox);
+                    input.oninvalid = () => input.UI.control.classList.add(UI.css.invalidForm);
+                    input.onblur = () => input.UI.control.classList.remove(UI.css.focusForm);
+                    input.UI.control.classList.add(css.control, UI.css.noScrollbar);
+                    input.UI.choiceButton.classList.add(UI.css.formComponentControl);
+                    input.UI.choiceButton.innerHTML = input.UI.conf.choiceIcon;
+                    input.UI.placeholder.classList.add(css.controlPlaceholder);
+                    input.UI.placeholder.textContent = input.UI.conf.placeholder;
+                    input.after(input.UI.choiceButton);
+                    input.before(input.UI.control);
                     this.render(input);
                     // Помітити елемент як активований
                     UI.#markActivate(input, selfName);
@@ -1068,27 +1068,27 @@ const UI = new class {
             render(input = null) {
                 const worker = input => {
                     input.dispatchEvent(new CustomEvent(`UI.beforeRender`));
-                    input.uiData.controlBox.innerHTML = ``;
-                    input.uiData.componentBox.removeAttribute(`title`);
+                    input.UI.control.innerHTML = ``;
+                    input.UI.component.removeAttribute(`title`);
                     let files = input.files;
                     let totalSize = 0;
                     if (files && files.length) {
                         [...files].forEach(file => {
-                            let controlBoxItem = document.createElement(`span`);
-                            let controlBoxItemText = document.createElement(`span`);
-                            controlBoxItem.classList.add(css.controlBoxItem);
-                            controlBoxItemText.classList.add(css.controlBoxItemText);
-                            controlBoxItemText.textContent = file.name;
-                            controlBoxItem.append(controlBoxItemText);
-                            input.uiData.controlBox.append(controlBoxItem);
+                            let controlItem = document.createElement(`span`);
+                            let controlItemText = document.createElement(`span`);
+                            controlItem.classList.add(css.controlItem);
+                            controlItemText.classList.add(css.controlItemText);
+                            controlItemText.textContent = file.name;
+                            controlItem.append(controlItemText);
+                            input.UI.control.append(controlItem);
                             totalSize += file.size;
                         });
-                        input.uiData.componentBox.title = `Total size: ${(totalSize / 1048576).toFixed(3)} Mb`;
+                        input.UI.component.title = `Total size: ${(totalSize / 1048576).toFixed(3)} Mb`;
                     } else {
-                        input.uiData.controlBox.append(input.uiData.placeholder);
+                        input.UI.control.append(input.UI.placeholder);
                     }
-                    input.uiData.controlBox.classList.toggle(UI.css.requiredForm, input.required);
-                    input.uiData.componentBox.classList.toggle(UI.css.disabledForm, input.disabled);
+                    input.UI.control.classList.toggle(UI.css.requiredForm, input.required);
+                    input.UI.component.classList.toggle(UI.css.disabledForm, input.disabled);
                     input.dispatchEvent(new CustomEvent(`UI.rendered`));
                 };
                 // Опрацювати всю колекцію якщо поле не передано
@@ -1108,10 +1108,10 @@ const UI = new class {
                     input.onchange = null;
                     input.oninvalid = null;
                     input.onblur = null;
-                    if (input.form) input.form.removeEventListener(`reset`, input.uiData.resetHandler);
+                    if (input.form) input.form.removeEventListener(`reset`, input.UI.resetHandler);
                     UI.#unmarkActivate(input, selfName);
                     UI.#formComponent.unwrap(input);
-                    delete input.uiData;
+                    delete input.UI;
                     input.dispatchEvent(new CustomEvent(`UI.removed`));
                 });
                 return this;
@@ -1184,28 +1184,28 @@ const UI = new class {
                 // Активувати колекцію
                 collection.forEach(input => {
                     // Об'єкт з публічними полями елемента колекції
-                    input.uiData = {};
-                    input.uiData.conf = Object.assign({}, defConf, userConf, UI.#getDatasetConf(input));
+                    input.UI = {};
+                    input.UI.conf = Object.assign({}, defConf, userConf, UI.#getDatasetConf(input));
                     // Додати елементи, класи та слухачів подій
-                    input.uiData.componentBox = UI.#formComponent.wrap(input);
-                    input.uiData.infobox = document.createElement(`span`);
-                    input.uiData.infobox.classList.add(UI.css.formComponentControl, css.infobox);
-                    input.uiData.infobox.innerText = input.value || `0`;
-                    input.after(input.uiData.infobox);
+                    input.UI.component = UI.#formComponent.wrap(input);
+                    input.UI.infobox = document.createElement(`span`);
+                    input.UI.infobox.classList.add(UI.css.formComponentControl, css.infobox);
+                    input.UI.infobox.innerText = input.value || `0`;
+                    input.after(input.UI.infobox);
                     if (input.disabled) {
-                        input.uiData.componentBox.classList.add(UI.css.disabledForm);
+                        input.UI.component.classList.add(UI.css.disabledForm);
                         input.value = parseFloat(input.min) || 0;
                     } else {
                         input.oninput = () => {
                             input.dispatchEvent(new CustomEvent(`UI.beforeRender`));
-                            input.uiData.infobox.innerText = input.value;
+                            input.UI.infobox.innerText = input.value;
                             input.dispatchEvent(new CustomEvent(`UI.rendered`));
                         }
                     }
                     if (input.form) {
-                        input.uiData.resetHandler = () =>
-                            setTimeout(() => input.uiData.infobox.innerText = input.value || `0`, 100);
-                        input.form.addEventListener(`reset`, input.uiData.resetHandler);
+                        input.UI.resetHandler = () =>
+                            setTimeout(() => input.UI.infobox.innerText = input.value || `0`, 100);
+                        input.form.addEventListener(`reset`, input.UI.resetHandler);
                     }
                     // Помітити елемент як активований
                     UI.#markActivate(input, selfName);
@@ -1223,10 +1223,10 @@ const UI = new class {
                     input.dispatchEvent(new CustomEvent(`UI.beforeRemove`));
                     // Повернути елементи в стан до активації
                     input.oninput = null;
-                    if (input.form) input.form.removeEventListener(`reset`, input.uiData.resetHandler)
+                    if (input.form) input.form.removeEventListener(`reset`, input.UI.resetHandler)
                     UI.#unmarkActivate(input, selfName);
                     UI.#formComponent.unwrap(input);
-                    delete input.uiData;
+                    delete input.UI;
                     input.dispatchEvent(new CustomEvent(`UI.removed`));
                 });
                 return this;
@@ -1310,54 +1310,54 @@ const UI = new class {
                 // Активувати колекцію
                 collection.forEach(input => {
                     // Об'єкт з публічними полями елемента колекції
-                    input.uiData = {};
-                    input.uiData.conf = Object.assign({}, defConf, userConf, UI.#getDatasetConf(input));
-                    input.uiData.componentBox = UI.#formComponent.wrap(input);
-                    input.uiData.incBtn = document.createElement(`span`);
-                    input.uiData.decBtn = document.createElement(`span`);
-                    input.uiData.hasDisabled = (input.disabled || input.readOnly);
-                    input.uiData.step = () => parseFloat(input.step) || 1;
-                    input.uiData.max = () => parseFloat(input.max);
-                    input.uiData.min = () => parseFloat(input.min);
-                    input.uiData.val = () => parseFloat(input.value);
-                    input.uiData.up = () => input.uiData.val() + input.uiData.step();
-                    input.uiData.down = () => input.uiData.val() - input.uiData.step();
-                    input.uiData.setValid = () => input.classList.remove(UI.css.invalidForm);
-                    input.uiData.setInvalid = () => input.classList.add(UI.css.invalidForm);
-                    input.uiData.initVal = () => {
-                        if (!input.uiData.hasDisabled && isNaN(input.uiData.val())) {
-                            input.value = (input.value || input.uiData.min() || input.uiData.max() || 0);
+                    input.UI = {};
+                    input.UI.conf = Object.assign({}, defConf, userConf, UI.#getDatasetConf(input));
+                    input.UI.component = UI.#formComponent.wrap(input);
+                    input.UI.incButton = document.createElement(`span`);
+                    input.UI.decButton = document.createElement(`span`);
+                    input.UI.hasDisabled = (input.disabled || input.readOnly);
+                    input.UI.step = () => parseFloat(input.step) || 1;
+                    input.UI.max = () => parseFloat(input.max);
+                    input.UI.min = () => parseFloat(input.min);
+                    input.UI.val = () => parseFloat(input.value);
+                    input.UI.up = () => input.UI.val() + input.UI.step();
+                    input.UI.down = () => input.UI.val() - input.UI.step();
+                    input.UI.setValid = () => input.classList.remove(UI.css.invalidForm);
+                    input.UI.setInvalid = () => input.classList.add(UI.css.invalidForm);
+                    input.UI.initVal = () => {
+                        if (!input.UI.hasDisabled && isNaN(input.UI.val())) {
+                            input.value = (input.value || input.UI.min() || input.UI.max() || 0);
                         }
                     };
                     // Додати елементи, класи та слухачів подій
-                    input.uiData.componentBox.title = input.uiData.conf.title;
-                    input.uiData.incBtn.classList.add(UI.css.formComponentControl, css.inc);
-                    input.uiData.decBtn.classList.add(UI.css.formComponentControl, css.dec);
-                    input.uiData.incBtn.innerHTML = input.uiData.conf.incIcon;
-                    input.uiData.decBtn.innerHTML = input.uiData.conf.decIcon;
-                    input.after(input.uiData.decBtn, input.uiData.incBtn);
-                    input.uiData.incBtn.onclick = e => {
+                    input.UI.component.title = input.UI.conf.title;
+                    input.UI.incButton.classList.add(UI.css.formComponentControl, css.inc);
+                    input.UI.decButton.classList.add(UI.css.formComponentControl, css.dec);
+                    input.UI.incButton.innerHTML = input.UI.conf.incIcon;
+                    input.UI.decButton.innerHTML = input.UI.conf.decIcon;
+                    input.after(input.UI.decButton, input.UI.incButton);
+                    input.UI.incButton.onclick = e => {
                         e.preventDefault();
                         this.setVal(`inc`, input);
                     };
-                    input.uiData.decBtn.onclick = e => {
+                    input.UI.decButton.onclick = e => {
                         e.preventDefault();
                         this.setVal(`dec`, input);
                     };
                     input.oninput = () => {
-                        let max = input.uiData.max();
-                        let min = input.uiData.min();
-                        let val = input.uiData.val();
-                        if (input.uiData.hasDisabled) {
+                        let max = input.UI.max();
+                        let min = input.UI.min();
+                        let val = input.UI.val();
+                        if (input.UI.hasDisabled) {
                             input.value = min;
                             return;
                         }
-                        input.uiData.setValid();
-                        if (isNaN(val)) input.uiData.setInvalid();
+                        input.UI.setValid();
+                        if (isNaN(val)) input.UI.setInvalid();
                         else if (!isNaN(max) && val > max) input.value = max;
                         else if (!isNaN(min) && val < min) input.value = min;
                     };
-                    input.uiData.initVal();
+                    input.UI.initVal();
                     // Помітити елемент як активований
                     UI.#markActivate(input, selfName);
                 });
@@ -1373,20 +1373,20 @@ const UI = new class {
              */
             setVal(action, input = null) {
                 const worker = input => {
-                    if (input.uiData.hasDisabled) return;
-                    input.uiData.initVal();
-                    input.uiData.setValid();
+                    if (input.UI.hasDisabled) return;
+                    input.UI.initVal();
+                    input.UI.setValid();
                     input.dispatchEvent(new CustomEvent(`UI.beforeSetVal`));
                     if (action === `inc`) {
                         input.dispatchEvent(new CustomEvent(`UI.beforeInc`));
-                        let max = input.uiData.max();
-                        let up = input.uiData.up();
+                        let max = input.UI.max();
+                        let up = input.UI.up();
                         input.value = isNaN(max) ? up : max > up ? up : max;
                         input.dispatchEvent(new CustomEvent(`UI.inc`));
                     } else if (action === `dec`) {
                         input.dispatchEvent(new CustomEvent(`UI.beforeDec`));
-                        let min = input.uiData.min();
-                        let down = input.uiData.down();
+                        let min = input.UI.min();
+                        let down = input.UI.down();
                         input.value = isNaN(min) ? down : min < down ? down : min;
                         input.dispatchEvent(new CustomEvent(`UI.dec`));
                     }
@@ -1411,7 +1411,7 @@ const UI = new class {
                     input.oninput = null;
                     UI.#unmarkActivate(input, selfName);
                     UI.#formComponent.unwrap(input);
-                    delete input.uiData;
+                    delete input.UI;
                     input.dispatchEvent(new CustomEvent(`UI.removed`));
                 });
                 return this;
@@ -1454,8 +1454,8 @@ const UI = new class {
      * @param {boolean} [userConf.withSearch = true] Чи потрібен в компоненті пошук по опціях спаску
      * @param {string} [userConf.selectPlaceholder = `Make a choice`] Заповнювач порожнього поля списку
      * @param {string} [userConf.searchPlaceholder = `Search on the list`] Заповнювач порожнього поля пошуку по опціях списку
-     * @param {string} [userConf.arrowIconDown = `˅`] Іконка кнопки, що показує dropdown компонента. Може містити HTML
-     * @param {string} [userConf.arrowIconUp = `˄`] Іконка кнопки, що ховає dropdown компонента. Може містити HTML
+     * @param {string} [userConf.openIcon = `˅`] Іконка кнопки, що показує dropdown компонента. Може містити HTML
+     * @param {string} [userConf.closeIcon = `˄`] Іконка кнопки, що ховає dropdown компонента. Може містити HTML
      * @param {string} [userConf.delItemIcon = `✖`] Іконка кнопки видалення обраної опції в multiple компоненті. Може містити HTML
      * @return {Object} Клас-будівельник
      * @see https://kroloburet.github.io/UI/#select
@@ -1470,8 +1470,8 @@ const UI = new class {
             withSearch: false,
             selectPlaceholder: `Make a choice`,
             searchPlaceholder: `Search on the list`,
-            arrowIconDown: `<i class="fa-solid fa-chevron-down"></i>`,
-            arrowIconUp: `<i class="fa-solid fa-chevron-up"></i>`,
+            openIcon: `<i class="fa-solid fa-chevron-down"></i>`,
+            closeIcon: `<i class="fa-solid fa-chevron-up"></i>`,
             delItemIcon: `<i class="fa-solid fa-xmark"></i>`,
         };
 
@@ -1482,12 +1482,12 @@ const UI = new class {
             dropdownList: `UI_${selfName}-dropdown-list`,
             dropdownItem: `UI_${selfName}-dropdown-item`,
             dropdownShow: `UI_${selfName}-dropdown-show`,
-            controlBox: `UI_${selfName}-control-box`,
-            controlBoxItem: `UI_${selfName}-control-box-item`,
-            controlBoxItemMultiply: `UI_${selfName}-control-box-item-multiple`,
-            controlBoxItemText: `UI_${selfName}-control-box-item-text`,
-            controlBoxItemDel: `UI_${selfName}-control-box-item-del`,
-            controlBoxPlaceholder: `UI_${selfName}-control-box-placeholder`,
+            control: `UI_${selfName}-control`,
+            controlItem: `UI_${selfName}-control-item`,
+            controlItemMultiply: `UI_${selfName}-control-item-multiple`,
+            controlItemText: `UI_${selfName}-control-item-text`,
+            controlItemDel: `UI_${selfName}-control-item-del`,
+            controlPlaceholder: `UI_${selfName}-control-placeholder`,
             selectSearchInput: `UI_${selfName}-search-input`,
         };
 
@@ -1515,60 +1515,60 @@ const UI = new class {
                 // Активувати колекцію
                 collection.forEach(select => {
                     // Об'єкт з публічними полями елемента колекції
-                    select.uiData = {};
-                    select.uiData.conf = Object.assign({}, defConf, userConf, UI.#getDatasetConf(select));
-                    select.uiData.componentBox = UI.#formComponent.wrap(select);
-                    select.uiData.overlay = document.createElement(`div`);
-                    select.uiData.controlBox = document.createElement(`div`);
-                    select.uiData.searchInput = document.createElement(`input`);
-                    select.uiData.dropdown = document.createElement(`div`);
-                    select.uiData.dropdownList = document.createElement(`div`);
-                    select.uiData.dropdownShowBtn = document.createElement(`span`);
-                    select.uiData.hasDisabled = select.disabled;
-                    select.uiData.hasMultiple = select.multiple;
-                    select.uiData.hasSearch = select.uiData.conf.withSearch;
-                    select.uiData.dropdownItems = [];
-                    select.uiData.controlBoxPlaceholder;
+                    select.UI = {};
+                    select.UI.conf = Object.assign({}, defConf, userConf, UI.#getDatasetConf(select));
+                    select.UI.component = UI.#formComponent.wrap(select);
+                    select.UI.overlay = document.createElement(`div`);
+                    select.UI.control = document.createElement(`div`);
+                    select.UI.dropdown = document.createElement(`div`);
+                    select.UI.dropdownList = document.createElement(`div`);
+                    select.UI.dropdownToggleButton = document.createElement(`span`);
+                    select.UI.hasDisabled = select.disabled;
+                    select.UI.hasMultiple = select.multiple;
+                    select.UI.hasSearch = select.UI.conf.withSearch;
+                    select.UI.dropdownItems = [];
+                    select.UI.controlPlaceholder;
                     // Побудувати компонент
-                    select.uiData.dropdownShowBtn.classList.add(UI.css.formComponentControl);
-                    select.uiData.dropdownShowBtn.innerHTML = select.uiData.conf.arrowIconDown;
-                    select.uiData.dropdown.classList.add(css.dropdown);
-                    select.uiData.dropdownList.classList.add(css.dropdownList, UI.css.scrollbar);
-                    select.uiData.controlBox.classList.add(css.controlBox, UI.css.noScrollbar);
-                    select.uiData.overlay.classList.add(css.overlay)
-                    select.before(select.uiData.controlBox);
-                    select.after(select.uiData.dropdown, select.uiData.dropdownShowBtn);
-                    select.uiData.dropdown.append(select.uiData.dropdownList);
-                    if (select.uiData.hasSearch) {
-                        select.uiData.searchInput.type = `text`;
-                        select.uiData.searchInput.classList.add(css.selectSearchInput);
-                        select.uiData.searchInput.placeholder = select.uiData.conf.searchPlaceholder;
-                        select.uiData.searchInput.oninput = () => this.search(select.uiData.searchInput.value, select);
-                        select.uiData.dropdown.prepend(select.uiData.searchInput);
+                    select.UI.dropdownToggleButton.classList.add(UI.css.formComponentControl);
+                    select.UI.dropdownToggleButton.innerHTML = select.UI.conf.openIcon;
+                    select.UI.dropdown.classList.add(css.dropdown);
+                    select.UI.dropdownList.classList.add(css.dropdownList, UI.css.scrollbar);
+                    select.UI.control.classList.add(css.control, UI.css.noScrollbar);
+                    select.UI.overlay.classList.add(css.overlay)
+                    select.before(select.UI.control);
+                    select.after(select.UI.dropdown, select.UI.dropdownToggleButton);
+                    select.UI.dropdown.append(select.UI.dropdownList);
+                    if (select.UI.hasSearch) {
+                        select.UI.searchInput = document.createElement(`input`);
+                        select.UI.searchInput.type = `text`;
+                        select.UI.searchInput.classList.add(css.selectSearchInput);
+                        select.UI.searchInput.placeholder = select.UI.conf.searchPlaceholder;
+                        select.UI.searchInput.oninput = () => this.search(select.UI.searchInput.value, select);
+                        select.UI.dropdown.prepend(select.UI.searchInput);
                     }
                     let hasDefaultSelected = [...select.options].filter(opt => opt.defaultSelected).length;
-                    if (select.uiData.conf.selectPlaceholder && !hasDefaultSelected) select.selectedIndex = -1;
+                    if (select.UI.conf.selectPlaceholder && !hasDefaultSelected) select.selectedIndex = -1;
                     this.render(select);
                     // Слухачі подій для показу та приховування dropdown
-                    select.uiData.overlay.onclick = () => this.hideDropdown(select);
-                    select.uiData.componentBox.onclick = e => {
+                    select.UI.overlay.onclick = () => this.hideDropdown(select);
+                    select.UI.component.onclick = e => {
                         let control = [
-                            select.uiData.controlBox,
-                            select.uiData.controlBoxItemText,
-                            select.uiData.controlBoxPlaceholder,
-                            select.uiData.dropdownShowBtn,
-                            select.uiData.dropdownShowBtn.firstChild,
+                            select.UI.control,
+                            select.UI.controlItemText,
+                            select.UI.controlPlaceholder,
+                            select.UI.dropdownToggleButton,
+                            select.UI.dropdownToggleButton.firstChild,
                         ].includes(e.target);
                         if (control) {
-                            let show = select.uiData.dropdown.classList.contains(css.dropdownShow);
+                            let show = select.UI.dropdown.classList.contains(css.dropdownShow);
                             show ? this.hideDropdown(select) : this.showDropdown(select);
                         }
                     };
                     // Слухачі подій поля
-                    select.oninvalid = () => select.uiData.controlBox.classList.add(UI.css.invalidForm);
+                    select.oninvalid = () => select.UI.control.classList.add(UI.css.invalidForm);
                     if (select.form) {
-                        select.uiData.resetHandler = () => setTimeout(() => this.render(select), 100);
-                        select.form.addEventListener(`reset`, select.uiData.resetHandler);
+                        select.UI.resetHandler = () => setTimeout(() => this.render(select), 100);
+                        select.form.addEventListener(`reset`, select.UI.resetHandler);
                     }
                     // Помітити елемент як активований
                     UI.#markActivate(select, selfName);
@@ -1584,14 +1584,14 @@ const UI = new class {
              */
             #addPlaceholder(select = null) {
                 const worker = select => {
-                    if (!select.uiData.conf.selectPlaceholder) return;
+                    if (!select.UI.conf.selectPlaceholder) return;
                     select.selectedIndex = -1;
-                    select.data = select.uiData.hasMultiple ? [] : ``;
-                    select.uiData.controlBox.innerHTML = ``;
-                    select.uiData.controlBoxPlaceholder = document.createElement(`span`);
-                    select.uiData.controlBoxPlaceholder.classList.add(css.controlBoxPlaceholder);
-                    select.uiData.controlBoxPlaceholder.textContent = select.uiData.conf.selectPlaceholder;
-                    select.uiData.controlBox.prepend(select.uiData.controlBoxPlaceholder);
+                    select.UI.value = select.UI.hasMultiple ? [] : ``;
+                    select.UI.control.innerHTML = ``;
+                    select.UI.controlPlaceholder = document.createElement(`span`);
+                    select.UI.controlPlaceholder.classList.add(css.controlPlaceholder);
+                    select.UI.controlPlaceholder.textContent = select.UI.conf.selectPlaceholder;
+                    select.UI.control.prepend(select.UI.controlPlaceholder);
                 }
                 // Опрацювати всю колекцію якщо поле не передано
                 !(select instanceof HTMLElement) ? collection.forEach(worker) : worker(select);
@@ -1606,8 +1606,8 @@ const UI = new class {
              */
             #setDropdownPosition(select = null) {
                 const worker = select => {
-                    if (select.uiData.hasDisabled || !select.uiData.dropdownItems.length) return;
-                    const dropdown = select.uiData.dropdown;
+                    if (select.UI.hasDisabled || !select.UI.dropdownItems.length) return;
+                    const dropdown = select.UI.dropdown;
                     const dropdownDistanceToBtm = window.innerHeight - dropdown.getBoundingClientRect().bottom;
                     const dropdownDistanceToTop = dropdown.getBoundingClientRect().top;
                     const dropdownDistanceToLeft = dropdown.getBoundingClientRect().left;
@@ -1643,14 +1643,14 @@ const UI = new class {
              */
             showDropdown(select = null) {
                 const worker = select => {
-                    if (select.uiData.hasDisabled || !select.uiData.dropdownItems.length) return;
+                    if (select.UI.hasDisabled || !select.UI.dropdownItems.length) return;
                     select.dispatchEvent(new CustomEvent(`UI.beforeDropdownShow`));
-                    select.after(select.uiData.overlay);
-                    select.uiData.controlBox.classList.contains(UI.css.invalidForm)
-                        ? select.uiData.controlBox.classList.replace(UI.css.invalidForm, UI.css.focusForm)
-                        : select.uiData.controlBox.classList.add(UI.css.focusForm);
-                    select.uiData.dropdown.classList.add(css.dropdownShow);
-                    select.uiData.dropdownShowBtn.innerHTML = select.uiData.conf.arrowIconUp;
+                    select.after(select.UI.overlay);
+                    select.UI.control.classList.contains(UI.css.invalidForm)
+                        ? select.UI.control.classList.replace(UI.css.invalidForm, UI.css.focusForm)
+                        : select.UI.control.classList.add(UI.css.focusForm);
+                    select.UI.dropdown.classList.add(css.dropdownShow);
+                    select.UI.dropdownToggleButton.innerHTML = select.UI.conf.closeIcon;
                     this.#setDropdownPosition(select);
                     select.dispatchEvent(new CustomEvent(`UI.dropdownShowed`));
                 }
@@ -1668,13 +1668,13 @@ const UI = new class {
              */
             hideDropdown(select = null) {
                 const worker = select => {
-                    if (!select.uiData || select.uiData.hasDisabled) return;
+                    if (!select.UI || select.UI.hasDisabled) return;
                     select.dispatchEvent(new CustomEvent(`UI.beforeDropdownHide`));
-                    select.uiData.overlay.remove();
-                    select.uiData.componentBox.style.zIndex = `auto`;
-                    select.uiData.dropdown.classList.remove(css.dropdownShow);
-                    select.uiData.controlBox.classList.remove(UI.css.focusForm);
-                    select.uiData.dropdownShowBtn.innerHTML = select.uiData.conf.arrowIconDown;
+                    select.UI.overlay.remove();
+                    select.UI.component.style.zIndex = `auto`;
+                    select.UI.dropdown.classList.remove(css.dropdownShow);
+                    select.UI.control.classList.remove(UI.css.focusForm);
+                    select.UI.dropdownToggleButton.innerHTML = select.UI.conf.openIcon;
                     select.dispatchEvent(new CustomEvent(`UI.dropdownHidden`));
                 };
                 // Опрацювати всю колекцію якщо поле не передано
@@ -1694,13 +1694,13 @@ const UI = new class {
             search(query, select = null) {
                 const worker = select => {
                     if (
-                        select.uiData.hasDisabled ||
-                        !select.uiData.hasSearch ||
-                        !select.uiData.dropdownItems.length
+                        select.UI.hasDisabled ||
+                        !select.UI.hasSearch ||
+                        !select.UI.dropdownItems.length
                     ) return;
                     select.dispatchEvent(new CustomEvent(`UI.beforeSearch`));
                     const q = query.toLowerCase();
-                    select.uiData.dropdownItems.forEach((item, index) => {
+                    select.UI.dropdownItems.forEach((item, index) => {
                         item.hidden = !(
                             item.textContent.toLowerCase().indexOf(q) > -1 ||
                             select.options[index].dataset.findOf?.toLowerCase().indexOf(q) > -1
@@ -1726,15 +1726,15 @@ const UI = new class {
                 if (typeof val !== `boolean`) throw TypeError(`Argument "val" is ${val}, true or false expected!`);
                 if (!indexes.length) throw TypeError(`Argument "indexes" is empty!`);
                 const worker = select => {
-                    if (select.uiData.hasDisabled) return;
+                    if (select.UI.hasDisabled) return;
                     select.dispatchEvent(new CustomEvent(`UI.beforeSelected`, {detail: {indexes, selected: val}}));
                     for (let index of indexes) {
                         let option = select.item(index);
-                        if (option.disabled || (!select.uiData.hasMultiple && index !== indexes[0])) break;
+                        if (option.disabled || (!select.UI.hasMultiple && index !== indexes[0])) break;
                         option.selected = val;
                     }
                     this.render(select);
-                    if (!select.uiData.hasMultiple || !select.uiData.dropdownItems.length) this.hideDropdown(select);
+                    if (!select.UI.hasMultiple || !select.UI.dropdownItems.length) this.hideDropdown(select);
                     select.dispatchEvent(new Event(`change`));
                     select.dispatchEvent(new CustomEvent(`UI.selected`, {detail: {indexes, selected: val}}));
                 };
@@ -1753,10 +1753,10 @@ const UI = new class {
                 const worker = select => {
                     select.dispatchEvent(new CustomEvent(`UI.beforeRender`));
                     // Обнулити дані
-                    let data = select.uiData.hasMultiple ? [] : ``;
-                    select.uiData.controlBox.innerHTML = ``;
-                    select.uiData.dropdownList.innerHTML = ``;
-                    select.uiData.dropdownItems = [];
+                    let value = select.UI.hasMultiple ? [] : ``;
+                    select.UI.control.innerHTML = ``;
+                    select.UI.dropdownList.innerHTML = ``;
+                    select.UI.dropdownItems = [];
                     [...select.options].forEach(option => {
                         // Додати опцію у dropdown
                         if (!option.selected && !option.disabled) {
@@ -1764,42 +1764,42 @@ const UI = new class {
                             dropdownItem.classList.add(css.dropdownItem);
                             dropdownItem.innerHTML = option.dataset.content || option.textContent;
                             dropdownItem.onclick = () => this.selected(true, [option.index], select);
-                            select.uiData.dropdownItems[option.index] = dropdownItem;
-                            select.uiData.dropdownList.append(dropdownItem);
+                            select.UI.dropdownItems[option.index] = dropdownItem;
+                            select.UI.dropdownList.append(dropdownItem);
                         }
                         // Додати як обрані
                         if (option.selected) {
-                            let controlBoxItem = document.createElement(`span`);
-                            let controlBoxItemText = document.createElement(`span`);
-                            let controlBoxItemClass = select.uiData.hasMultiple
-                                ? css.controlBoxItemMultiply
-                                : css.controlBoxItem;
-                            select.uiData.hasMultiple ? data.push(option.value) : data = select.value;
-                            controlBoxItem.classList.add(controlBoxItemClass);
-                            controlBoxItemText.classList.add(css.controlBoxItemText);
-                            controlBoxItemText.innerHTML = option.dataset.content || option.textContent;
-                            controlBoxItemText.onclick = () => this.showDropdown(select);
-                            controlBoxItem.append(controlBoxItemText);
-                            select.uiData.controlBox.append(controlBoxItem);
-                            if (select.uiData.hasMultiple) {
-                                let controlBoxItemDel = document.createElement(`span`);
-                                controlBoxItemDel.classList.add(css.controlBoxItemDel);
-                                controlBoxItemDel.innerHTML = select.uiData.conf.delItemIcon;
-                                controlBoxItemDel.onclick = () => this.selected(false, [option.index], select);
-                                controlBoxItem.append(controlBoxItemDel);
+                            let controlItem = document.createElement(`span`);
+                            let controlItemText = document.createElement(`span`);
+                            let controlItemClass = select.UI.hasMultiple
+                                ? css.controlItemMultiply
+                                : css.controlItem;
+                            select.UI.hasMultiple ? value.push(option.value) : value = select.value;
+                            controlItem.classList.add(controlItemClass);
+                            controlItemText.classList.add(css.controlItemText);
+                            controlItemText.innerHTML = option.dataset.content || option.textContent;
+                            controlItemText.onclick = () => this.showDropdown(select);
+                            controlItem.append(controlItemText);
+                            select.UI.control.append(controlItem);
+                            if (select.UI.hasMultiple) {
+                                let controlItemDel = document.createElement(`span`);
+                                controlItemDel.classList.add(css.controlItemDel);
+                                controlItemDel.innerHTML = select.UI.conf.delItemIcon;
+                                controlItemDel.onclick = () => this.selected(false, [option.index], select);
+                                controlItem.append(controlItemDel);
                             }
                         }
                     });
                     // Додати placeholder
                     if (!select.value) this.#addPlaceholder(select);
                     //
-                    select.uiData.controlBox.classList.toggle(UI.css.requiredForm, select.required);
-                    select.uiData.componentBox.classList.toggle(UI.css.disabledForm, select.uiData.hasDisabled);
+                    select.UI.control.classList.toggle(UI.css.requiredForm, select.required);
+                    select.UI.component.classList.toggle(UI.css.disabledForm, select.UI.hasDisabled);
                     // Якщо є запит, показати результат пошуку
-                    let searchVal = select.uiData.searchInput?.value;
+                    let searchVal = select.UI.searchInput?.value;
                     if (searchVal) this.search(searchVal, select);
                     // Додати властивість полю для отримання значення {Array|String}
-                    select.data = data;
+                    select.UI.value = value;
                     select.dispatchEvent(new CustomEvent(`UI.rendered`));
                 };
                 // Опрацювати всю колекцію якщо поле не передано
@@ -1818,11 +1818,10 @@ const UI = new class {
                     select.dispatchEvent(new CustomEvent(`UI.beforeRemove`));
                     // Повернути елементи в стан до активації
                     select.oninvalid = null;
-                    if (select.form) select.form.removeEventListener(`reset`, select.uiData.resetHandler);
+                    if (select.form) select.form.removeEventListener(`reset`, select.UI.resetHandler);
                     UI.#unmarkActivate(select, selfName);
                     UI.#formComponent.unwrap(select);
-                    delete select.data;
-                    delete select.uiData;
+                    delete select.UI;
                     select.dispatchEvent(new CustomEvent(`UI.removed`));
                 });
                 return this;
@@ -1855,7 +1854,7 @@ const UI = new class {
      *
      * @param {Object} userConf Конфігурація користувача
      * @param {string} [userConf.selector = `UI_Menu`] Селектор ul елемента/тів для опрацювання
-     * @param {string} [userConf.btnIcon = `☰`] Іконка кнопки, яка покаже/сховає меню на малих пристроях. Може містити HTML.
+     * @param {string} [userConf.toggleIcon = `☰`] Іконка кнопки, яка покаже/сховає меню на малих пристроях. Може містити HTML.
      * @param {boolean} [userConf.markLink = false] Чи позначати пункт меню якщо в ньому є посилання на поточну сторінку
      * @return {Object} Клас-будівельник
      * @see https://kroloburet.github.io/UI/#menu
@@ -1867,15 +1866,15 @@ const UI = new class {
         // CSS селектори які використовує метод
         const css = {
             show: `UI_${selfName}-show`,
-            showBtn: `UI_${selfName}-show-btn`,
-            showSubBtn: `UI_${selfName}-show-sub-btn`,
+            toggleButton: `UI_${selfName}-toggle-btn`,
+            subToggleButton: `UI_${selfName}-sub-toggle-btn`,
             mark: `UI_${selfName}-mark`,
         };
 
         // Конфігурація за замовчуванням
         const defConf = {
             selector: `.UI_${selfName}`,
-            btnIcon: `&#8801;`,
+            toggleIcon: `<i class="fa-solid fa-bars"></i>`,
             markLink: false,
         };
 
@@ -1903,21 +1902,21 @@ const UI = new class {
                 // Активувати колекцію
                 collection.forEach(ul => {
                     // Об'єкт з публічними полями елемента колекції
-                    ul.uiData = {};
-                    ul.uiData.conf = Object.assign({}, defConf, userConf, UI.#getDatasetConf(ul));
-                    ul.uiData.showBtn = document.createElement(`i`);
-                    ul.uiData.showBtn.classList.add(css.showBtn);
-                    ul.uiData.showBtn.innerHTML = ul.uiData.conf.btnIcon;
-                    ul.uiData.showBtn.onclick = () => this.toggleShow(null, ul);
-                    ul.uiData.showSubBtns = [];
-                    ul.after(ul.uiData.showBtn);
+                    ul.UI = {};
+                    ul.UI.conf = Object.assign({}, defConf, userConf, UI.#getDatasetConf(ul));
+                    ul.UI.toggleButton = document.createElement(`i`);
+                    ul.UI.toggleButton.classList.add(css.toggleButton);
+                    ul.UI.toggleButton.innerHTML = ul.UI.conf.toggleIcon;
+                    ul.UI.toggleButton.onclick = () => this.toggleShow(null, ul);
+                    ul.UI.subToggleButtons = [];
+                    ul.after(ul.UI.toggleButton);
                     ul.querySelectorAll(`:scope ul`).forEach(subUl => {
-                        const showSubBtn = document.createElement(`i`);
-                        showSubBtn.classList.add(css.showSubBtn);
-                        showSubBtn.innerHTML = ul.uiData.conf.btnIcon;
-                        showSubBtn.onclick = () => this.toggleShow(null, subUl);
-                        ul.uiData.showSubBtns.push(showSubBtn);
-                        subUl.before(showSubBtn);
+                        const subToggleButton = document.createElement(`i`);
+                        subToggleButton.classList.add(css.subToggleButton);
+                        subToggleButton.innerHTML = ul.UI.conf.toggleIcon;
+                        subToggleButton.onclick = () => this.toggleShow(null, subUl);
+                        ul.UI.subToggleButtons.push(subToggleButton);
+                        subUl.before(subToggleButton);
                     });
                     this.markLink(ul);
                     // Помітити елемент як активований
@@ -1934,11 +1933,11 @@ const UI = new class {
              */
             markLink(ul = null) {
                 const worker = ul => {
-                    if (!ul.uiData.conf.markLink) return;
+                    if (!ul.UI.conf.markLink) return;
                     const pageLocation = [`${location.pathname}${location.search}`, location.pathname, location.href];
                     ul.querySelectorAll(`:scope a`).forEach(a => {
                         if (pageLocation.includes(a.href))
-                            a.closest(`${ul.uiData.conf.selector} > li`).classList.add(css.mark);
+                            a.closest(`${ul.UI.conf.selector} > li`).classList.add(css.mark);
                     });
                 };
                 // Опрацювати всю колекцію якщо елемент не передано
@@ -1985,10 +1984,10 @@ const UI = new class {
                 collection.filter(el => UI.#isActivate(el, selfName)).forEach(ul => {
                     ul.dispatchEvent(new CustomEvent(`UI.beforeRemove`));
                     // Повернути елементи в стан до активації
-                    ul.uiData.showBtn.remove();
-                    ul.uiData.showSubBtns.forEach(btn => btn.remove());
+                    ul.UI.toggleButton.remove();
+                    ul.UI.subToggleButtons.forEach(btn => btn.remove());
                     UI.#unmarkActivate(ul, selfName);
-                    delete ul.uiData;
+                    delete ul.UI;
                     ul.dispatchEvent(new CustomEvent(`UI.removed`));
                 });
                 return this;
