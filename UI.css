@@ -473,6 +473,10 @@ ul, ol {
     list-style-position: inside;
 }
 
+ol {
+    list-style-type: decimal;
+}
+
 li ul, li ol {
     margin-bottom: 0;
 }
