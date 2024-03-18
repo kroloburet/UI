@@ -1761,7 +1761,7 @@ const UI = new class {
                         // Додати опцію у dropdown
                         if (!option.selected && !option.disabled) {
                             let dropdownItem = document.createElement(`div`);
-                            dropdownItem.classList.add(css.dropdownItem);
+                            dropdownItem.classList.add(css.dropdownItem, ...option.classList);
                             dropdownItem.innerHTML = option.dataset.content || option.textContent;
                             dropdownItem.onclick = () => this.selected(true, [option.index], select);
                             select.UI.dropdownItems[option.index] = dropdownItem;
