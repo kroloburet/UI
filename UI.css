@@ -13,7 +13,6 @@
  **************************/
 
 @import url("https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css");
-@import "https://fonts.googleapis.com/css2?family=Manrope&display=swap";
 
 /**************************
  * Технічний клас-мітка для блокування виклику
@@ -38,7 +37,7 @@
 /*---------------------------------------------- Variables ---*/
 :root {
     /*--- Basic ---*/
-    --UI_base-font: normal 1rem/1.5 'Manrope'; /* Use rem unit */
+    --UI_base-font: normal 1rem/1.5 'Arial'; /* Use rem unit */
     --UI_base-font-color: #2D3538;
     --UI_base-body-bg-color: #FFFFFF;
     --UI_base-active-bg-color: rgba(0, 0, 0, .05);
