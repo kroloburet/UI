@@ -323,7 +323,6 @@ body {
     background-color: var(--UI_base-body-bg-color);
     font: var(--UI_base-font);
     color: var(--UI_base-font-color);
-    letter-spacing: .013rem;
 }
 
 /**************************
