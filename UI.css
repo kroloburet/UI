@@ -955,6 +955,7 @@ a.UI_angle-up::after, .UI_button.UI_angle-up::after {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    align-items: center;
     cursor: pointer;
 }
 
