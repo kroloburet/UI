@@ -1652,6 +1652,7 @@ const UI = new class {
                     select.UI.dropdown.classList.add(css.dropdownShow);
                     select.UI.dropdownToggleButton.innerHTML = select.UI.conf.closeIcon;
                     this.#setDropdownPosition(select);
+                    if (select.UI.searchInput) select.UI.searchInput.focus();
                     select.dispatchEvent(new CustomEvent(`UI.dropdownShowed`));
                 }
                 this.hideDropdown();
