@@ -673,16 +673,20 @@ sequi voluptatum. Ad autem, culpa cum explicabo, itaque laudantium nesciunt null
     <p><code>UI_nowrap</code> &mdash; Щоб текст всередині елемента не переносився на новий рядок. Але не забувайте, на
         малих пристроях це може спричинити поперечний скролл.</p>
 
-    <!--- UI_arrow-right, UI_angle-right, UI_angle-down, UI_angle-up --->
-    <p><code>UI_arrow-right</code>, <code>UI_angle-right</code>, <code>UI_angle-down</code>, <code>UI_angle-up</code>
-        &mdash; Псевдоелементом ::after в кнопках та посиланнях з цим класом буде стрілка праворуч або куточок з
+    <!--- UI_arrow-left, UI_arrow-right, UI_angle-left, UI_angle-right, UI_angle-down, UI_angle-up --->
+    <p><code>UI_arrow-left</code>, <code>UI_arrow-right</code>, <code>UI_angle-left</code>, <code>UI_angle-right</code>, <code>UI_angle-down</code>, <code>UI_angle-up</code>
+        &mdash; Псевдоелементом (::after або ::before) в елементах з цим класом буде стрілка або куточок з
         відповідним напрямом. Приклад:</p>
     <p>
+        <button class="UI_button UI_arrow-left">UI_arrow-left</button>
         <button class="UI_button UI_arrow-right">UI_arrow-right</button>
+        <button class="UI_button UI_angle-left">UI_angle-left</button>
         <button class="UI_button UI_angle-right">UI_angle-right</button>
         <button class="UI_button UI_angle-down">UI_angle-down</button>
         <button class="UI_button UI_angle-up">UI_angle-up</button>
+        <a class="UI_arrow-left">UI_arrow-left</a>,
         <a class="UI_arrow-right">UI_arrow-right</a>,
+        <a class="UI_angle-left">UI_angle-left</a>,
         <a class="UI_angle-right">UI_angle-right</a>,
         <a class="UI_angle-down">UI_angle-down</a>,
         <a class="UI_angle-up">UI_angle-up</a>

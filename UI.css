@@ -574,27 +574,38 @@ li ul, li ol {
     cursor: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAZCAMAAADt/kXiAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAAXpQTFRFAAAA/////////////////////////////////////////////////////////Pz8////////7+/v////////7+/v6Ojo9vb25+fn6Ojo8vLyw8PDysrK3Nzc19fX6Ojo////zMzM////ysrK////zMzMoqKiu7u7vb29oqKiycnJnp6eq6uro6OjuLi4kpKSi4uLkZGRkpKSoqKig4ODhISEiIiIiYmJi4uLm5ubAAAAQUFBSkpKVlZWV1dXW1tbXV1dXl5eY2NjZGRkZmZmZ2dnaGhoampqa2trbm5ub29vcHBwdXV1dnZ2d3d3eHh4eXl5e3t7fHx8g4ODhISEiIiIiYmJjY2Nj4+PkZGRkpKSlJSUmpqanZ2dpKSkqqqqq6urrq6usLCws7OztLS0tra2ubm5u7u7vLy8vb29vr6+ysrKzc3Nz8/P0dHR1dXV2tra3d3d39/f5ubm6Ojo6urq7e3t8vLy+fn5+vr6/Pz8/f39/v7+////loloEAAAADp0Uk5TAAceHyAmKywtMjU5OkRNV2lqfJCSlKSkqa6uuLrM0dzm5+jr6/Dx8vT19vr6+/v8/f39/f7+/v7+/uSLPNAAAAELSURBVCjPY2AAAX4dAzkGLEDdKcmJD4u4dlKtlzB2cW8R0sTdjDXYGbGI28S5WwQpMrGgi3vWZjjk2XkESMDEOLkh5tdmRte6ZKcbQoWlInxUOeDipQW+UHHLsHzvEEuQeBaKuG5MbW2GdWptYW15cW1hDVxcyLGotraiqhYK4OIMyu7VtQhQ4MfFCwSsDAzM5onI4pGxfl4erppADWL2JbVlCfEQkFOmoKSip2UKMkkjoDbaCgqsgXpSPeXB4jyBaX62LhAQXlub7FUjawK2WtIlKhduQ7xvba1sMMRNogjxRP/a2kpxGahjjeDiZUDsJsiAIQ4CzgTF9VMKkYCDAExc2iwUCaixMQAAsEF8RaFan24AAAAASUVORK5CYII=), auto !important;
 }
 
-a.UI_arrow-right::after, .UI_button.UI_arrow-right::after,
-a.UI_angle-right::after, .UI_button.UI_angle-right::after,
-a.UI_angle-down::after, .UI_button.UI_angle-down::after,
-a.UI_angle-up::after, .UI_button.UI_angle-up::after {
+.UI_arrow-left::before, .UI_angle-left::before {
+    font: var(--fa-font-solid);
+    margin-right: .5em;
+}
+
+.UI_arrow-right::after, .UI_angle-right::after,
+.UI_angle-down::after, .UI_angle-up::after {
     font: var(--fa-font-solid);
     margin-left: .5em;
 }
 
-a.UI_arrow-right::after, .UI_button.UI_arrow-right::after {
+.UI_arrow-left::before {
+    content: "\f060";
+}
+
+.UI_arrow-right::after {
     content: "\f178";
 }
 
-a.UI_angle-right::after, .UI_button.UI_angle-right::after {
+.UI_angle-left::before {
+    content: "\f104";
+}
+
+.UI_angle-right::after {
     content: "\f105";
 }
 
-a.UI_angle-down::after, .UI_button.UI_angle-down::after {
+.UI_angle-down::after {
     content: "\f107";
 }
 
-a.UI_angle-up::after, .UI_button.UI_angle-up::after {
+.UI_angle-up::after {
     content: "\f106";
 }
 
