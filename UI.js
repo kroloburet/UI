@@ -1489,6 +1489,7 @@ const UI = new class {
             controlItemDel: `UI_${selfName}-control-item-del`,
             controlPlaceholder: `UI_${selfName}-control-placeholder`,
             selectSearchInput: `UI_${selfName}-search-input`,
+            hover: `UI_${selfName}-item-hover`,
         };
 
         // Селектор пошуку елементів для опрацювання
@@ -1532,6 +1533,7 @@ const UI = new class {
                     select.UI.dropdownToggleButton.classList.add(UI.css.formComponentControl);
                     select.UI.dropdownToggleButton.innerHTML = select.UI.conf.openIcon;
                     select.UI.dropdown.classList.add(css.dropdown);
+                    select.UI.dropdownList.tabIndex = 0;
                     select.UI.dropdownList.classList.add(css.dropdownList, UI.css.scrollbar);
                     select.UI.control.classList.add(css.control, UI.css.noScrollbar);
                     select.UI.overlay.classList.add(css.overlay)
@@ -1573,6 +1575,47 @@ const UI = new class {
                     // Помітити елемент як активований
                     UI.#markActivate(select, selfName);
                 });
+                return this;
+            }
+
+            #setDropdownListItemInteractive(select = null) {
+                const worker = select => {
+                    if (! select.UI.dropdownItems.length) return;
+                    select.UI.dropdownList.focus();
+                    let index = select.UI.controlPlaceholder ? -1 : 0;
+                    // Set index of next or previous item
+                    function setIndex(currentIndex, direction, items) {
+                        const isUp = direction === 'up';
+                        let newIndex = (currentIndex + (isUp ? -1 : 1) + items.length) % items.length;
+                        while (items[newIndex].hidden) {
+                            newIndex = (newIndex + (isUp ? -1 : 1) + items.length) % items.length;
+                        }
+                        index = newIndex;
+                        items.forEach(item => item.classList.remove(css.hover));
+                        items[index].classList.add(css.hover);
+                        items[index].scrollIntoView({ block: "center", behavior: "smooth" });
+                    }
+                    // Key event controller
+                    const keyEventController = event => {
+                        if (event.key === `ArrowUp` || event.key === `ArrowDown`) {
+                            select.UI.dropdownList.focus();
+                            const direction = event.key === 'ArrowUp' ? 'up' : 'down';
+                            setIndex(index, direction, select.UI.dropdownItems);
+                        } else if (event.key === `Enter`) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                            event.stopImmediatePropagation();
+                            if (select.options[index]) this.selected(true, [index], select)
+                        } else {
+                            if (select.UI.hasSearch) select.UI.searchInput.focus();
+                        }
+                    }
+                    // Set events
+                    select.UI.dropdownList.onkeydown = keyEventController;
+                    if (select.UI.hasSearch) select.UI.searchInput.onkeydown = keyEventController;
+                }
+                // Опрацювати всю колекцію якщо поле не передано
+                !(select instanceof HTMLElement) ? collection.forEach(worker) : worker(select);
                 return this;
             }
 
@@ -1652,7 +1695,7 @@ const UI = new class {
                     select.UI.dropdown.classList.add(css.dropdownShow);
                     select.UI.dropdownToggleButton.innerHTML = select.UI.conf.closeIcon;
                     this.#setDropdownPosition(select);
-                    if (select.UI.searchInput) select.UI.searchInput.focus();
+                    this.#setDropdownListItemInteractive(select);
                     select.dispatchEvent(new CustomEvent(`UI.dropdownShowed`));
                 }
                 this.hideDropdown();
@@ -1707,6 +1750,7 @@ const UI = new class {
                             select.options[index].dataset.findOf?.toLowerCase().indexOf(q) > -1
                         );
                     });
+                    this.#setDropdownListItemInteractive(select);
                     select.dispatchEvent(new CustomEvent(`UI.searched`));
                 };
                 // Опрацювати всю колекцію якщо поле не передано
@@ -1760,14 +1804,13 @@ const UI = new class {
                     select.UI.dropdownItems = [];
                     [...select.options].forEach(option => {
                         // Додати опцію у dropdown
-                        if (!option.selected && !option.disabled) {
-                            let dropdownItem = document.createElement(`div`);
-                            dropdownItem.classList.add(css.dropdownItem, ...option.classList);
-                            dropdownItem.innerHTML = option.dataset.content || option.textContent;
-                            dropdownItem.onclick = () => this.selected(true, [option.index], select);
-                            select.UI.dropdownItems[option.index] = dropdownItem;
-                            select.UI.dropdownList.append(dropdownItem);
-                        }
+                        let dropdownItem = document.createElement(`div`);
+                        dropdownItem.classList.add(css.dropdownItem, ...option.classList);
+                        dropdownItem.innerHTML = option.dataset.content || option.textContent;
+                        dropdownItem.onclick = () => this.selected(true, [option.index], select);
+                        if (option.selected || option.disabled) dropdownItem.hidden = true;
+                        select.UI.dropdownItems[option.index] = dropdownItem;
+                        select.UI.dropdownList.append(dropdownItem);
                         // Додати як обрані
                         if (option.selected) {
                             let controlItem = document.createElement(`span`);

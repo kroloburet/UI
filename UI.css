@@ -1736,7 +1736,8 @@ dl.UI_Tabs-activated dd.UI_Tabs-show {
     padding: var(--UI_form-field-paddingY) var(--UI_form-field-paddingX);
 }
 
-.UI_Select-dropdown-item:hover {
+.UI_Select-dropdown-item:hover,
+.UI_Select-dropdown-item.UI_Select-item-hover {
     background-color: var(--UI_form-active-bg-color);
     cursor: pointer;
 }
