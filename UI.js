@@ -134,6 +134,7 @@ const UI = new class {
                 if (!el) return;
                 const methodParams = el.getAttribute(data.attributeName);
                 if (data.methodName in this && methodParams) {
+                    this[data.methodName].trigger = el;
                     this[data.methodName](...getDatasetMethodParams(el, methodParams));
                 }
             });
@@ -248,6 +249,8 @@ const UI = new class {
         UI_select: `UI_select`,
         UI_input: `UI_input`,
         UI_textarea: `UI_textarea`,
+        angleUp: `UI_angle-up`,
+        angleDown: `UI_angle-down`,
     }
 
     /**
@@ -440,11 +443,15 @@ const UI = new class {
         const visible = el.style.display || getComputedStyle(el, null).getPropertyValue('display');
         if (visible === `none` || el.hidden) {
             el.dispatchEvent(new CustomEvent(`UI.beforeShow`));
+            if (this.Toggle.trigger?.classList.contains(UI.css.angleDown))
+                this.Toggle.trigger.classList.add(UI.css.angleUp);
             el.style.display = display;
             el.hidden = false;
             el.dispatchEvent(new CustomEvent(`UI.showed`));
         } else {
             el.dispatchEvent(new CustomEvent(`UI.beforeHide`));
+            if (this.Toggle.trigger?.classList.contains(UI.css.angleUp))
+                this.Toggle.trigger.classList.remove(UI.css.angleUp);
             el.style.display = `none`;
             el.dispatchEvent(new CustomEvent(`UI.hidden`));
         }

@@ -1905,14 +1905,13 @@ Form component with &quot;UI_contour UI_size-s UI_inline-form&quot;
     -->
 
     <h3 id="toggle">Перемикання відображення елемента</h3>
-    <p>Метод <code>UI.Toggle()</code> показує/приховує елемент який йому передадуть в аргументі. Цей елемент може бути
-        передано як HTMLElement або ідентифікатор цього елементу.</p>
+    <p>Метод <code>UI.Toggle()</code> показує/приховує елемент який йому передадуть в аргументі. Цей елемент може бути передано як HTMLElement або ідентифікатор цього елементу. Якщо елемент який викликає <code>UI.Toggle()</code> має клас <code>UI_angle-down</code> чи <code>UI_angle-up</code> та атрибут <code>data-toggle</code>, метод буде змінювати напрям куточка відповідно до стану показаного/прихованого елемента.</p>
 
     <dl class="UI_Tabs">
         <dt>Вигляд</dt>
         <dd>
             <!--- UI.Toggle() --->
-            <button type="button" class="UI_button" data-toggle="hidElem">Докладніше</button>
+            <button type="button" class="UI_button UI_angle-down" data-toggle="hidElem">Докладніше</button>
 
             <!--- або "повісити" опрацьовувач на подію
             <button type="button" class="UI_button" onclick="UI.Toggle('hidElem')">Докладніше</button>
@@ -1935,7 +1934,7 @@ Form component with &quot;UI_contour UI_size-s UI_inline-form&quot;
             <i class="copy-fragment fa-solid fa-copy" title="Копіювати код"></i>
             <pre class="fragment">
 &lt;!--- UI.Toggle() ---&gt;
-&lt;button type=&quot;button&quot; class=&quot;UI_button&quot; data-toggle=&quot;hidElem&quot;&gt;Докладніше&lt;/button&gt;
+&lt;button type=&quot;button&quot; class=&quot;UI_button UI_angle-down&quot; data-toggle=&quot;hidElem&quot;&gt;Докладніше&lt;/button&gt;
 
 &lt;!--- або &quot;повісити&quot; опрацьовувач на подію
 &lt;button type=&quot;button&quot; class=&quot;UI_button&quot; onclick=&quot;UI.Toggle('hidElem')&quot;&gt;Докладніше&lt;/button&gt;
