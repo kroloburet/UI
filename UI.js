@@ -1562,6 +1562,7 @@ const UI = new class {
                     select.UI.overlay.onclick = () => this.hideDropdown(select);
                     select.UI.component.onclick = e => {
                         let control = [
+                            select.UI.component,
                             select.UI.control,
                             select.UI.controlItemText,
                             select.UI.controlPlaceholder,
