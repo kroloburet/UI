@@ -42,10 +42,10 @@
     --UI_base-body-bg-color: #FFFFFF;
     --UI_base-active-bg-color: rgba(0, 0, 0, .05);
     --UI_base-border-width: 1px;
-    --UI_base-border-radius: .75rem;
-    --UI_base-border-radius-l: 1rem;
-    --UI_base-border-radius-s: .35rem;
-    --UI_base-border-radius-xs: .18rem;
+    --UI_base-border-radius: .75em;
+    --UI_base-border-radius-l: 1em;
+    --UI_base-border-radius-s: .35em;
+    --UI_base-border-radius-xs: .18em;
     --UI_base-padding: calc(.7em + 1vw);
     --UI_base-gapX: 2vw;
     --UI_base-gapY: 2rem;
