@@ -1758,7 +1758,7 @@ const UI = new class {
                             select.options[index].dataset.findOf?.toLowerCase().indexOf(q) > -1
                         );
                     });
-                    this.#setDropdownListItemInteractive(select);
+                    // this.#setDropdownListItemInteractive(select);
                     select.dispatchEvent(new CustomEvent(`UI.searched`));
                 };
                 // Опрацювати всю колекцію якщо поле не передано
