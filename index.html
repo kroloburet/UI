@@ -1468,7 +1468,7 @@ Radio
                 </select>
                 <input type="text" class="UI_input" placeholder="Example text">
                 <button type="button" class="UI_button">Add</button>
-                <i class="fa-solid fa-trash-alt fa-2x"></i>
+                <button type="button" class="UI_button">Delete</button>
             </div>
 
             <!--- Fieldset group with UI_readonly-form --->
@@ -1481,7 +1481,7 @@ Radio
                 </select>
                 <input type="text" class="UI_input" placeholder="Example text">
                 <button type="button" class="UI_button">Add</button>
-                <i class="fa-solid fa-trash-alt fa-2x"></i>
+                <button type="button" class="UI_button">Delete</button>
             </div>
 
             <!--- Fieldset group with UI_disabled-form --->
@@ -1494,7 +1494,7 @@ Radio
                 </select>
                 <input type="text" class="UI_input" placeholder="Example text">
                 <button type="button" class="UI_button">Add</button>
-                <i class="fa-solid fa-trash-alt fa-2x"></i>
+                <button type="button" class="UI_button">Delete</button>
             </div>
 
             <!--- Fieldset group with UI_contour --->
@@ -1507,7 +1507,7 @@ Radio
                 </select>
                 <input type="text" class="UI_input" placeholder="Example text">
                 <button type="button" class="UI_button">Add</button>
-                <i class="fa-solid fa-trash-alt fa-2x"></i>
+                <button type="button" class="UI_button">Delete</button>
             </div>
 
             <!--- Fieldset group with UI_inline-form --->
@@ -1520,7 +1520,7 @@ Radio
                 </select>
                 <input type="text" class="UI_input" placeholder="Example text">
                 <button type="button" class="UI_button">Add</button>
-                <i class="fa-solid fa-trash-alt fa-2x"></i>
+                <button type="button" class="UI_button">Delete</button>
             </div>
         </dd>
         <dt>Код</dt>
@@ -1537,7 +1537,7 @@ Fieldset group
     &lt;/select&gt;
     &lt;input type=&quot;text&quot; class=&quot;UI_input&quot; placeholder=&quot;Example text&quot;&gt;
     &lt;button type=&quot;button&quot; class=&quot;UI_button&quot;&gt;Add&lt;/button&gt;
-    &lt;i class=&quot;fa-solid fa-trash-alt fa-2x&quot;&gt;&lt;/i&gt;
+    &lt;button type=&quot;button&quot; class=&quot;UI_button&quot;&gt;Delete&lt;/button&gt;
 &lt;/div&gt;
 
 &lt;!--- Fieldset group with UI_readonly-form ---&gt;
@@ -1550,7 +1550,7 @@ Fieldset group with UI_readonly-form
     &lt;/select&gt;
     &lt;input type=&quot;text&quot; class=&quot;UI_input&quot; placeholder=&quot;Example text&quot;&gt;
     &lt;button type=&quot;button&quot; class=&quot;UI_button&quot;&gt;Add&lt;/button&gt;
-    &lt;i class=&quot;fa-solid fa-trash-alt fa-2x&quot;&gt;&lt;/i&gt;
+    &lt;button type=&quot;button&quot; class=&quot;UI_button&quot;&gt;Delete&lt;/button&gt;
 &lt;/div&gt;
 
 &lt;!--- Fieldset group with UI_disabled-form ---&gt;
@@ -1563,7 +1563,7 @@ Fieldset group with UI_disabled-form
     &lt;/select&gt;
     &lt;input type=&quot;text&quot; class=&quot;UI_input&quot; placeholder=&quot;Example text&quot;&gt;
     &lt;button type=&quot;button&quot; class=&quot;UI_button&quot;&gt;Add&lt;/button&gt;
-    &lt;i class=&quot;fa-solid fa-trash-alt fa-2x&quot;&gt;&lt;/i&gt;
+    &lt;button type=&quot;button&quot; class=&quot;UI_button&quot;&gt;Delete&lt;/button&gt;
 &lt;/div&gt;
 
 &lt;!--- Fieldset group with UI_contour ---&gt;
@@ -1576,7 +1576,7 @@ Fieldset group with UI_contour
     &lt;/select&gt;
     &lt;input type=&quot;text&quot; class=&quot;UI_input&quot; placeholder=&quot;Example text&quot;&gt;
     &lt;button type=&quot;button&quot; class=&quot;UI_button&quot;&gt;Add&lt;/button&gt;
-    &lt;i class=&quot;fa-solid fa-trash-alt fa-2x&quot;&gt;&lt;/i&gt;
+    &lt;button type=&quot;button&quot; class=&quot;UI_button&quot;&gt;Delete&lt;/button&gt;
 &lt;/div&gt;
 
 &lt;!--- Fieldset group with UI_inline-form ---&gt;
@@ -1589,7 +1589,7 @@ Fieldset group with UI_inline-form
     &lt;/select&gt;
     &lt;input type=&quot;text&quot; class=&quot;UI_input&quot; placeholder=&quot;Example text&quot;&gt;
     &lt;button type=&quot;button&quot; class=&quot;UI_button&quot;&gt;Add&lt;/button&gt;
-    &lt;i class=&quot;fa-solid fa-trash-alt fa-2x&quot;&gt;&lt;/i&gt;
+    &lt;button type=&quot;button&quot; class=&quot;UI_button&quot;&gt;Delete&lt;/button&gt;
 &lt;/div&gt;
             </pre>
         </dd>
@@ -1604,7 +1604,7 @@ Fieldset group with UI_inline-form
         з класом <code>UI_form-component</code> розмістіть поле/ля, кнопку/ки. Елементи з класом <code>UI_form-component-control</code>
         всередині компоненту будуть виглядати як елементи керування. Компонент форми може містити елементи форми та
         вкладені компоненти форми. До полей та кнопок в середині компонента можна не застосовувати класи елементів форми
-        такі як <code>UI_input</code>, <code>UI_button</code> та інші.</p>
+        такі як <code>UI_input</code>, <code>UI_button</code> та інші. Компонент форми по замовчуванню <code>display: flex</code> або <code>display: inline-flex</code> якщо до нього застосовано клас <code>UI_inline-form</code>. Тож, всі елементи в компоненті форми розміщені в рядок та не переносяться. Це може спричиняти проблеми з адаптивністю якщо компонент <q>зібраний</q> із багатьох елементів. В такому випадку, ви можете застосувати до компонента клас <code>UI_adaptive</code>.</p>
 
     <dl class="UI_Tabs">
         <dt>Вигляд</dt>
@@ -1634,6 +1634,23 @@ Fieldset group with UI_inline-form
                 <input type="search" placeholder="Example search">
                 <button type="button">Search</button>
             </form>
+
+            <!--- Search form component with "UI_adaptive" --->
+            Search form component with "UI_adaptive"
+            <div class="UI_form-component UI_adaptive UI_inline-form">
+                <select class="UI_Select" data-select-placeholder="Choose a type">
+                    <option>Doctor</option>
+                    <option>Patient</option>
+                    <option>Visitor</option>
+                </select>
+                <select class="UI_Select" data-select-placeholder="Sort">
+                    <option>By registration date</option>
+                    <option>By update date</option>
+                    <option>By alphabet</option>
+                </select>
+                <input type="text" placeholder="Search query">
+                <button type="button">Search</button>
+            </div>
 
             <!--- Search form component with "UI_disabled-form" --->
             Search form component with "UI_disabled-form"
@@ -1706,6 +1723,23 @@ Search form component with &quot;UI_disabled-form&quot;
     &lt;input type=&quot;search&quot; placeholder=&quot;Example search&quot;&gt;
     &lt;button type=&quot;button&quot;&gt;Search&lt;/button&gt;
 &lt;/form&gt;
+
+&lt;!--- Search form component with &quot;UI_adaptive&quot; ---&gt;
+Search form component with &quot;UI_adaptive&quot;
+&lt;div class=&quot;UI_form-component UI_adaptive&quot;&gt;
+    &lt;select class=&quot;UI_Select&quot; data-select-placeholder=&quot;Choose a type&quot;&gt;
+        &lt;option&gt;Doctor&lt;/option&gt;
+        &lt;option&gt;Patient&lt;/option&gt;
+        &lt;option&gt;Visitor&lt;/option&gt;
+    &lt;/select&gt;
+    &lt;select class=&quot;UI_Select&quot; data-select-placeholder=&quot;Sort&quot;&gt;
+        &lt;option&gt;By registration date&lt;/option&gt;
+        &lt;option&gt;By update date&lt;/option&gt;
+        &lt;option&gt;By alphabet&lt;/option&gt;
+    &lt;/select&gt;
+    &lt;input type=&quot;text&quot; placeholder=&quot;Search query&quot;&gt;
+    &lt;button type=&quot;button&quot;&gt;Search&lt;/button&gt;
+&lt;/div&gt;
 
 &lt;!--- Form component with &quot;UI_contour UI_readonly-form&quot; ---&gt;
 Form component with &quot;UI_contour UI_readonly-form&quot;
