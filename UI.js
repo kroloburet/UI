@@ -36,6 +36,48 @@ const UI = new class {
     #disabledNodes = [`.UI_disabled-node`];
 
     /**
+     * Методи UI можуть використовувати черги
+     *
+     * @type Object
+     * @private
+     * @type {{stack: {}, run(string): Promise<void>, push(Function, Object, string): void}}
+     */
+    #queue = {
+        stack: {},
+
+        /**
+         * Додає нове завдання до черги по вказаному ключу
+         * @param {Function} callback async функція, яку слід виконати
+         * @param {Object} args Аргументи для функції
+         * @param {string} key Ключ, що визначає простір імен
+         */
+        push(callback, args, key) {
+            if (!this.stack[key]) {
+                this.stack[key] = [];
+            }
+            this.stack[key].push({ callback, args });
+            if (this.stack[key].length === 1) {
+                this.run(key);
+            }
+        },
+
+        /**
+         * Виконує всі завдання в черзі для певного ключа
+         * @param {string} key Ключ, що визначає простір імен
+         */
+        async run(key) {
+            while (this.stack[key] && this.stack[key].length > 0) {
+                const { callback, args } = this.stack[key][0];
+                await callback(args);
+                this.stack[key].shift();
+            }
+            if (this.stack[key] && this.stack[key].length === 0) {
+                delete this.stack[key];
+            }
+        }
+    }
+
+    /**
      * Чи є елемент нащадком забороненого
      * вузла, або сам заборонений
      *
@@ -646,85 +688,89 @@ const UI = new class {
             callback: null,
         };
 
-        // Повідомлення
-        let notice = document.querySelector(`.UI_${selfName}`);
+        // Обіцянка для метода UI.Notice().remove()
+        let resolveRemovePromise;
+        const removePromise = new Promise((resolve) => {
+            resolveRemovePromise = resolve;
+        });
 
-        return new class {
-            constructor() {
-                this.#activate();
-            }
+        // Повідомдення повинні створюватись по черзі
+        this.#queue.push(async (config) => {
+            const conf = Object.assign({}, defConf, config);
 
-            /**
-             * Створити повідомлення якщо не створено,
-             * опрацювати повідомлення
-             *
-             * @returns {this}
-             * @private
-             */
-            #activate() {
-                const conf = Object.assign({}, defConf, userConf);
-                // Повідомлення ще не створено
-                if (!notice) {
-                    notice = document.createElement(`div`);
-                    notice.UI = {};
-                    notice.UI.component = document.createElement(`div`);
-                    notice.UI.component.classList.add(UI.css.bodyOverlay, css.box);
-                    notice.UI.component.prepend(notice);
-                    document.body.classList.add(UI.css.bodyHideOverflow);
-                    document.body.append(notice.UI.component);
-                    notice.dispatchEvent(new CustomEvent(`UI.created`));
+            // Створення нового повідомлення
+            this.notice = document.createElement(`div`);
+            this.notice.classList.add(`UI_${selfName}`, conf.className);
+            this.notice.innerHTML = conf.message;
+            this.notice.UI = {};
+            this.notice.UI.component = document.createElement(`div`);
+            this.notice.UI.component.classList.add(UI.css.bodyOverlay, css.box);
+            this.notice.UI.component.prepend(this.notice);
+            document.body.append(this.notice.UI.component);
+            document.body.classList.add(UI.css.bodyHideOverflow);
+
+            this.notice.dispatchEvent(new CustomEvent(`UI.created`));
+            this.notice.dispatchEvent(new CustomEvent(`UI.activated`));
+
+            // Якщо передано delay, автоматичне видалення через заданий час
+            if (conf.delay) {
+                await new Promise((resolve) => setTimeout(resolve, conf.delay));
+
+                _Notice.remove();
+
+                if (typeof conf.callback === `function`) {
+                    await conf.callback();
                 }
-                // Повідомлення створено
-                notice.classList.add(`UI_${selfName}`, conf.className);
-                notice.innerHTML = conf.message;
-                if (conf.delay) {
-                    setTimeout(async () => {
-                        this.remove();
-                        if (typeof conf.callback === `function`) await conf.callback();
-                    }, conf.delay)
-                }
-                notice.dispatchEvent(new CustomEvent(`UI.activated`));
-                return this;
+            } else {
+                // Чекати remove() на екземплярі
+                await removePromise;
             }
+        }, userConf, selfName);
 
+        // Публічний об'єкт що повертає Notice()
+        const _Notice = {
             /**
              * Вставити елемент/елементи в повідомлення
              *
              * @return {this}
              */
-            insert(...nodes) {
-                if (!notice) return this;
-                notice.dispatchEvent(new CustomEvent(`UI.beforeInsert`));
-                notice.innerHTML = null;
-                notice.append(...nodes);
-                notice.dispatchEvent(new CustomEvent(`UI.inserted`));
-                return this;
-            }
+            insert: (...nodes) => {
+                if (this.notice) {
+                    this.notice.dispatchEvent(new CustomEvent(`UI.beforeInsert`));
+                    this.notice.innerHTML = null;
+                    this.notice.append(...nodes);
+                    this.notice.dispatchEvent(new CustomEvent(`UI.inserted`));
+                }
+                return _Notice;
+            },
+
 
             /**
              * Деактивувати повідомлення
              *
              * @return {this}
              */
-            remove() {
-                if (!notice) return this;
-                notice.dispatchEvent(new CustomEvent(`UI.beforeRemove`));
-                notice.UI.component.remove();
-                document.body.classList.remove(UI.css.bodyHideOverflow);
-                delete notice.UI;
-                notice.dispatchEvent(new CustomEvent(`UI.removed`));
-                return this;
-            }
+            remove: () => {
+                if (this.notice) {
+                    this.notice.dispatchEvent(new CustomEvent(`UI.beforeRemove`));
+                    this.notice.UI.component.remove();
+                    document.body.classList.remove(UI.css.bodyHideOverflow);
+                    delete this.notice.UI;
+                    this.notice.dispatchEvent(new CustomEvent(`UI.removed`));
+                    resolveRemovePromise();
+                }
+                return _Notice;
+            },
 
             /**
              * Отримати повідомлення
              *
              * @returns {HTMLElement}
              */
-            get get() {
-                return notice;
-            }
+            get: this.notice
         }
+
+        return _Notice;
     }
 
     /**
