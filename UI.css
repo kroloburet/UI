@@ -48,7 +48,7 @@
     --UI_base-border-radius-xs: .18em;
     --UI_base-padding: calc(.7em + 1vw);
     --UI_base-gapX: 2vw;
-    --UI_base-gapY: 2rem;
+    --UI_base-gapY: 2em;
     --UI_base-overlay-body-z-index: 9999; /* Use number unit */
     --UI_base-overlay-elements-z-index: 1000; /* Use number unit */
 
@@ -93,8 +93,8 @@
     --UI_hr-border: 1px solid var(--UI_base-color);
 
     /*--- Grid ---*/
-    --UI_grid-gapX: 2rem;
-    --UI_grid-gapY: 2rem;
+    --UI_grid-gapX: 2em;
+    --UI_grid-gapY: 2em;
 
     /*--- Assistants ---*/
     --UI_scrollbar-width: 5px;
@@ -121,13 +121,13 @@
     --UI_form-bg-color: var(--UI_base-body-bg-color);
     --UI_form-field-paddingY: .857em;
     --UI_form-field-paddingX: var(--UI_base-padding);
-    --UI_form-gap-top: .3rem;
-    --UI_form-gap-right: 1rem;
-    --UI_form-gap-bottom: 1rem;
+    --UI_form-gap-top: .3em;
+    --UI_form-gap-right: 1em;
+    --UI_form-gap-bottom: 1em;
     --UI_form-border-width: 1px;
     --UI_form-border-color: #888F93;
     --UI_form-border-radius: var(--UI_base-border-radius);
-    --UI_form-shadow: 0 .125rem 0 rgba(69, 90, 100, .25);
+    --UI_form-shadow: 0 .125em 0 rgba(69, 90, 100, .25);
     --UI_form-active-bg-color: rgba(198, 237, 255, .6);
     --UI_form-component-control-font-color: var(--UI_form-border-color);
     --UI_form-component-control-bg-color: var(--UI_form-bg-color);
@@ -139,11 +139,11 @@
     --UI_form-component-control-active-bg-color: var(--UI_form-bg-color);
     --UI_form-component-control-active-border-color: var(--UI_form-border-color);
     --UI_form-focus-border-color: #0B3950;
-    --UI_form-focus-shadow: 0 0 0 .188rem #C6EDFF;
+    --UI_form-focus-shadow: 0 0 0 .188em #C6EDFF;
     --UI_form-invalid-border-color: #FF405A;
-    --UI_form-invalid-shadow: 0 0 0 .188rem #FFD4DA;
+    --UI_form-invalid-shadow: 0 0 0 .188em #FFD4DA;
     --UI_form-required-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23F8142FFF' d='M208 32c0-17.7 14.3-32 32-32h32c17.7 0 32 14.3 32 32V172.9l122-70.4c15.3-8.8 34.9-3.6 43.7 11.7l16 27.7c8.8 15.3 3.6 34.9-11.7 43.7L352 256l122 70.4c15.3 8.8 20.5 28.4 11.7 43.7l-16 27.7c-8.8 15.3-28.4 20.6-43.7 11.7L304 339.1V480c0 17.7-14.3 32-32 32H240c-17.7 0-32-14.3-32-32V339.1L86 409.6c-15.3 8.8-34.9 3.6-43.7-11.7l-16-27.7c-8.8-15.3-3.6-34.9 11.7-43.7L160 256 38 185.6c-15.3-8.8-20.5-28.4-11.7-43.7l16-27.7C51.1 98.8 70.7 93.6 86 102.4l122 70.4V32z'/%3E%3C/svg%3E");
-    --UI_form-required-image-size: .5rem;
+    --UI_form-required-image-size: .5em;
     --UI_checmark-size: 1.5em;
     --UI_range-track-height: 1px;
     --UI_range-thumb-width: 1.5em;
@@ -153,7 +153,7 @@
     --UI_button-paddingY: .647em;
     --UI_button-paddingX: var(--UI_base-padding);
     --UI_button-border-radius: var(--UI_form-border-radius);
-    --UI_button-shadow: 0 .125rem .25rem rgba(69, 90, 100, .25);
+    --UI_button-shadow: 0 .125em .25em rgba(69, 90, 100, .25);
     --UI_button-font-color: var(--UI_primary-font-color);
     --UI_button-bg-color: var(--UI_primary-bg-color);
     --UI_button-border-color: var(--UI_primary-border-color);
@@ -181,7 +181,7 @@
     --UI_Hint-max-width: 350px;
     --UI_Hint-border: 1px solid var(--UI_base-body-bg-color);
     --UI_Hint-border-radius: var(--UI_base-border-radius-s);
-    --UI_Hint-shadow: 0 .125rem .25rem rgba(69, 90, 100, .25);
+    --UI_Hint-shadow: 0 .125em .25em rgba(69, 90, 100, .25);
     --UI_Notice-font-color: #000000;
     --UI_Notice-border-color: var(--UI_base-body-bg-color);
     --UI_Notice-border-width: 1px;
@@ -417,7 +417,7 @@ abbr {
 }
 
 code, kbd, samp, mark {
-    padding: .1rem .5rem;
+    padding: .1em .5em;
     width: fit-content;
     background-color: var(--UI_mark-mute-bg-color);
     border-radius: var(--UI_base-border-radius-s);
@@ -450,11 +450,11 @@ sub, sup {
 }
 
 sub {
-    bottom: -.25rem;
+    bottom: -.25em;
 }
 
 sup {
-    top: -.5rem;
+    top: -.5em;
 }
 
 pre {
@@ -859,7 +859,7 @@ li ul, li ol {
 
 .UI_table caption {
     margin-bottom: .5em;
-    font-size: 1.2rem;
+    font-size: 1.2em;
     font-weight: bold;
     text-align: left;
 }
@@ -1001,7 +1001,7 @@ li ul, li ol {
     border-top: none;
     border-left: none;
     transform: rotate(45deg);
-    box-shadow: var(--UI_form-border-width) var(--UI_form-border-width) 0 .02rem var(--UI_form-border-color);
+    box-shadow: var(--UI_form-border-width) var(--UI_form-border-width) 0 .02em var(--UI_form-border-color);
 }
 
 .UI_checkbox [type="checkbox"]:checked + .UI_checkmark {
@@ -1267,8 +1267,8 @@ li ul, li ol {
     content: var(--UI_form-required-image);
     display: inline-block;
     line-height: 0;
-    margin-left: .3rem;
-    margin-right: .5rem;
+    margin-left: .3em;
+    margin-right: .5em;
     min-width: var(--UI_form-required-image-size);
     min-height: var(--UI_form-required-image-size);
     vertical-align: super;
