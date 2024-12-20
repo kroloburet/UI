@@ -518,14 +518,16 @@ const UI = new class {
         if (!el) return;
 
         const getScrollableParent = (element) => {
-            let parent = element.parentNode;
+            let parent = element.parentElement;
 
-            while (parent && parent !== document.body && parent !== window) {
+            while (parent && parent !== document.body) {
+                const parentHeight = parent.scrollHeight;
+                const windowHeight = window.innerHeight;
                 const overflowY = window.getComputedStyle(parent).overflowY;
-                if (overflowY === 'auto' || overflowY === 'scroll') {
+                if (parentHeight > windowHeight && (overflowY === 'auto' || overflowY === 'scroll')) {
                     return parent;
                 }
-                parent = parent.parentNode;
+                parent = parent.parentElement;
             }
 
             return window;
