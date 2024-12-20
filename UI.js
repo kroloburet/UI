@@ -540,10 +540,12 @@ const UI = new class {
         const scrollTop = elementPosition.top - parentPosition.top + scrollableParent.scrollTop - 100; // Корекція відступу
         const scrollLeft = elementPosition.left - parentPosition.left + scrollableParent.scrollLeft;
 
-        scrollableParent.scrollTo({
-            top: scrollTop,
-            left: scrollLeft,
-            behavior: 'smooth',
+        setTimeout(() => {
+            scrollableParent.scrollTo({
+                top: scrollTop,
+                left: scrollLeft,
+                behavior: 'smooth',
+            });
         });
 
         document.dispatchEvent(new CustomEvent('UI.afterGoTo'));
