@@ -513,25 +513,41 @@ const UI = new class {
     GoTo(target = null){
         target = target ?? location.hash;
         if (!target) return;
-        try {
-            const el = target instanceof HTMLElement ? target : document.querySelector(target);
-            if (!el) return;
-            document.dispatchEvent(new CustomEvent('UI.beforeGoTo'));
-            // Прокрутити до елемента вручну з корекцією
-            const rect = el.getBoundingClientRect();
-            setTimeout(() => {
-                window.scrollTo({
-                    top: window.scrollY + rect.top - 100, // Додає відступ у 100px
-                    behavior: 'smooth',
-                });
-                // Альтернативно: Прокрутка до центру
-                // el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }, 200);
-            document.dispatchEvent(new CustomEvent('UI.afterGoTo'));
-            return el;
-        } catch (e) {
-            // Error
-        }
+
+        const el = target instanceof HTMLElement ? target : document.querySelector(target);
+        if (!el) return;
+
+        const getScrollableParent = (element) => {
+            let parent = element.parentNode;
+
+            while (parent && parent !== document.body) {
+                const overflowY = window.getComputedStyle(parent).overflowY;
+                if (overflowY === 'auto' || overflowY === 'scroll') {
+                    return parent;
+                }
+                parent = parent.parentNode;
+            }
+
+            return window;
+        };
+
+        document.dispatchEvent(new CustomEvent('UI.beforeGoTo'));
+
+        const scrollableParent = getScrollableParent(el);
+        const elementPosition = el.getBoundingClientRect();
+        const parentPosition = scrollableParent === window ? { top: 0, left: 0 } : scrollableParent.getBoundingClientRect();
+
+        const scrollTop = elementPosition.top - parentPosition.top + scrollableParent.scrollTop - 100; // Корекція відступу
+        const scrollLeft = elementPosition.left - parentPosition.left + scrollableParent.scrollLeft;
+
+        scrollableParent.scrollTo({
+            top: scrollTop,
+            left: scrollLeft,
+            behavior: 'smooth',
+        });
+
+        document.dispatchEvent(new CustomEvent('UI.afterGoTo'));
+        return el;
     }
 
     /**
