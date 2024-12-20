@@ -517,40 +517,44 @@ const UI = new class {
         const el = target instanceof HTMLElement ? target : document.querySelector(target);
         if (!el) return;
 
-        const getScrollableParent = (element) => {
-            let parent = element.parentElement;
+        try {
+            const getScrollableParent = (element) => {
+                let parent = element.parentElement;
 
-            while (parent && parent !== document.body) {
-                const parentHeight = parent.scrollHeight;
-                const windowHeight = window.innerHeight;
-                const overflowY = window.getComputedStyle(parent).overflowY;
-                if (parentHeight > windowHeight && (overflowY === 'auto' || overflowY === 'scroll')) {
-                    return parent;
+                while (parent && parent !== document.body) {
+                    const parentHeight = parent.scrollHeight;
+                    const windowHeight = window.innerHeight;
+                    const overflowY = window.getComputedStyle(parent).overflowY;
+                    if (parentHeight > windowHeight && (overflowY === 'auto' || overflowY === 'scroll')) {
+                        return parent;
+                    }
+                    parent = parent.parentElement;
                 }
-                parent = parent.parentElement;
-            }
 
-            return window;
-        };
+                return window;
+            };
 
-        document.dispatchEvent(new CustomEvent('UI.beforeGoTo'));
+            document.dispatchEvent(new CustomEvent('UI.beforeGoTo'));
 
-        const scrollableParent = getScrollableParent(el);
-        const elementPosition = el.getBoundingClientRect();
-        const parentPosition = scrollableParent === window ? { top: 0, left: 0 } : scrollableParent.getBoundingClientRect();
+            setTimeout(() => {
+                const scrollableParent = getScrollableParent(el);
+                const elementPosition = el.getBoundingClientRect();
+                const parentPosition = scrollableParent === window ? { top: 0, left: 0 } : scrollableParent.getBoundingClientRect();
+                const scrollTop = elementPosition.top - parentPosition.top + scrollableParent.scrollTop - 100; // Корекція відступу
+                const scrollLeft = elementPosition.left - parentPosition.left + scrollableParent.scrollLeft;
 
-        const scrollTop = elementPosition.top - parentPosition.top + scrollableParent.scrollTop - 100; // Корекція відступу
-        const scrollLeft = elementPosition.left - parentPosition.left + scrollableParent.scrollLeft;
+                scrollableParent.scrollTo({
+                    top: scrollTop,
+                    left: scrollLeft,
+                    behavior: 'smooth',
+                });
+            }, 200);
 
-        setTimeout(() => {
-            scrollableParent.scrollTo({
-                top: scrollTop,
-                left: scrollLeft,
-                behavior: 'smooth',
-            });
-        });
+            document.dispatchEvent(new CustomEvent('UI.afterGoTo'));
+        } catch (e) {
+            // Error
+        }
 
-        document.dispatchEvent(new CustomEvent('UI.afterGoTo'));
         return el;
     }
 
