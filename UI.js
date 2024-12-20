@@ -510,21 +510,24 @@ const UI = new class {
      * @return {undefined|HTMLElement} Елемент
      * @see https://kroloburet.github.io/UI/#goTo
      */
-    GoTo(target = null) {
-        if (this.#isDisabledNode()) return;
+    GoTo(target = null){
         target = target ?? location.hash;
         if (!target) return;
         try {
             const el = target instanceof HTMLElement ? target : document.querySelector(target);
-            if(!el) return;
-            document.dispatchEvent(new CustomEvent(`UI.beforeGoTo`));
+            if (!el) return;
+            document.dispatchEvent(new CustomEvent('UI.beforeGoTo'));
+            // Прокрутити до елемента вручну з корекцією
+            const rect = el.getBoundingClientRect();
             setTimeout(() => {
-                el?.scrollIntoView({
-                    behavior: `smooth`,
-                    block: `start`,
+                window.scrollTo({
+                    top: window.scrollY + rect.top - 100, // Додає відступ у 100px
+                    behavior: 'smooth',
                 });
+                // Альтернативно: Прокрутка до центру
+                // el.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }, 200);
-            document.dispatchEvent(new CustomEvent(`UI.afterGoTo`));
+            document.dispatchEvent(new CustomEvent('UI.afterGoTo'));
             return el;
         } catch (e) {
             // Error
