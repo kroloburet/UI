@@ -503,6 +503,9 @@ const UI = new class {
     /**
      * Перехід до елементу
      *
+     * @event UI.beforeGoTo
+     * @event UI.afterGoTo
+     *
      * @param {string|HTMLElement|null} [target = null] Селектор елемента чи елемент
      * @return {undefined|HTMLElement} Елемент
      * @see https://kroloburet.github.io/UI/#goTo
@@ -513,12 +516,15 @@ const UI = new class {
         if (!target) return;
         try {
             const el = target instanceof HTMLElement ? target : document.querySelector(target);
+            if(!el) return;
+            document.dispatchEvent(new CustomEvent(`UI.beforeGoTo`));
             setTimeout(() => {
                 el?.scrollIntoView({
                     behavior: `smooth`,
                     block: `start`,
                 });
             }, 200);
+            document.dispatchEvent(new CustomEvent(`UI.afterGoTo`));
             return el;
         } catch (e) {
             // Error
