@@ -511,13 +511,13 @@ const UI = new class {
      * @see https://kroloburet.github.io/UI/#goTo
      */
     GoTo(target = null){
-        target = target ?? location.hash;
-        if (!target) return;
-
-        const el = target instanceof HTMLElement ? target : document.querySelector(target);
-        if (!el) return;
-
         try {
+            target = target ?? location.hash;
+            if (!target) return;
+
+            const el = target instanceof HTMLElement ? target : document.querySelector(target);
+            if (!el) return;
+
             const getScrollableParent = (element) => {
                 let parent = element.parentElement;
 
@@ -551,11 +551,11 @@ const UI = new class {
             }, 200);
 
             document.dispatchEvent(new CustomEvent('UI.afterGoTo'));
+
+            return el;
         } catch (e) {
             // Error
         }
-
-        return el;
     }
 
     /**
