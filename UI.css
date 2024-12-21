@@ -1183,15 +1183,12 @@ li ul, li ol {
     flex-wrap: wrap;
     align-items: center;
     justify-content: flex-start;
-    margin: var(--UI_form-gap-top) 0 0 0;
+    gap: var(--UI_form-gap-bottom) var(--UI_form-gap-right);
+    margin: var(--UI_form-gap-top) 0 var(--UI_form-gap-bottom) 0;
 }
 
 .UI_fieldset > * {
-    margin: 0 var(--UI_form-gap-right) var(--UI_form-gap-bottom) 0;
-}
-
-.UI_fieldset :last-child {
-    margin-right: 0;
+    margin: 0;
 }
 
 .UI_fieldset :where(
@@ -1224,7 +1221,6 @@ li ul, li ol {
 @media (max-width: 576px) {
     .UI_fieldset > * {
         min-width: 100%;
-        margin: 0 0 var(--UI_form-gap-bottom) 0;
     }
 }
 
