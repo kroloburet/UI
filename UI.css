@@ -170,8 +170,9 @@
     --UI_Tabs-border-color: var(--UI_base-color);
     --UI_Tabs-control-font-size: 1.0625em;
     --UI_Tabs-control-font-color: var(--UI_base-font-color);
+    --UI_Tabs-control-hover-font-color: #000;
     --UI_Tabs-control-padding: .5em 1em;
-    --UI_Tabs-control-bg-color: var(--UI_base-color);
+    --UI_Tabs-control-hover-bg-color: var(--UI_base-color);
     --UI_Tabs-control-border-color: transparent;
     --UI_Tabs-content-paddingY: var(--UI_base-padding);
     --UI_Tabs-content-paddingX: var(--UI_base-padding);
@@ -1517,6 +1518,7 @@ dl.UI_Tabs-activated dt {
     border: var(--UI_Tabs-border-width) solid transparent;
     border-bottom: none;
     border-radius: var(--UI_base-border-radius) var(--UI_base-border-radius) 0 0;
+    color: var(--UI_Tabs-control-font-color);
     cursor: pointer;
 }
 
@@ -1524,8 +1526,8 @@ dl.UI_Tabs-activated dt.UI_Tabs-show,
 dl.UI_Tabs-activated dt:hover,
 dl.UI_Tabs-activated dt.UI_Tabs-show:hover {
     border-color: var(--UI_Tabs-control-border-color);
-    background-color: var(--UI_Tabs-control-bg-color);
-    color: var(--UI_Tabs-control-font-color);
+    background-color: var(--UI_Tabs-control-hover-bg-color);
+    color: var(--UI_Tabs-control-hover-font-color);
 }
 
 dl.UI_Tabs-activated dt.UI_Tabs-show {
@@ -1548,19 +1550,19 @@ dl.UI_Tabs-activated dd.UI_Tabs-show {
 /*---------------------------------------------- Tabs color themes ---*/
 .UI_Tabs.UI_primary {
     --UI_Tabs-border-color: var(--UI_primary-bg-color);
-    --UI_Tabs-control-font-color: var(--UI_primary-font-color);
-    --UI_Tabs-control-bg-color: var(--UI_primary-bg-color);
+    --UI_Tabs-control-hover-font-color: var(--UI_primary-font-color);
+    --UI_Tabs-control-hover-bg-color: var(--UI_primary-bg-color);
 }
 
 .UI_Tabs.UI_accent {
     --UI_Tabs-border-color: var(--UI_accent-bg-color);
-    --UI_Tabs-control-font-color: var(--UI_accent-font-color);
-    --UI_Tabs-control-bg-color: var(--UI_accent-bg-color);
+    --UI_Tabs-control-hover-font-color: var(--UI_accent-font-color);
+    --UI_Tabs-control-hover-bg-color: var(--UI_accent-bg-color);
 }
 
 .UI_Tabs.UI_contour {
     --UI_Tabs-border-color: var(--UI_Tabs-control-font-color);
-    --UI_Tabs-control-bg-color: var(--UI_Tabs-content-bg-color);
+    --UI_Tabs-control-hover-bg-color: var(--UI_Tabs-content-bg-color);
     --UI_Tabs-control-border-color: var(--UI_Tabs-control-font-color);
 }
 
