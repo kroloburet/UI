@@ -376,6 +376,7 @@ const UI = new class {
                 collection.forEach(dl => {
                     // Об'єкт з публічними полями елемента колекції
                     dl.UI = {};
+                    dl.UI.Builder = this;
                     dl.UI.conf = Object.assign({}, defConf, userConf, UI.#getDatasetConf(dl));
                     dl.UI.component = dl;
                     dl.UI.control = document.createElement(`div`);
@@ -598,6 +599,7 @@ const UI = new class {
                     if (!el.nextElementSibling.classList.contains(`UI_${selfName}`))
                         throw ReferenceError(`Hint element mast contain css class "UI_${selfName}"!`);
                     el.UI = {};
+                    el.UI.Builder = this;
                     el.UI.hint = el.nextElementSibling;
                     el.addEventListener(`mousemove`, this.setPosition);
                     document.addEventListener(hideEvent, event => {
@@ -736,6 +738,7 @@ const UI = new class {
             this.notice.classList.add(`UI_${selfName}`, conf.className);
             this.notice.innerHTML = conf.message;
             this.notice.UI = {};
+            this.notice.UI.Builder = this;
             this.notice.UI.component = document.createElement(`div`);
             this.notice.UI.component.classList.add(UI.css.bodyOverlay, css.box);
             this.notice.UI.component.prepend(this.notice);
@@ -852,6 +855,7 @@ const UI = new class {
                     collection.filter(el => !UI.#isActivate(el, selfName)).forEach(pop => {
                         // Додати обгортку, кнопки та події
                         pop.UI = {};
+                        pop.UI.Builder = this;
                         pop.UI.component = document.createElement(`div`);
                         pop.UI.closeButton = document.createElement(`span`);
                         pop.UI.component.classList.add(UI.css.bodyOverlay, css.box);
@@ -956,6 +960,7 @@ const UI = new class {
                         throw TypeError(`Expected: type number in "limit" argument.`);
                     if (UI.#isDisabledNode(field)) return;
                     field.UI = {};
+                    field.UI.Builder = this;
                     field.UI.limit = parseInt(limit, 10);
                     field.UI.component = UI.#formComponent.wrap(field);
                     field.UI.counter = document.createElement(`span`);
@@ -1113,6 +1118,7 @@ const UI = new class {
                 collection.forEach(input => {
                     // Об'єкт з публічними полями елемента колекції
                     input.UI = {};
+                    input.UI.Builder = this;
                     input.UI.conf = Object.assign({}, defConf, userConf, UI.#getDatasetConf(input));
                     input.UI.component = UI.#formComponent.wrap(input);
                     input.UI.choiceButton = document.createElement(`span`);
@@ -1271,6 +1277,7 @@ const UI = new class {
                 collection.forEach(input => {
                     // Об'єкт з публічними полями елемента колекції
                     input.UI = {};
+                    input.UI.Builder = this;
                     input.UI.conf = Object.assign({}, defConf, userConf, UI.#getDatasetConf(input));
                     // Додати елементи, класи та слухачів подій
                     input.UI.component = UI.#formComponent.wrap(input);
@@ -1397,6 +1404,7 @@ const UI = new class {
                 collection.forEach(input => {
                     // Об'єкт з публічними полями елемента колекції
                     input.UI = {};
+                    input.UI.Builder = this;
                     input.UI.conf = Object.assign({}, defConf, userConf, UI.#getDatasetConf(input));
                     input.UI.component = UI.#formComponent.wrap(input);
                     input.UI.incButton = document.createElement(`span`);
@@ -1603,6 +1611,7 @@ const UI = new class {
                 collection.forEach(select => {
                     // Об'єкт з публічними полями елемента колекції
                     select.UI = {};
+                    select.UI.Builder = this;
                     select.UI.conf = Object.assign({}, defConf, userConf, UI.#getDatasetConf(select));
                     select.UI.component = UI.#formComponent.wrap(select);
                     select.UI.overlay = document.createElement(`div`);
@@ -2034,6 +2043,7 @@ const UI = new class {
                 collection.forEach(ul => {
                     // Об'єкт з публічними полями елемента колекції
                     ul.UI = {};
+                    ul.UI.Builder = this;
                     ul.UI.conf = Object.assign({}, defConf, userConf, UI.#getDatasetConf(ul));
                     ul.UI.toggleButton = document.createElement(`i`);
                     ul.UI.toggleButton.classList.add(css.toggleButton);
