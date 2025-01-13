@@ -351,6 +351,7 @@ const UI = new class {
 
         return new class {
             constructor() {
+                this.collection = collection;
                 this.#activate();
             }
 
@@ -373,10 +374,11 @@ const UI = new class {
                 // Деактивувати активовані, щоб оновити конфігурацію
                 this.remove();
                 // Активувати колекцію
-                collection.forEach(dl => {
+                this.collection.forEach(dl => {
                     // Об'єкт з публічними полями елемента колекції
                     dl.UI = {};
-                    dl.UI.Builder = this;
+                    dl.UI.Builder = Object.create(this);
+                    dl.UI.Builder.collection = [dl];
                     dl.UI.conf = Object.assign({}, defConf, userConf, UI.#getDatasetConf(dl));
                     dl.UI.component = dl;
                     dl.UI.control = document.createElement(`div`);
@@ -429,7 +431,7 @@ const UI = new class {
                     tabs.dispatchEvent(new CustomEvent(`UI.sowed`, {detail: {tabIndex}}));
                 };
                 // Опрацювати всю колекцію якщо компонент не передано
-                !(tabs instanceof HTMLElement) ? collection.forEach(worker) : worker(tabs);
+                !(tabs instanceof HTMLElement) ? this.collection.forEach(worker) : worker(tabs);
                 return this;
             }
 
@@ -439,7 +441,7 @@ const UI = new class {
              * @return {this}
              */
             remove() {
-                collection.filter(el => UI.#isActivate(el, selfName)).forEach(tabs => {
+                this.collection.filter(el => UI.#isActivate(el, selfName)).forEach(tabs => {
                     tabs.dispatchEvent(new CustomEvent(`UI.beforeRemove`));
                     // Видалити прив'язку подій та повернути HTML-структуру списку визначень
                     tabs.UI.tabsList.forEach((dt, index) => {
@@ -460,7 +462,7 @@ const UI = new class {
              * @returns {Array}
              */
             get get() {
-                return collection.filter(el => UI.#isActivate(el, selfName));
+                return this.collection.filter(el => UI.#isActivate(el, selfName));
             }
         }
     }
@@ -723,46 +725,6 @@ const UI = new class {
             callback: null,
         };
 
-        // Обіцянка для метода UI.Notice().remove()
-        let resolveRemovePromise;
-        const removePromise = new Promise((resolve) => {
-            resolveRemovePromise = resolve;
-        });
-
-        // Повідомдення повинні створюватись по черзі
-        this.#queue.push(async (config) => {
-            const conf = Object.assign({}, defConf, config);
-
-            // Створення нового повідомлення
-            this.notice = document.createElement(`div`);
-            this.notice.classList.add(`UI_${selfName}`, conf.className);
-            this.notice.innerHTML = conf.message;
-            this.notice.UI = {};
-            this.notice.UI.Builder = this;
-            this.notice.UI.component = document.createElement(`div`);
-            this.notice.UI.component.classList.add(UI.css.bodyOverlay, css.box);
-            this.notice.UI.component.prepend(this.notice);
-            document.body.append(this.notice.UI.component);
-            document.body.classList.add(UI.css.bodyHideOverflow);
-
-            this.notice.dispatchEvent(new CustomEvent(`UI.created`));
-            this.notice.dispatchEvent(new CustomEvent(`UI.activated`));
-
-            // Якщо передано delay, автоматичне видалення через заданий час
-            if (conf.delay) {
-                await new Promise((resolve) => setTimeout(resolve, conf.delay));
-
-                _Notice.remove();
-
-                if (typeof conf.callback === `function`) {
-                    await conf.callback();
-                }
-            } else {
-                // Чекати remove() на екземплярі
-                await removePromise;
-            }
-        }, userConf, selfName);
-
         // Публічний об'єкт що повертає Notice()
         const _Notice = {
             /**
@@ -805,6 +767,46 @@ const UI = new class {
              */
             get: this.notice
         }
+
+        // Обіцянка для метода UI.Notice().remove()
+        let resolveRemovePromise;
+        const removePromise = new Promise((resolve) => {
+            resolveRemovePromise = resolve;
+        });
+
+        // Повідомдення повинні створюватись по черзі
+        this.#queue.push(async (config) => {
+            const conf = Object.assign({}, defConf, config);
+
+            // Створення нового повідомлення
+            this.notice = document.createElement(`div`);
+            this.notice.classList.add(`UI_${selfName}`, conf.className);
+            this.notice.innerHTML = conf.message;
+            this.notice.UI = {};
+            this.notice.UI.Builder = _Notice;
+            this.notice.UI.component = document.createElement(`div`);
+            this.notice.UI.component.classList.add(UI.css.bodyOverlay, css.box);
+            this.notice.UI.component.prepend(this.notice);
+            document.body.append(this.notice.UI.component);
+            document.body.classList.add(UI.css.bodyHideOverflow);
+
+            this.notice.dispatchEvent(new CustomEvent(`UI.created`));
+            this.notice.dispatchEvent(new CustomEvent(`UI.activated`));
+
+            // Якщо передано delay, автоматичне видалення через заданий час
+            if (conf.delay) {
+                await new Promise((resolve) => setTimeout(resolve, conf.delay));
+
+                _Notice.remove();
+
+                if (typeof conf.callback === `function`) {
+                    await conf.callback();
+                }
+            } else {
+                // Чекати remove() на екземплярі
+                await removePromise;
+            }
+        }, userConf, selfName);
 
         return _Notice;
     }
@@ -855,7 +857,6 @@ const UI = new class {
                     collection.filter(el => !UI.#isActivate(el, selfName)).forEach(pop => {
                         // Додати обгортку, кнопки та події
                         pop.UI = {};
-                        pop.UI.Builder = this;
                         pop.UI.component = document.createElement(`div`);
                         pop.UI.closeButton = document.createElement(`span`);
                         pop.UI.component.classList.add(UI.css.bodyOverlay, css.box);
@@ -1102,6 +1103,7 @@ const UI = new class {
 
         return new class {
             constructor() {
+                this.collection = collection;
                 this.#activate();
             }
 
@@ -1115,10 +1117,11 @@ const UI = new class {
                 // Деактивувати активовані, щоб оновити конфігурацію
                 this.remove();
                 // Активувати колекцію
-                collection.forEach(input => {
+                this.collection.forEach(input => {
                     // Об'єкт з публічними полями елемента колекції
                     input.UI = {};
-                    input.UI.Builder = this;
+                    input.UI.Builder = Object.create(this);
+                    input.UI.Builder.collection = [input];
                     input.UI.conf = Object.assign({}, defConf, userConf, UI.#getDatasetConf(input));
                     input.UI.component = UI.#formComponent.wrap(input);
                     input.UI.choiceButton = document.createElement(`span`);
@@ -1184,7 +1187,7 @@ const UI = new class {
                     input.dispatchEvent(new CustomEvent(`UI.rendered`));
                 };
                 // Опрацювати всю колекцію якщо поле не передано
-                !(input instanceof HTMLElement) ? collection.forEach(worker) : worker(input);
+                !(input instanceof HTMLElement) ? this.collection.forEach(worker) : worker(input);
                 return this;
             }
 
@@ -1194,7 +1197,7 @@ const UI = new class {
              * @return {this}
              */
             remove() {
-                collection.filter(el => UI.#isActivate(el, selfName)).forEach(input => {
+                this.collection.filter(el => UI.#isActivate(el, selfName)).forEach(input => {
                     input.dispatchEvent(new CustomEvent(`UI.beforeRemove`));
                     // Повернути елементи в стан до активації
                     input.onchange = null;
@@ -1215,7 +1218,7 @@ const UI = new class {
              * @returns {Array}
              */
             get get() {
-                return collection.filter(el => UI.#isActivate(el, selfName));
+                return this.collection.filter(el => UI.#isActivate(el, selfName));
             }
         }
     }
@@ -1261,6 +1264,7 @@ const UI = new class {
 
         return new class {
             constructor() {
+                this.collection = collection;
                 this.#activate();
             }
 
@@ -1274,10 +1278,11 @@ const UI = new class {
                 // Деактивувати активовані, щоб оновити конфігурацію
                 this.remove();
                 // Активувати колекцію
-                collection.forEach(input => {
+                this.collection.forEach(input => {
                     // Об'єкт з публічними полями елемента колекції
                     input.UI = {};
-                    input.UI.Builder = this;
+                    input.UI.Builder = Object.create(this);
+                    input.UI.Builder.collection = [input];
                     input.UI.conf = Object.assign({}, defConf, userConf, UI.#getDatasetConf(input));
                     // Додати елементи, класи та слухачів подій
                     input.UI.component = UI.#formComponent.wrap(input);
@@ -1312,7 +1317,7 @@ const UI = new class {
              * @return {this}
              */
             remove() {
-                collection.filter(el => UI.#isActivate(el, selfName)).forEach(input => {
+                this.collection.filter(el => UI.#isActivate(el, selfName)).forEach(input => {
                     input.dispatchEvent(new CustomEvent(`UI.beforeRemove`));
                     // Повернути елементи в стан до активації
                     input.oninput = null;
@@ -1331,7 +1336,7 @@ const UI = new class {
              * @returns {Array}
              */
             get get() {
-                return collection.filter(el => UI.#isActivate(el, selfName));
+                return this.collection.filter(el => UI.#isActivate(el, selfName));
             }
         }
     }
@@ -1388,6 +1393,7 @@ const UI = new class {
 
         return new class {
             constructor() {
+                this.collection = collection;
                 this.#activate();
             }
 
@@ -1401,10 +1407,11 @@ const UI = new class {
                 // Деактивувати активовані, щоб оновити конфігурацію
                 this.remove();
                 // Активувати колекцію
-                collection.forEach(input => {
+                this.collection.forEach(input => {
                     // Об'єкт з публічними полями елемента колекції
                     input.UI = {};
-                    input.UI.Builder = this;
+                    input.UI.Builder = Object.create(this);
+                    input.UI.Builder.collection = [input];
                     input.UI.conf = Object.assign({}, defConf, userConf, UI.#getDatasetConf(input));
                     input.UI.component = UI.#formComponent.wrap(input);
                     input.UI.incButton = document.createElement(`span`);
@@ -1489,7 +1496,7 @@ const UI = new class {
                     input.dispatchEvent(new CustomEvent(`UI.setVal`));
                 };
                 // Опрацювати всю колекцію якщо поле не передано
-                !(input instanceof HTMLElement) ? collection.forEach(worker) : worker(input);
+                !(input instanceof HTMLElement) ? this.collection.forEach(worker) : worker(input);
                 return this;
             }
 
@@ -1499,7 +1506,7 @@ const UI = new class {
              * @return {this}
              */
             remove() {
-                collection.filter(el => UI.#isActivate(el, selfName)).forEach(input => {
+                this.collection.filter(el => UI.#isActivate(el, selfName)).forEach(input => {
                     input.dispatchEvent(new CustomEvent(`UI.beforeRemove`));
                     // Повернути елементи в стан до активації
                     input.oninput = null;
@@ -1517,7 +1524,7 @@ const UI = new class {
              * @returns {Array}
              */
             get get() {
-                return collection.filter(el => UI.#isActivate(el, selfName));
+                return this.collection.filter(el => UI.#isActivate(el, selfName));
             }
         }
     }
@@ -1595,6 +1602,7 @@ const UI = new class {
 
         return new class {
             constructor() {
+                this.collection = collection;
                 this.#activate();
             }
 
@@ -1608,10 +1616,11 @@ const UI = new class {
                 // Деактивувати активовані, щоб оновити конфігурацію
                 this.remove();
                 // Активувати колекцію
-                collection.forEach(select => {
+                this.collection.forEach(select => {
                     // Об'єкт з публічними полями елемента колекції
                     select.UI = {};
-                    select.UI.Builder = this;
+                    select.UI.Builder = Object.create(this);
+                    select.UI.Builder.collection = [select];
                     select.UI.conf = Object.assign({}, defConf, userConf, UI.#getDatasetConf(select));
                     select.UI.component = UI.#formComponent.wrap(select);
                     select.UI.overlay = document.createElement(`div`);
@@ -1674,7 +1683,7 @@ const UI = new class {
                 return this;
             }
 
-            #setDropdownListItemInteractive(select = null) {
+            setDropdownListItemInteractive(select = null) {
                 const worker = select => {
                     if (! select.UI.dropdownItems.length) return;
                     select.UI.dropdownList.focus();
@@ -1711,7 +1720,7 @@ const UI = new class {
                     if (select.UI.hasSearch) select.UI.searchInput.onkeydown = keyEventController;
                 }
                 // Опрацювати всю колекцію якщо поле не передано
-                !(select instanceof HTMLElement) ? collection.forEach(worker) : worker(select);
+                !(select instanceof HTMLElement) ? this.collection.forEach(worker) : worker(select);
                 return this;
             }
 
@@ -1721,7 +1730,7 @@ const UI = new class {
              * @param {HTMLElement|null} select Поле
              * @returns {undefined|this}
              */
-            #addPlaceholder(select = null) {
+            addPlaceholder(select = null) {
                 const worker = select => {
                     if (!select.UI.conf.selectPlaceholder) return;
                     select.selectedIndex = -1;
@@ -1733,7 +1742,7 @@ const UI = new class {
                     select.UI.control.prepend(select.UI.controlPlaceholder);
                 }
                 // Опрацювати всю колекцію якщо поле не передано
-                !(select instanceof HTMLElement) ? collection.forEach(worker) : worker(select);
+                !(select instanceof HTMLElement) ? this.collection.forEach(worker) : worker(select);
                 return this;
             }
 
@@ -1743,7 +1752,7 @@ const UI = new class {
              * @param {HTMLElement|null} select Поле
              * @returns {undefined|this}
              */
-            #setDropdownPosition(select = null) {
+            setDropdownPosition(select = null) {
                 const worker = select => {
                     if (select.UI.hasDisabled || !select.UI.dropdownItems.length) return;
                     const dropdown = select.UI.dropdown;
@@ -1770,7 +1779,7 @@ const UI = new class {
                     }
                 }
                 // Опрацювати всю колекцію якщо поле не передано
-                !(select instanceof HTMLElement) ? collection.forEach(worker) : worker(select);
+                !(select instanceof HTMLElement) ? this.collection.forEach(worker) : worker(select);
                 return this;
             }
 
@@ -1790,13 +1799,13 @@ const UI = new class {
                         : select.UI.control.classList.add(UI.css.focusForm);
                     select.UI.dropdown.classList.add(css.dropdownShow);
                     select.UI.dropdownToggleButton.innerHTML = select.UI.conf.closeIcon;
-                    this.#setDropdownPosition(select);
-                    this.#setDropdownListItemInteractive(select);
+                    this.setDropdownPosition(select);
+                    this.setDropdownListItemInteractive(select);
                     select.dispatchEvent(new CustomEvent(`UI.dropdownShowed`));
                 }
                 this.hideDropdown();
                 // Опрацювати всю колекцію якщо поле не передано
-                !(select instanceof HTMLElement) ? collection.forEach(worker) : worker(select);
+                !(select instanceof HTMLElement) ? this.collection.forEach(worker) : worker(select);
                 return this;
             }
 
@@ -1818,7 +1827,7 @@ const UI = new class {
                     select.dispatchEvent(new CustomEvent(`UI.dropdownHidden`));
                 };
                 // Опрацювати всю колекцію якщо поле не передано
-                !(select instanceof HTMLElement) ? collection.forEach(worker) : worker(select);
+                !(select instanceof HTMLElement) ? this.collection.forEach(worker) : worker(select);
                 return this;
             }
 
@@ -1846,11 +1855,11 @@ const UI = new class {
                             select.options[index].dataset.findOf?.toLowerCase().indexOf(q) > -1
                         );
                     });
-                    // this.#setDropdownListItemInteractive(select);
+                    // this.setDropdownListItemInteractive(select);
                     select.dispatchEvent(new CustomEvent(`UI.searched`));
                 };
                 // Опрацювати всю колекцію якщо поле не передано
-                !(select instanceof HTMLElement) ? collection.forEach(worker) : worker(select);
+                !(select instanceof HTMLElement) ? this.collection.forEach(worker) : worker(select);
                 return this;
             }
 
@@ -1880,7 +1889,7 @@ const UI = new class {
                     select.dispatchEvent(new CustomEvent(`UI.selected`, {detail: {indexes, selected: val}}));
                 };
                 // Опрацювати всю колекцію якщо поле не передано
-                !(select instanceof HTMLElement) ? collection.forEach(worker) : worker(select);
+                !(select instanceof HTMLElement) ? this.collection.forEach(worker) : worker(select);
                 return this;
             }
 
@@ -1931,7 +1940,7 @@ const UI = new class {
                         }
                     });
                     // Додати placeholder
-                    if (!select.value) this.#addPlaceholder(select);
+                    if (!select.value) this.addPlaceholder(select);
                     //
                     select.UI.control.classList.toggle(UI.css.requiredForm, select.required);
                     select.UI.component.classList.toggle(UI.css.disabledForm, select.UI.hasDisabled);
@@ -1943,7 +1952,7 @@ const UI = new class {
                     select.dispatchEvent(new CustomEvent(`UI.rendered`));
                 };
                 // Опрацювати всю колекцію якщо поле не передано
-                !(select instanceof HTMLElement) ? collection.forEach(worker) : worker(select);
+                !(select instanceof HTMLElement) ? this.collection.forEach(worker) : worker(select);
                 return this;
             }
 
@@ -1954,7 +1963,7 @@ const UI = new class {
              * @return {this}
              */
             remove() {
-                collection.filter(el => UI.#isActivate(el, selfName)).forEach(select => {
+                this.collection.filter(el => UI.#isActivate(el, selfName)).forEach(select => {
                     select.dispatchEvent(new CustomEvent(`UI.beforeRemove`));
                     // Повернути елементи в стан до активації
                     select.oninvalid = null;
@@ -1973,7 +1982,7 @@ const UI = new class {
              * @returns {Array}
              */
             get get() {
-                return collection.filter(el => UI.#isActivate(el, selfName));
+                return this.collection.filter(el => UI.#isActivate(el, selfName));
             }
         }
     }
@@ -2027,6 +2036,7 @@ const UI = new class {
 
         return new class {
             constructor() {
+                this.collection = collection;
                 this.#activate();
             }
 
@@ -2040,10 +2050,11 @@ const UI = new class {
                 // Деактивувати активовані, щоб оновити конфігурацію
                 this.remove();
                 // Активувати колекцію
-                collection.forEach(ul => {
+                this.collection.forEach(ul => {
                     // Об'єкт з публічними полями елемента колекції
                     ul.UI = {};
-                    ul.UI.Builder = this;
+                    ul.UI.Builder = Object.create(this);
+                    ul.UI.Builder.collection = [ul];
                     ul.UI.conf = Object.assign({}, defConf, userConf, UI.#getDatasetConf(ul));
                     ul.UI.toggleButton = document.createElement(`i`);
                     ul.UI.toggleButton.classList.add(css.toggleButton);
@@ -2082,7 +2093,7 @@ const UI = new class {
                     });
                 };
                 // Опрацювати всю колекцію якщо елемент не передано
-                !(ul instanceof HTMLElement) ? collection.forEach(worker) : worker(ul);
+                !(ul instanceof HTMLElement) ? this.collection.forEach(worker) : worker(ul);
                 return this;
             }
 
@@ -2112,7 +2123,7 @@ const UI = new class {
                         : ul.dispatchEvent(new CustomEvent(`UI.hidden`));
                 };
                 // Опрацювати всю колекцію якщо елемент не передано
-                !(ul instanceof HTMLElement) ? collection.forEach(worker) : worker(ul);
+                !(ul instanceof HTMLElement) ? this.collection.forEach(worker) : worker(ul);
                 return this;
             }
 
@@ -2122,7 +2133,7 @@ const UI = new class {
              * @return {this}
              */
             remove() {
-                collection.filter(el => UI.#isActivate(el, selfName)).forEach(ul => {
+                this.collection.filter(el => UI.#isActivate(el, selfName)).forEach(ul => {
                     ul.dispatchEvent(new CustomEvent(`UI.beforeRemove`));
                     // Повернути елементи в стан до активації
                     ul.UI.toggleButton.remove();
@@ -2140,7 +2151,7 @@ const UI = new class {
              * @returns {Array}
              */
             get get() {
-                return collection.filter(el => UI.#isActivate(el, selfName));
+                return this.collection.filter(el => UI.#isActivate(el, selfName));
             }
         }
     }
