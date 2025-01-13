@@ -528,7 +528,7 @@ const UI = new class {
                     const parentHeight = parent.scrollHeight;
                     const windowHeight = window.innerHeight;
                     const overflowY = window.getComputedStyle(parent).overflowY;
-                    if (parentHeight > windowHeight && (overflowY === 'auto' || overflowY === 'scroll')) {
+                    if (parentHeight > windowHeight && (overflowY === `auto` || overflowY === `scroll`)) {
                         return parent;
                     }
                     parent = parent.parentElement;
@@ -537,23 +537,36 @@ const UI = new class {
                 return window;
             };
 
-            document.dispatchEvent(new CustomEvent('UI.beforeGoTo'));
+            document.dispatchEvent(new CustomEvent(`UI.beforeGoTo`));
 
             setTimeout(() => {
                 const scrollableParent = getScrollableParent(el);
                 const elementPosition = el.getBoundingClientRect();
-                const parentPosition = scrollableParent === window ? { top: 0, left: 0 } : scrollableParent.getBoundingClientRect();
-                const scrollTop = elementPosition.top - parentPosition.top + scrollableParent.scrollTop - 100; // Корекція відступу
-                const scrollLeft = elementPosition.left - parentPosition.left + scrollableParent.scrollLeft;
 
-                scrollableParent.scrollTo({
+                // Якщо scrollableParent — це `window`, використати document.documentElement або document.body
+                const isWindow = scrollableParent === window;
+                const parentPosition = isWindow
+                    ? { top: 0, left: 0 }
+                    : scrollableParent.getBoundingClientRect();
+
+                const scrollTop = isWindow
+                    ? window.scrollY + elementPosition.top - 100 // Прокрутка сторінки
+                    : elementPosition.top - parentPosition.top + (scrollableParent.scrollTop ?? 0) - 100;
+
+                const scrollLeft = isWindow
+                    ? window.scrollX + elementPosition.left // Прокрутка сторінки
+                    : elementPosition.left - parentPosition.left + (scrollableParent.scrollLeft ?? 0);
+
+                // Прокрутка
+                const scrollTarget = isWindow ? window : scrollableParent;
+                scrollTarget.scrollTo({
                     top: scrollTop,
                     left: scrollLeft,
-                    behavior: 'smooth',
+                    behavior: `smooth`,
                 });
             }, 200);
 
-            document.dispatchEvent(new CustomEvent('UI.afterGoTo'));
+            document.dispatchEvent(new CustomEvent(`UI.afterGoTo`));
 
             return el;
         } catch (e) {
