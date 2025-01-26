@@ -1483,6 +1483,7 @@ pre.UI_Hint {
     color: var(--UI_Popup-close-btn-color);
     font-size: var(--UI_Popup-close-btn-font-size);
     cursor: pointer;
+    z-index: 99999;
 }
 
 .UI_Popup .UI_Popup-close-btn:hover {
