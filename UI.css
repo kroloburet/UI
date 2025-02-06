@@ -1490,6 +1490,12 @@ pre.UI_Hint {
     color: var(--UI_Popup-close-btn-color-hover);
 }
 
+@media (max-width: 576px) {
+    .UI_Popup {
+        padding: var(--UI_base-gapY) var(--UI_Popup-padding);
+    }
+}
+
 /*---------------------------------------------- UI_Tabs ---*/
 .UI_Tabs {
 }
