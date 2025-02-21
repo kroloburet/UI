@@ -755,7 +755,6 @@ const UI = new class {
                 return _Notice;
             },
 
-
             /**
              * Деактивувати повідомлення
              *
@@ -832,6 +831,8 @@ const UI = new class {
      * @event UI.beforeShow
      * @event UI.showed
      * @event UI.beforeHide
+     * @event UI.beforeInsert
+     * @event UI.inserted
      * @event UI.hidden
      *
      * @param {string|null} [id = null] Ідентифікатор елемента або нічого
@@ -877,8 +878,7 @@ const UI = new class {
                             e.target === pop.UI.component ? this.hide() : null;
                         pop.UI.closeButton.classList.add(css.closeButton, `fa-solid`, `fa-times-circle`);
                         pop.UI.closeButton.onclick = this.hide;
-                        pop.prepend(pop.UI.closeButton);
-                        pop.UI.component.prepend(pop);
+                        pop.UI.component.prepend(pop.UI.closeButton, pop);
                         document.body.append(pop.UI.component);
                         // Помітити елемент як активований
                         UI.#markActivate(pop, selfName);
@@ -918,6 +918,21 @@ const UI = new class {
                 });
                 document.body.classList.remove(UI.css.bodyHideOverflow);
                 return this;
+            }
+
+            /**
+             * Вставити елемент/елементи в popup
+             *
+             * @return {this}
+             */
+            insert(...nodes) {
+                const pop = collection.filter(el => UI.#isActivate(el, selfName) && el.id === id)[0];
+                if (!pop)
+                    throw ReferenceError(`The transmitted argument "id" is not correct or element not found`);
+                pop.dispatchEvent(new CustomEvent(`UI.beforeInsert`));
+                pop.innerHTML = null;
+                pop.append(...nodes);
+                pop.dispatchEvent(new CustomEvent(`UI.inserted`));
             }
 
             /**

@@ -2490,6 +2490,9 @@ UI.GoTo(element);
                     <q>клас-будівельник</q>.
                 </li>
                 <li>Метод <code>hide()</code> ховає всі вікна. Повертає <q>клас-будівельник</q>.</li>
+                <li>Метод <code>insert(...nodes)</code> вставляє елемент/елементи у вікно з <code>id</code>. Перед вставкою контент
+                    вікна буде видалений. Повертає <q>клас-будівельник</q>.
+                </li>
                 <li>Властивість <code>get</code> повертає масив &mdash; колекцію елементів, які активував
                     <code>UI.Popup()</code>. Повинен бути викликаним останнім в ланцюгу викликів.
                 </li>
@@ -2502,6 +2505,8 @@ UI.GoTo(element);
                 <li><code>UI.beforeShow</code> вікно буде показано.</li>
                 <li><code>UI.showed</code> вікно показано.</li>
                 <li><code>UI.beforeHide</code> вікно буде приховано.</li>
+                <li><code>UI.beforeInsert</code> у вікно буде вставлено елемент.</li>
+                <li><code>UI.inserted</code> у вікно вставлено елемент.</li>
                 <li><code>UI.hidden</code> вікно приховано.</li>
             </ul>
             <h4>Поглиблений доступ</h4>

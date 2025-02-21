@@ -1476,7 +1476,7 @@ pre.UI_Hint {
     display: block;
 }
 
-.UI_Popup .UI_Popup-close-btn {
+.UI_Popup-box .UI_Popup-close-btn {
     position: fixed;
     top: var(--UI_Popup-padding);
     right: var(--UI_Popup-padding);
@@ -1486,7 +1486,7 @@ pre.UI_Hint {
     z-index: 99999;
 }
 
-.UI_Popup .UI_Popup-close-btn:hover {
+.UI_Popup-box .UI_Popup-close-btn:hover {
     color: var(--UI_Popup-close-btn-color-hover);
 }
 
