@@ -933,6 +933,7 @@ const UI = new class {
                 pop.innerHTML = null;
                 pop.append(...nodes);
                 pop.dispatchEvent(new CustomEvent(`UI.inserted`));
+                return this;
             }
 
             /**
