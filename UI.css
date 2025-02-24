@@ -1454,7 +1454,6 @@ pre.UI_Hint {
 /*---------------------------------------------- UI_Popup ---*/
 .UI_Popup {
     display: none;
-    position: relative;
     max-width: var(--UI_Popup-max-wigth);
     margin: auto;
     padding: var(--UI_Popup-padding);
