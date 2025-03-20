@@ -978,7 +978,7 @@ sequi voluptatum. Ad autem, culpa cum explicabo, itaque laudantium nesciunt null
 
     <h2 id="forms">Форми</h2>
     <p>В UI передбачено стилізацію елементів форми. Дотримуйтесь простих правил розмітки форм UI. Для елементів форми в
-        <code>UI</code> передбачені CSS-класи (див. вкладку <q>Код</q>). Для елементів форм, які важко стилізуються і не
+        <code>UI</code> передбачені CSS-класи (див. вкладку <q>Код</q>). Наприклад, щоб стилізувати <code>input type="date"</code>, просто застосуйте до нього клас <code>UI_input</code>. Для елементів форм, які важко стилізуються і не
         дуже зручні для використання, UI <q>обгортає</q> в компоненти форми описані в <a
                 data-go-to="#methods">методах UI</a>. Елементи форми в UI можуть бути звичайними
         (блоковими за замовчуванням) та інлайновими.</p>
@@ -1084,6 +1084,10 @@ sequi voluptatum. Ad autem, culpa cum explicabo, itaque laudantium nesciunt null
             <!--- input type="number" with class "UI_InputNumber" --->
             Input type="number" with class "UI_InputNumber"
             <input type="number" class="UI_InputNumber" min="0" max="6">
+
+            <!--- simple input type="datetime-local" --->
+            Simple input type="datetime-local"
+            <input type="datetime-local" class="UI_input">
 
             <!--- simple input type="file" multiple --->
             Simple input type="file" multiple
@@ -1214,6 +1218,10 @@ Simple input type=&quot;number&quot;
 &lt;!--- input type=&quot;number&quot; with class &quot;UI_InputNumber&quot; ---&gt;
 Input type=&quot;number&quot; with class &quot;UI_InputNumber&quot;
 &lt;input type=&quot;number&quot; class=&quot;UI_InputNumber&quot; min=&quot;0&quot; max=&quot;6&quot;&gt;
+
+&lt;!--- simple input type=&quot;datetime-local&quot; ---&gt;
+Simple input type=&quot;datetime-local&quot;
+&lt;input type=&quot;datetime-local&quot; class=&quot;UI_input&quot;&gt;
 
 &lt;!--- simple input type=&quot;file&quot; multiple ---&gt;
 Simple input type=&quot;file&quot; multiple
