@@ -899,6 +899,7 @@ const UI = new class {
                 if (!pop)
                     throw ReferenceError(`The transmitted argument "id" is not correct or element not found`);
                 pop.dispatchEvent(new CustomEvent(`UI.beforeShow`));
+                document.body.append(pop.UI.component);
                 pop.UI.component.classList.add(css.show);
                 document.body.classList.add(UI.css.bodyHideOverflow);
                 pop.dispatchEvent(new CustomEvent(`UI.showed`));
@@ -911,12 +912,13 @@ const UI = new class {
              * @returns {this}
              */
             hide() {
-                collection.filter(el => UI.#isActivate(el, selfName)).forEach(pop => {
-                    pop.dispatchEvent(new CustomEvent(`UI.beforeHide`));
-                    pop.UI.component.classList.remove(css.show);
-                    pop.dispatchEvent(new CustomEvent(`UI.hidden`));
-                });
-                document.body.classList.remove(UI.css.bodyHideOverflow);
+                const showedPops = [...document.querySelectorAll(`.${css.show}`)].reverse();
+                const lastPop = showedPops[0];
+                if (!lastPop) return this;
+                lastPop.dispatchEvent(new CustomEvent(`UI.beforeHide`));
+                lastPop.classList.remove(css.show);
+                lastPop.dispatchEvent(new CustomEvent(`UI.hidden`));
+                if (! showedPops[1]) document.body.classList.remove(UI.css.bodyHideOverflow);
                 return this;
             }
 
