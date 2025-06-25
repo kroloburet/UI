@@ -81,6 +81,8 @@
     --UI_contour-active-font-color: #FFFFFF;
     --UI_contour-active-bg-color: #0A78DE;
     --UI_contour-active-border-color: transparent;
+    --UI_green-color: green;
+    --UI_red-color: red;
 
     /*--- Typography ---*/
     --UI_blockquote-border: 1px solid var(--UI_base-color);
@@ -676,10 +678,17 @@ li ul, li ol {
 }
 
 .UI_ok::after {
-    content: "\f00c" !important;
+    content: "\f058" !important;
     margin-left: .5em;
     font: var(--fa-font-solid);
-    color: green;
+    color: var(--UI_green-color);
+}
+
+.UI_err::after {
+    content: "\f06a" !important;
+    margin-left: .5em;
+    font: var(--fa-font-solid);
+    color: var(--UI_red-color);
 }
 
 .UI_adaptive {}
