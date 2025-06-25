@@ -675,6 +675,13 @@ li ul, li ol {
     animation: fa-spin 2s linear infinite;
 }
 
+.UI_ok::after {
+    content: "\f00c" !important;
+    margin-left: .5em;
+    font: var(--fa-font-solid);
+    color: green;
+}
+
 .UI_adaptive {}
 
 /*--- Color themes ---*/

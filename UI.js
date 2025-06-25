@@ -275,6 +275,7 @@ const UI = new class {
         scrollbar: `UI_scrollbar`,
         noScrollbar: `UI_no-scrollbar`,
         process: `UI_process`,
+        ok: `UI_ok`,
         disabled: `UI_disabled`,
         invalidForm: `UI_invalid-form`,
         focusForm: `UI_focus-form`,
