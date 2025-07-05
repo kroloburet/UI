@@ -1170,6 +1170,7 @@ const UI = new class {
                         this.render(input);
                         input.UI.control.classList.add(UI.css.focusForm);
                         input.UI.control.classList.remove(UI.css.invalidForm);
+                        input.form?.dispatchEvent(new Event(`change`));
                     };
                     input.oninvalid = () => input.UI.control.classList.add(UI.css.invalidForm);
                     input.onblur = () => input.UI.control.classList.remove(UI.css.focusForm);
@@ -1330,6 +1331,7 @@ const UI = new class {
                         input.oninput = () => {
                             input.dispatchEvent(new CustomEvent(`UI.beforeRender`));
                             input.UI.infobox.innerText = input.value;
+                            input.form?.dispatchEvent(new Event(`input`))
                             input.dispatchEvent(new CustomEvent(`UI.rendered`));
                         }
                     }
@@ -1919,6 +1921,7 @@ const UI = new class {
                     this.render(select);
                     if (!select.UI.hasMultiple || !select.UI.dropdownItems.length) this.hideDropdown(select);
                     select.dispatchEvent(new Event(`change`));
+                    select.form?.dispatchEvent(new Event(`change`));
                     select.dispatchEvent(new CustomEvent(`UI.selected`, {detail: {indexes, selected: val}}));
                 };
                 // Опрацювати всю колекцію якщо поле не передано

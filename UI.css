@@ -678,14 +678,14 @@ li ul, li ol {
 }
 
 .UI_ok::after {
-    content: "\f058" !important;
+    content: "\f00c" !important;
     margin-left: .5em;
     font: var(--fa-font-solid);
     color: var(--UI_green-color);
 }
 
 .UI_err::after {
-    content: "\f06a" !important;
+    content: "\f00d" !important;
     margin-left: .5em;
     font: var(--fa-font-solid);
     color: var(--UI_red-color);
