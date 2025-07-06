@@ -1527,6 +1527,7 @@ const UI = new class {
                         input.dispatchEvent(new CustomEvent(`UI.dec`));
                     }
                     input.dispatchEvent(new Event(`change`));
+                    input.form?.dispatchEvent(new Event(`input`));
                     input.focus();
                     input.dispatchEvent(new CustomEvent(`UI.setVal`));
                 };
