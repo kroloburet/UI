@@ -151,7 +151,7 @@
     --UI_range-track-height: 1px;
     --UI_range-thumb-width: 1.5em;
     --UI_range-thumb-height: 1.5em;
-    --UI_button-font-size: 1.0625em;
+    --UI_button-font-size: 1em;
     --UI_button-line-height: 1.412;
     --UI_button-paddingY: .647em;
     --UI_button-paddingX: var(--UI_base-padding);
@@ -1055,7 +1055,7 @@ li ul, li ol {
     align-items: center;
     margin: var(--UI_form-gap-top) var(--UI_form-gap-right) var(--UI_form-gap-bottom) 0;
     padding: var(--UI_button-paddingY) var(--UI_button-paddingX);
-    font-weight: 700;
+    font-weight: 600;
     font-size: var(--UI_button-font-size);
     line-height: var(--UI_button-line-height);
     color: var(--UI_button-font-color);
