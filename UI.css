@@ -1070,7 +1070,6 @@ li ul, li ol {
     display: flex;
     justify-content: center;
     margin: 0;
-    padding: var(--UI_button-paddingY);
     color: var(--UI_form-component-control-font-color);
     background-color: var(--UI_form-component-control-bg-color);
     border-color: var(--UI_form-component-control-border-color);
