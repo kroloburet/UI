@@ -116,14 +116,14 @@
     --UI_table-tr-hover-bg-color: var(--UI_base-active-bg-color);
 
     /*--- Forms ---*/
-    --UI_form-font-size: .875em;
-    --UI_form-line-height: 1.572;
+    --UI_form-font-size: 1em;
+    --UI_form-line-height: 1.5;
     --UI_form-font-color: #2D3538;
     --UI_form-placeholder-color: #525252;
     --UI_form-bg-color: var(--UI_base-body-bg-color);
-    --UI_form-field-paddingY: .857em;
-    --UI_form-field-paddingX: var(--UI_base-padding);
-    --UI_form-gap-top: .3em;
+    --UI_form-field-paddingY: .8em;
+    --UI_form-field-paddingX: 1em;
+    --UI_form-gap-top: .5em;
     --UI_form-gap-right: 1em;
     --UI_form-gap-bottom: 1em;
     --UI_form-border-width: 1px;
@@ -152,9 +152,9 @@
     --UI_range-thumb-width: 1.5em;
     --UI_range-thumb-height: 1.5em;
     --UI_button-font-size: 1em;
-    --UI_button-line-height: 1.412;
-    --UI_button-paddingY: .647em;
-    --UI_button-paddingX: var(--UI_base-padding);
+    --UI_button-line-height: 1.5;
+    --UI_button-paddingY: var(--UI_form-field-paddingY);
+    --UI_button-paddingX: var(--UI_form-field-paddingX);
     --UI_button-border-radius: var(--UI_form-border-radius);
     --UI_button-shadow: 0 .125em .25em rgba(69, 90, 100, .25);
     --UI_button-font-color: var(--UI_primary-font-color);
@@ -170,7 +170,7 @@
     /*--- UI methods ---*/
     --UI_Tabs-border-width: 1px;
     --UI_Tabs-border-color: var(--UI_base-color);
-    --UI_Tabs-control-font-size: 1.0625em;
+    --UI_Tabs-control-font-size: 1.2em;
     --UI_Tabs-control-font-color: var(--UI_base-font-color);
     --UI_Tabs-control-hover-font-color: #000;
     --UI_Tabs-control-padding: .5em 1em;
@@ -318,6 +318,11 @@ meter {
 ::-webkit-file-upload-button {
     font: inherit;
     -webkit-appearance: button;
+}
+
+/*--- Fix FontAwesome width ---*/
+.fa, .fa-brands, .fa-classic, .fa-regular, .fa-solid, .fab, .far, .fas {
+    width: auto;
 }
 
 /**************************
@@ -988,6 +993,7 @@ li ul, li ol {
     user-select: none;
     align-items: center;
     cursor: pointer;
+    gap: var(--UI_form-field-paddingX);
 }
 
 .UI_checkbox [type="checkbox"], .UI_radio [type="radio"] {
