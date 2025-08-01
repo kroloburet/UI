@@ -170,7 +170,7 @@
     /*--- UI methods ---*/
     --UI_Tabs-border-width: 1px;
     --UI_Tabs-border-color: var(--UI_base-color);
-    --UI_Tabs-control-font-size: 1.2em;
+    --UI_Tabs-control-font-size: 1em;
     --UI_Tabs-control-font-color: var(--UI_base-font-color);
     --UI_Tabs-control-hover-font-color: #000;
     --UI_Tabs-control-padding: .5em 1em;
@@ -1081,6 +1081,13 @@ li ul, li ol {
     border-color: var(--UI_form-component-control-border-color);
     border-radius: 0;
     text-decoration: none;
+}
+
+.UI_form-component-control,
+.UI_form-component button,
+.UI_form-component input[type="button"],
+.UI_form-component .UI_button {
+    white-space: nowrap;
 }
 
 .UI_button:hover,
