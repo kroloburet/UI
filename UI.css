@@ -126,7 +126,7 @@
     --UI_form-gap-top: .5em;
     --UI_form-gap-right: 1em;
     --UI_form-gap-bottom: 1em;
-    --UI_form-border-width: 1px;
+    --UI_form-border-width: var(--UI_base-border-width);
     --UI_form-border-color: #888F93;
     --UI_form-border-radius: var(--UI_base-border-radius);
     --UI_form-shadow: 0 .125em 0 rgba(69, 90, 100, .25);
@@ -148,7 +148,7 @@
     --UI_form-required-image-size: .5em;
     --UI_checkmark-size: 1.5em;
     --UI_checkmark-color: #FFFFFF;
-    --UI_range-track-height: 1px;
+    --UI_range-track-height: var(--UI_base-border-width);
     --UI_range-thumb-width: 1.5em;
     --UI_range-thumb-height: 1.5em;
     --UI_button-font-size: 1em;
@@ -168,7 +168,7 @@
     --UI_button-active-border-color: var(--UI_primary-active-border-color);
 
     /*--- UI methods ---*/
-    --UI_Tabs-border-width: 1px;
+    --UI_Tabs-border-width: var(--UI_base-border-width);
     --UI_Tabs-border-color: var(--UI_base-color);
     --UI_Tabs-control-font-size: 1em;
     --UI_Tabs-control-font-color: var(--UI_base-font-color);
@@ -183,27 +183,29 @@
     --UI_Hint-bg-color: #BCF0FC;
     --UI_Hint-padding: .5em .8em;
     --UI_Hint-max-width: 350px;
-    --UI_Hint-border: 1px solid var(--UI_base-body-bg-color);
+    --UI_Hint-border: var(--UI_base-border-width) solid var(--UI_base-body-bg-color);
     --UI_Hint-border-radius: var(--UI_base-border-radius-s);
     --UI_Hint-shadow: 0 .125em .25em rgba(69, 90, 100, .25);
     --UI_Notice-font-color: #000000;
     --UI_Notice-border-color: var(--UI_base-body-bg-color);
-    --UI_Notice-border-width: 1px;
+    --UI_Notice-border-width: var(--UI_base-border-width);
     --UI_Notice-icon-font-size: 1.3em;
     --UI_Notice-error-bg-color: #FFD6D6;
     --UI_Notice-warning-bg-color: #FFF5BA;
     --UI_Notice-success-bg-color: #AFFFD2;
     --UI_Notice-info-bg-color: #C5E4FF;
     --UI_Notice-process-bg-color: #E8E8E8;
-    --UI_Popup-max-wigth: 800px;
+    --UI_Popup-max-width: 800px;
     --UI_Popup-font-color: var(--UI_base-font-color);
     --UI_Popup-padding: var(--UI_base-padding);
     --UI_Popup-bg-color: var(--UI_base-body-bg-color);
     --UI_Popup-border-color: var(--UI_base-body-bg-color);
-    --UI_Popup-border-width: 1px;
-    --UI_Popup-close-btn-font-size: 2em;
-    --UI_Popup-close-btn-color: var(--UI_link-color);
-    --UI_Popup-close-btn-color-hover: var(--UI_link-hover-color);
+    --UI_Popup-border-width: var(--UI_base-border-width);
+    --UI_Popup-control-bg-color: var(--UI_Popup-bg-color);
+    --UI_Popup-control-gap: 1em;
+    --UI_Popup-control-item-font-size: 1em;
+    --UI_Popup-control-item-color: var(--UI_link-color);
+    --UI_Popup-control-item-color-hover: var(--UI_link-hover-color);
     --UI_Lim-font-color: var(--UI_form-font-color);
     --UI_Menu-bg-color: var(--UI_base-color);
     --UI_Menu-font-color: var(--UI_base-font-color);
@@ -1480,53 +1482,79 @@ pre.UI_Hint {
 }
 
 /*---------------------------------------------- UI_Popup ---*/
-.UI_Popup {
-    display: none;
-    max-width: var(--UI_Popup-max-wigth);
-    margin: auto;
-    padding: var(--UI_Popup-padding);
-    border: var(--UI_Popup-border-width) solid var(--UI_Popup-border-color);
-    border-radius: var(--UI_base-border-radius);
-    background-color: var(--UI_Popup-bg-color);
-    color: var(--UI_Popup-font-color);
-}
 
+.UI_Popup,
 .UI_Popup-box {
     display: none;
 }
 
 .UI_Popup-box.UI_Popup-show {
     display: flex;
+    flex-direction: column;
+    overflow: hidden;
 }
 
 .UI_Popup-box.UI_Popup-show .UI_Popup {
     display: block;
+    max-width: var(--UI_Popup-max-width);
+    padding: var(--UI_Popup-padding);
+    padding-bottom: 0;
+    overflow: auto;
 }
 
-.UI_Popup-box .UI_Popup-close-btn {
-    position: fixed;
-    top: var(--UI_Popup-padding);
-    right: var(--UI_Popup-padding);
-    color: var(--UI_Popup-close-btn-color);
-    font-size: var(--UI_Popup-close-btn-font-size);
+.UI_Popup-box.UI_Popup-show .UI_Popup.popup-full {
+    --UI_Popup-max-width: auto;
+}
+
+.UI_Popup-box.UI_Popup-show .UI_Popup.popup-s {
+    --UI_Popup-max-width: 700px;
+}
+
+.UI_Popup-box.UI_Popup-show .UI_Popup.popup-xs {
+    --UI_Popup-max-width: 500px;
+}
+
+.UI_Popup-body {
+    display: flex;
+    flex-direction: column;
+    max-height: 100%;
+    height: auto;
+    width: auto;
+    margin: 0 auto auto auto;
+    padding-bottom: var(--UI_Popup-padding);
+    border: var(--UI_Popup-border-width) solid var(--UI_Popup-border-color);
+    border-radius: var(--UI_base-border-radius);
+    background-color: var(--UI_Popup-bg-color);
+    color: var(--UI_Popup-font-color);
+}
+
+.UI_Popup-control {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: var(--UI_Popup-control-gap);
+    padding: var(--UI_Popup-padding);
+    border-top-left-radius: var(--UI_base-border-radius);
+    border-top-right-radius: var(--UI_base-border-radius);
+    border-bottom: var(--UI_Popup-border-width) solid var(--UI_Popup-border-color);
+    background-color: var(--UI_Popup-control-bg-color);
+    position: sticky;
+    top: 0;
+}
+
+.UI_Popup-box .UI_Popup-control-item {
+    color: var(--UI_Popup-control-item-color);
+    font-size: var(--UI_Popup-control-item-font-size);
     cursor: pointer;
-    z-index: 99999;
 }
 
-.UI_Popup-box .UI_Popup-close-btn:hover {
-    color: var(--UI_Popup-close-btn-color-hover);
-}
-
-@media (max-width: 768px) {
-    .UI_Popup-box .UI_Popup-close-btn {
-        top: 5px;
-        right: 5px;
-    }
+.UI_Popup-box .UI_Popup-control-item:hover {
+    color: var(--UI_Popup-control-item-color-hover);
 }
 
 @media (max-width: 576px) {
-    .UI_Popup {
-        padding: var(--UI_base-gapY) var(--UI_Popup-padding);
+    .UI_Popup-body {
+        padding-bottom: calc(var(--UI_Popup-padding) * 3);
     }
 }
 

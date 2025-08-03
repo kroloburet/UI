@@ -849,7 +849,9 @@ const UI = new class {
         const css = {
             box: `UI_${selfName}-box`,
             show: `UI_${selfName}-show`,
-            closeButton: `UI_${selfName}-close-btn`,
+            body: `UI_${selfName}-body`,
+            control: `UI_${selfName}-control`,
+            controlItem: `UI_${selfName}-control-item`,
         };
 
         // Колекція елементів для опрацювання
@@ -871,16 +873,22 @@ const UI = new class {
                 if (!id) {
                     // Активувати колекцію
                     collection.filter(el => !UI.#isActivate(el, selfName)).forEach(pop => {
-                        // Додати обгортку, кнопки та події
+                        // Побудувати компонент
                         pop.UI = {};
                         pop.UI.component = document.createElement(`div`);
-                        pop.UI.closeButton = document.createElement(`span`);
+                        pop.UI.control = document.createElement(`div`);
+                        pop.UI.body = document.createElement(`div`);
+                        pop.UI.closeButton = document.createElement(`i`);
                         pop.UI.component.classList.add(UI.css.bodyOverlay, css.box);
-                        pop.UI.component.onclick = e =>
-                            e.target === pop.UI.component ? this.hide() : null;
-                        pop.UI.closeButton.classList.add(css.closeButton, `fa-solid`, `fa-times-circle`);
+                        pop.UI.control.classList.add(css.control);
+                        pop.UI.body.classList.add(css.body);
+                        pop.UI.closeButton.classList.add(css.controlItem, `fa-solid`, `fa-times`);
                         pop.UI.closeButton.onclick = this.hide;
-                        pop.UI.component.prepend(pop.UI.closeButton, pop);
+                        // pop.UI.component.onclick = e =>
+                        //     e.target === pop.UI.component ? this.hide() : null;
+                        pop.UI.body.prepend(pop.UI.control, pop);
+                        pop.UI.component.prepend(pop.UI.body);
+                        this.#insertControls(pop);
                         document.body.append(pop.UI.component);
                         // Помітити елемент як активований
                         UI.#markActivate(pop, selfName);
@@ -888,6 +896,15 @@ const UI = new class {
                 } else {
                     this.show();
                 }
+                return this;
+            }
+
+            #insertControls(pop, ...nodes) {
+                pop.dispatchEvent(new CustomEvent(`UI.beforeInsertControls`));
+                pop.UI.control.innerHTML = null;
+                const controlItems = pop.querySelectorAll(`.${css.controlItem}`);
+                pop.UI.control.prepend(...nodes, ...controlItems, pop.UI.closeButton);
+                pop.dispatchEvent(new CustomEvent(`UI.insertedControls`));
                 return this;
             }
 
@@ -937,6 +954,14 @@ const UI = new class {
                 pop.innerHTML = null;
                 pop.append(...nodes);
                 pop.dispatchEvent(new CustomEvent(`UI.inserted`));
+                return this;
+            }
+
+            insertControls(...nodes) {
+                const pop = collection.filter(el => UI.#isActivate(el, selfName) && el.id === id)[0];
+                if (!pop)
+                    throw ReferenceError(`The transmitted argument "id" is not correct or element not found`);
+                this.#insertControls(pop, ...nodes);
                 return this;
             }
 

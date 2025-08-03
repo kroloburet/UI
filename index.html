@@ -2436,7 +2436,7 @@ UI.GoTo(element);
     <p>Будь-які елементи з CSS-класом <code>UI_Popup</code> та унікальним <code>id</code> UI перетворить на вікна, що
         випливають. Цей елемент може містити що завгодно. Зміст не буде приховано від пошукових ботів. За замовчуванням
         такі вікна приховані на сторінці, а щоб показати вікно, треба викликати метод з переданим <code>id</code>
-        вікна.</p>
+        вікна. За замовчуванням елемент вікна має максимальну ширину встановлену в змінній <code>--UI_Popup-max-width</code>, однак ви можете застосовувати класи <code>popup-full</code>, <code>popup-s</code>, <code>popup-xs</code> до елементу вікна, щоб впливати на його максимальну ширину.</p>
 
     <dl class="UI_Tabs">
         <dt>Вигляд</dt>
@@ -2450,9 +2450,34 @@ UI.GoTo(element);
             <a onclick="UI.Popup('pop2')">Посилання</a>
             --->
 
-            <div id="pop1" class="UI_Popup">
+            <div id="pop1" class="UI_Popup popup-xs">
                 <h3>Привіт!</h3>
-                Вікно активоване кнопкою. <a data-popup="pop2">Відкрити ще вікно</a>
+                <p>
+                    Вікно активоване кнопкою. Його максимальна ширина зумовлена класом <code>popup-xs</code>. Всі елементи з класом <code>UI_Popup-control-item</code> в цьому вікні були знайдені при активації та переміщені в панель керування цим вікном вгорі. <a data-popup="pop2">Відкрити ще вікно</a>.
+                    <i class="fa-solid fa-heart UI_Popup-control-item"></i>
+                    <i class="fa-solid fa-share-nodes UI_Popup-control-item"></i>
+                </p>
+
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque debitis deleniti dicta dolore
+                    dolorem dolorum enim est facilis hic impedit iure laborum nulla numquam possimus praesentium
+                    similique, sunt tempore veritatis!
+                </p>
+                <p>Amet, animi asperiores cupiditate eligendi, esse hic id iure possimus qui recusandae, reiciendis
+                    rerum voluptatem. Amet, dolore, dolorum enim error ipsum iste iure nulla officiis praesentium
+                    provident, quibusdam quisquam ullam.
+                </p>
+                <p>Accusantium aliquam cupiditate dolor dolores ea error et id impedit magnam molestiae neque nostrum
+                    odit quam quas quia quidem, quo sapiente soluta velit vero. Deserunt ex molestiae nisi odit
+                    voluptatum.
+                </p>
+                <p>Accusantium aut deleniti dignissimos earum eos est eum ex facilis hic magni, minus mollitia
+                    perferendis placeat quam quas quasi recusandae, repellat sapiente sed sequi sit suscipit tempore
+                    veniam veritatis vitae?
+                </p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium adipisci deleniti dignissimos
+                    esse eveniet, ex fugit laudantium minus natus ratione, tempora temporibus veniam voluptatem. Ducimus
+                    obcaecati perferendis tempore veritatis! Similique!
+                </p>
             </div>
             <div id="pop2" class="UI_Popup">
                 Вікно активоване посиланням.
@@ -2471,9 +2496,13 @@ UI.GoTo(element);
 &lt;a onclick=&quot;UI.Popup('pop2')&quot;&gt;Посилання&lt;/a&gt;
 ---&gt;
 
-&lt;div id=&quot;pop1&quot; class=&quot;UI_Popup&quot;&gt;
+&lt;div id=&quot;pop1&quot; class=&quot;UI_Popup popup-xs&quot;&gt;
     &lt;h3&gt;Привіт!&lt;/h3&gt;
-    Вікно активоване кнопкою. &lt;a data-popup=&quot;pop2&quot;&gt;Відкрити ще вікно&lt;/a&gt;
+    &lt;p&gt;
+        Вікно активоване кнопкою. Його максимальна ширина зумовлена класом &lt;code&gt;popup-xs&lt;/code&gt;. Всі елементи з класом &lt;code&gt;UI_Popup-control-item&lt;/code&gt; в цьому вікні були знайдені при активації та переміщені в панель керування цим вікном вгорі. &lt;a data-popup=&quot;pop2&quot;&gt;Відкрити ще вікно&lt;/a&gt;.
+        &lt;i class=&quot;fa-solid fa-heart UI_Popup-control-item&quot;&gt;&lt;/i&gt;
+        &lt;i class=&quot;fa-solid fa-share-nodes UI_Popup-control-item&quot;&gt;&lt;/i&gt;
+    &lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&quot;pop2&quot; class=&quot;UI_Popup&quot;&gt;
     Вікно активоване посиланням.
@@ -2486,12 +2515,11 @@ UI.GoTo(element);
                 елемента,
                 який треба показати як вікно, що випливає. Викликаний без аргументу метод знайде всі елементи з класом
                 <code>UI_Popup</code>, опрацює їх та активує. Це вже зроблено, бо <code>UI.Popup()</code> викликано в
-                кінці файлу <code>UI.js</code>. Вам залишилось лише передати <code>id</code> та показати вікно. Метод
-                повертає екземпляр <q>класу-будівельника</q>.</p>
+                кінці файлу <code>UI.js</code>. Вам залишилось лише передати <code>id</code> та показати вікно. Коли UI активує елемент з класом <code>UI_Popup</code>, він шукає всі вкладені елементи з класом <code>UI_Popup-control-item</code> та переміщає їх в панель керування вікном. Так ви можете легко контролювати вікно та його зміст з панелі керування. Кнопка приховування вікна буде додана завжди першою опціонально. Метод повертає екземпляр <q>класу-будівельника</q>.</p>
             <blockquote>
                 <h5>Порада</h5>
                 <p>Метод можна <q>повісити</q> на елемент атрибутом <code>data-</code> та
-                    передати параметер в його властивість. Приклад: <code>data-popup="elemId"</code>.
+                    передати параметр в його властивість. Приклад: <code>data-popup="elemId"</code>.
                     Рядкові параметри слід передавати не в лапках. UI коректно опрацює типи (числові, булеві, this,
                     null, undefined), а інше передасть в метод як рядок.</p>
             </blockquote>
@@ -2509,9 +2537,11 @@ UI.GoTo(element);
                 <li>Метод <code>show()</code> показує вікно з <code>id</code> та класом <code>UI_Popup</code>. Повертає
                     <q>клас-будівельник</q>.
                 </li>
-                <li>Метод <code>hide()</code> ховає всі вікна. Повертає <q>клас-будівельник</q>.</li>
+                <li>Метод <code>hide()</code> ховає вікно з <code>id</code> та класом <code>UI_Popup</code>. Повертає <q>клас-будівельник</q>.</li>
                 <li>Метод <code>insert(...nodes)</code> вставляє елемент/елементи у вікно з <code>id</code>. Перед вставкою контент
                     вікна буде видалений. Повертає <q>клас-будівельник</q>.
+                </li>
+                <li>Метод <code>insertControls(...nodes)</code> вставляє елемент/елементи в верхню панель керування вікном з <code>id</code>. Спочатку буде очищено всю панель керування, потім послідовно будуть додані в неї з правого боку в лівий: кнопка приховування вікна, знайдені в вікні елементи з класом <code>UI_Popup-control-item</code>, елементи <code>...nodes</code> передані цьому методу. Повертає <q>клас-будівельник</q>.
                 </li>
                 <li>Властивість <code>get</code> повертає масив &mdash; колекцію елементів, які активував
                     <code>UI.Popup()</code>. Повинен бути викликаним останнім в ланцюгу викликів.
@@ -2525,8 +2555,11 @@ UI.GoTo(element);
                 <li><code>UI.beforeShow</code> вікно буде показано.</li>
                 <li><code>UI.showed</code> вікно показано.</li>
                 <li><code>UI.beforeHide</code> вікно буде приховано.</li>
-                <li><code>UI.beforeInsert</code> у вікно буде вставлено елемент.</li>
-                <li><code>UI.inserted</code> у вікно вставлено елемент.</li>
+                <li><code>UI.beforeInsert</code> у вікно буде вставлено елемент/и.</li>
+                <li><code>UI.inserted</code> у вікно вставлено елемент/и.</li>
+                <li><code>UI.beforeInsertControls</code> у вікно буде вставлено елемент/и керування.</li>
+                <li><code>UI.insertedControls</code> у вікно вставлено елемент/и керування.</li>
+                <li><code>UI.inserted</code> у вікно вставлено елемент/и.</li>
                 <li><code>UI.hidden</code> вікно приховано.</li>
             </ul>
             <h4>Поглиблений доступ</h4>
