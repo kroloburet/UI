@@ -104,6 +104,7 @@
     --UI_scrollbar-track-bg-color: transparent;
 
     /*--- Table ---*/
+    --UI_table-border-radius: var(--UI_base-border-radius);
     --UI_table-font-color: var(--UI_base-font-color);
     --UI_table-bg-color: var(--UI_base-body-bg-color);
     --UI_table-th-font-color: var(--UI_table-font-color);
@@ -170,6 +171,7 @@
     /*--- UI methods ---*/
     --UI_Tabs-border-width: var(--UI_base-border-width);
     --UI_Tabs-border-color: var(--UI_base-color);
+    --UI_Tabs-border-radius: var(--UI_base-border-radius);
     --UI_Tabs-control-font-size: 1em;
     --UI_Tabs-control-font-color: var(--UI_base-font-color);
     --UI_Tabs-control-hover-font-color: #000;
@@ -189,6 +191,7 @@
     --UI_Notice-font-color: #000000;
     --UI_Notice-border-color: var(--UI_base-body-bg-color);
     --UI_Notice-border-width: var(--UI_base-border-width);
+    --UI_Notice-border-radius: var(--UI_base-border-radius);
     --UI_Notice-icon-font-size: 1.3em;
     --UI_Notice-error-bg-color: #FFD6D6;
     --UI_Notice-warning-bg-color: #FFF5BA;
@@ -742,7 +745,7 @@ li ul, li ol {
     padding: 1em 1em 1em 5em;
     margin: 0 var(--UI_base-gapX) var(--UI_base-gapY) 0;
     border: var(--UI_Notice-border-width) solid var(--UI_Notice-border-color);
-    border-radius: var(--UI_base-border-radius);
+    border-radius: var(--UI_Notice-border-radius);
     color: var(--UI_Notice-font-color);
 }
 
@@ -866,11 +869,11 @@ li ul, li ol {
 }
 
 .UI_table thead th:first-child {
-    border-top-left-radius: var(--UI_base-border-radius);
+    border-top-left-radius: var(--UI_table-border-radius);
 }
 
 .UI_table thead th:last-child {
-    border-top-right-radius: var(--UI_base-border-radius);
+    border-top-right-radius: var(--UI_table-border-radius);
 }
 
 .UI_table th {
@@ -1536,8 +1539,8 @@ pre.UI_Hint {
     justify-content: end;
     gap: var(--UI_Popup-control-gap);
     padding: var(--UI_Popup-padding);
-    border-top-left-radius: var(--UI_base-border-radius);
-    border-top-right-radius: var(--UI_base-border-radius);
+    border-top-left-radius: var(--UI_Popup-border-radius);
+    border-top-right-radius: var(--UI_Popup-border-radius);
     border-bottom: var(--UI_Popup-border-width) solid var(--UI_Popup-border-color);
     background-color: var(--UI_Popup-control-bg-color);
     position: sticky;
@@ -1580,7 +1583,7 @@ dl.UI_Tabs-activated dt {
     font-size: var(--UI_Tabs-control-font-size);
     border: var(--UI_Tabs-border-width) solid transparent;
     border-bottom: none;
-    border-radius: var(--UI_base-border-radius) var(--UI_base-border-radius) 0 0;
+    border-radius: var(--UI_Tabs-border-radius) var(--UI_Tabs-border-radius) 0 0;
     color: var(--UI_Tabs-control-font-color);
     cursor: pointer;
 }
@@ -1603,7 +1606,7 @@ dl.UI_Tabs-activated dd {
     padding: var(--UI_Tabs-content-paddingY) var(--UI_Tabs-content-paddingX);
     background-color: var(--UI_Tabs-content-bg-color);
     border-top: var(--UI_Tabs-border-width) solid var(--UI_Tabs-border-color);
-    border-radius: 0 0 var(--UI_base-border-radius) var(--UI_base-border-radius);
+    border-radius: 0 0 var(--UI_Tabs-border-radius) var(--UI_Tabs-border-radius);
 }
 
 dl.UI_Tabs-activated dd.UI_Tabs-show {
@@ -1816,7 +1819,7 @@ dl.UI_Tabs-activated dd.UI_Tabs-show {
     color: var(--UI_form-font-color);
     background-color: var(--UI_form-bg-color);
     border: var(--UI_form-border-width) solid var(--UI_form-focus-border-color);
-    border-radius: var(--UI_base-border-radius);
+    border-radius: var(--UI_form-border-radius);
     box-shadow: var(--UI_form-focus-shadow);
     overflow: hidden;
     z-index: var(--UI_base-overlay-elements-z-index);
