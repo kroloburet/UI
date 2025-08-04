@@ -201,6 +201,7 @@
     --UI_Popup-bg-color: var(--UI_base-body-bg-color);
     --UI_Popup-border-color: var(--UI_base-body-bg-color);
     --UI_Popup-border-width: var(--UI_base-border-width);
+    --UI_Popup-border-radius: var(--UI_base-border-radius);
     --UI_Popup-control-bg-color: var(--UI_Popup-bg-color);
     --UI_Popup-control-gap: 1em;
     --UI_Popup-control-item-font-size: 1em;
@@ -1496,6 +1497,7 @@ pre.UI_Hint {
 
 .UI_Popup-box.UI_Popup-show .UI_Popup {
     display: block;
+    min-width: 0;
     max-width: var(--UI_Popup-max-width);
     padding: var(--UI_Popup-padding);
     padding-bottom: 0;
@@ -1523,7 +1525,7 @@ pre.UI_Hint {
     margin: 0 auto auto auto;
     padding-bottom: var(--UI_Popup-padding);
     border: var(--UI_Popup-border-width) solid var(--UI_Popup-border-color);
-    border-radius: var(--UI_base-border-radius);
+    border-radius: var(--UI_Popup-border-radius);
     background-color: var(--UI_Popup-bg-color);
     color: var(--UI_Popup-font-color);
 }
