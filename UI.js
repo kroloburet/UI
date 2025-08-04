@@ -952,8 +952,11 @@ const UI = new class {
                     throw ReferenceError(`The transmitted argument "id" is not correct or element not found`);
                 pop.dispatchEvent(new CustomEvent(`UI.beforeInsert`));
                 pop.innerHTML = null;
+                pop.UI.control.innerHTML = null;
+                pop.UI.control.append(pop.UI.closeButton);
                 pop.append(...nodes);
                 pop.dispatchEvent(new CustomEvent(`UI.inserted`));
+                this.#insertControls(pop);
                 return this;
             }
 
