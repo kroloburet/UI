@@ -49,6 +49,8 @@
     --UI_base-padding: calc(.7em + 1vw);
     --UI_base-gapX: 2vw;
     --UI_base-gapY: 2em;
+    --UI_base-overlay-color: rgba(0,0,0,.96);
+    --UI_base-overlay-backdrop-filter: blur(5px);
     --UI_base-overlay-body-z-index: 9999; /* Use number unit */
     --UI_base-overlay-elements-z-index: 1000; /* Use number unit */
 
@@ -578,8 +580,9 @@ li ul, li ol {
     width: 100vw;
     height: 100vh;
     overflow: hidden auto;
-    background-color: rgba(0, 0, 0, .9);
+    background-color: var(--UI_base-overlay-color);
     z-index: var(--UI_base-overlay-body-z-index);
+    backdrop-filter: var(--UI_base-overlay-backdrop-filter);
 }
 
 .UI_body-hide-overflow {
