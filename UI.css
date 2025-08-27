@@ -208,7 +208,7 @@
     --UI_Popup-border-width: var(--UI_base-border-width);
     --UI_Popup-border-radius: var(--UI_base-border-radius);
     --UI_Popup-control-bg-color: var(--UI_Popup-bg-color);
-    --UI_Popup-control-gap: 1em;
+    --UI_Popup-control-gap: var(--UI_Popup-padding);
     --UI_Popup-control-item-font-size: 1em;
     --UI_Popup-control-item-color: var(--UI_link-color);
     --UI_Popup-control-item-color-hover: var(--UI_link-hover-color);
