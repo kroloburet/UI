@@ -1561,8 +1561,20 @@ pre.UI_Hint {
 }
 
 @media (max-width: 576px) {
+    .UI_Popup-box.UI_body-overlay {
+        padding: 0;
+    }
+
     .UI_Popup-body {
+        border-radius: 0;
+        border: none;
+        margin: 0;
         padding-bottom: calc(var(--UI_Popup-padding) * 3);
+        height: 100%;
+    }
+
+    .UI_Popup {
+        margin: 0 auto;
     }
 }
 
