@@ -1,0 +1,18 @@
+{
+  "name": "kroloburet_ui",
+  "version": "1.0.0",
+  "description": "Simple vanilla JS/CSS UI framework for web applications.",
+  "main": "UI.js",
+  "files": [
+    "UI.js",
+    "UI.css"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kroloburet/UI.git"
+  },
+  "keywords": ["ui", "web", "framework", "vanilla-js", "css"],
+  "author": "Kroloburet",
+  "license": "MIT",
+  "homepage": "https://kroloburet.github.io/UI"
+}

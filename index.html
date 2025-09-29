@@ -379,28 +379,17 @@
     -->
 
     <h2 id="letsGo">Початок роботи з UI</h2>
-    <p>Щоб почати користуватися UI, завантажте каталог <code>UI</code>:</p>
+    <p>Для підключення NPM (recommended):</p>
     <ul>
-        <li>zip:&nbsp;
-            <a href="https://github.com/kroloburet/UI/archive/refs/heads/main.zip" class="fa-solid fa-file-zipper"></a>
-        </li>
-        <li>git clone:&nbsp;
+        <li>Bash:&nbsp;
             <label class="UI_form-component UI_size-s">
-                <span class="fragment UI_input">https://github.com/kroloburet/UI.git</span>
-                <i class="copy-fragment UI_form-component-control fa-solid fa-copy" title="Копіювати посилання"></i>
+                <span class="fragment UI_input">npm install github:kroloburet/UI</span>
+                <i class="copy-fragment UI_form-component-control fa-solid fa-copy" title="Копіювати команду"></i>
             </label>
         </li>
     </ul>
-    <p>Або скористуйтеся для підключення CDN:</p>
+    <p>Для підключення CDN (minified):</p>
     <ul>
-        <li>UI folder cdn:&nbsp;
-            <label class="UI_form-component UI_size-s">
-                <span class="fragment UI_input">https://cdn.jsdelivr.net/gh/kroloburet/UI/</span>
-                <i class="copy-fragment UI_form-component-control fa-solid fa-copy" title="Копіювати посилання"></i>
-                <a href="https://purge.jsdelivr.net/gh/kroloburet/UI/" target="_blank"
-                   class="UI_form-component-control fa-solid fa-broom" title="Очистити кеш ресурсу"></a>
-            </label>
-        </li>
         <li>UI.min.css cdn:&nbsp;
             <label class="UI_form-component UI_size-s">
                 <span class="fragment UI_input">https://cdn.jsdelivr.net/gh/kroloburet/UI/UI.min.css</span>
@@ -418,6 +407,18 @@
             </label>
         </li>
     </ul>
+    <p>Для завантаження з GitHub:</p>
+    <ul>
+        <li>zip:&nbsp;
+            <a href="https://github.com/kroloburet/UI/archive/refs/heads/main.zip" class="fa-solid fa-file-zipper"></a>
+        </li>
+        <li>git clone:&nbsp;
+            <label class="UI_form-component UI_size-s">
+                <span class="fragment UI_input">https://github.com/kroloburet/UI.git</span>
+                <i class="copy-fragment UI_form-component-control fa-solid fa-copy" title="Копіювати посилання"></i>
+            </label>
+        </li>
+    </ul>
     <span>Підключіть файл <code>UI.css</code> та <code>UI.js</code> до сторінки.</span>
     <div class="code-style">
         <i class="copy-fragment fa-solid fa-copy" title="Копіювати код"></i>
@@ -428,11 +429,19 @@
     &lt;meta charset=&quot;utf-8&quot;&gt;
     &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;
     &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
-    &lt;link href=&quot;https://cdn.jsdelivr.net/gh/kroloburet/UI/UI.min.css&quot; rel=&quot;stylesheet&quot;&gt;
-    &lt;link href=&quot;/style/main.css&quot; rel=&quot;stylesheet&quot;&gt;
-    &lt;script src=&quot;https://cdn.jsdelivr.net/gh/kroloburet/UI/UI.min.js&quot; defer&gt;&lt;/script&gt;
-    &lt;script src=&quot;/scripts/main.js&quot; defer&gt;&lt;/script&gt;
     &lt;title&gt;Hello, World!&lt;/title&gt;
+
+    &lt;!--- From NPM Modules (recommended) ---&gt;
+    &lt;link href=&quot;node_modules/kroloburet_ui/UI.css&quot; rel=&quot;stylesheet&quot;&gt;
+    &lt;script src=&quot;node_modules/kroloburet_ui/UI.js&quot; defer&gt;&lt;/script&gt;
+
+    &lt;!--- OR From CDN (minified) ---&gt;
+    &lt;link href=&quot;https://cdn.jsdelivr.net/gh/kroloburet/UI/UI.min.css&quot; rel=&quot;stylesheet&quot;&gt;
+    &lt;script src=&quot;https://cdn.jsdelivr.net/gh/kroloburet/UI/UI.min.js&quot; defer&gt;&lt;/script&gt;
+
+    &lt;!--- Your Scripts ---&gt;
+    &lt;link href=&quot;/style/main.css&quot; rel=&quot;stylesheet&quot;&gt;
+    &lt;script src=&quot;/scripts/main.js&quot; defer&gt;&lt;/script&gt;
 &lt;/head&gt;
 &lt;body&gt;
     Hello, World!
@@ -3364,7 +3373,8 @@ UI.GoTo(element);
             Web Development by
             <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEBLAEsAAD/2wBDAAEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/wgALCAASABIBAREA/8QAGQABAAIDAAAAAAAAAAAAAAAACQMEBQgK/9oACAEBAAAAAQlwlRpGLNLQTrxk/8QAHRAAAQQCAwAAAAAAAAAAAAAABAMFBggABwITMv/aAAgBAQABBQJuaHN3LRRVIVypUslCjiJo+CNk8Lpn2FVsLKF2Hx85/8QAJRAAAgICAQMEAwEAAAAAAAAAAgMBBAUREgATIQYQFTEUMnGx/9oACAEBAAY/Aq1HG0bV21cJkVk10mw3dlZufIajyKEra5xfqlQMYziIlPQIQBuc0oBa1jJmZF9CAD5KZ9sv6NpY+hm8bTrR6kSrKXrKJxWracXk5xICi0j8i9VyzZNZDW7xK4nZjeuk+ucTgcbQf8ber2KSqy4qKyT7lO3VzWPq8Sr0siiFWkE1HaHt2PAdWTVnbJLOw4llJVhkgJhSJSPGeMyOpkdzr630Q1rNiuNjENW+EOYqHL+Rxs9tsLIe4G/PE9xvzrqP5H+e3//EABwQAQEAAgIDAAAAAAAAAAAAAAEhABEQMUFR0f/aAAgBAQABPyG2MigEM7A9g9ATE+4g+LA4kIKb9mSujiAKq60CEnLl6jvErjlujdVAtNbyMtPvyhrxe8Ze2/Bx/9oACAEBAAAAEH5//8QAHBABAQACAgMAAAAAAAAAAAAAAREAQSExEFGR/9oACAEBAAE/EE3I8gXGPNw9ZXiBC6kNsqPJq5H0/HBKB8Nsly/aK4vuECC9GFcT2bQjOndKkLd0KzDZQBqASIOAONUlNlatpV7u/H//2Q=="
                  alt="Web Development by Kroloburet">
-            <a href="mailto:kroloburet@gmail.com">kroloburet@gmail.com</a>
+            <a href="mailto:kroloburet@gmail.com">kroloburet@gmail.com</a>.
+            Stand With 🇺🇦 Ukraine!
         </div>
         <a href="https://www.buymeacoffee.com/kroloburet" target="_blank">
             <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height:60px!important;width:217px!important;">
