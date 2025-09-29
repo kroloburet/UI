@@ -1197,23 +1197,20 @@ li ul, li ol {
         row-gap: var(--UI_form-gap-bottom);
     }
 
-    .UI_form-component.UI_adaptive > *,
-    .UI_form-component.UI_adaptive > .UI_form-component > * {
-        border-right-width: var(--UI_form-border-width);
-        border-left-width: var(--UI_form-border-width);
+    .UI_form-component.UI_adaptive > * {
+        border-width: var(--UI_form-border-width);
         border-radius: var(--UI_form-border-radius);
     }
-
-    .UI_form-component.UI_adaptive > .UI_form-component:not(.UI_adaptive) > :first-child {
-        border-right-width: 0;
-        border-bottom-right-radius: 0;
-        border-top-right-radius: 0;
+    .UI_form-component.UI_adaptive > .UI_form-component > :first-child {
+        border-left-width: var(--UI_form-border-width);
+        border-bottom-left-radius: var(--UI_form-border-radius);
+        border-top-left-radius: var(--UI_form-border-radius);
     }
 
-    .UI_form-component.UI_adaptive > .UI_form-component:not(.UI_adaptive) > :last-child {
-        border-left-width: 0;
-        border-bottom-left-radius: 0;
-        border-top-left-radius: 0;
+    .UI_form-component.UI_adaptive > .UI_form-component > :last-child {
+        border-right-width: var(--UI_form-border-width);
+        border-bottom-right-radius: var(--UI_form-border-radius);
+        border-top-right-radius: var(--UI_form-border-radius);
     }
 }
 
