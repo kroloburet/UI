@@ -200,7 +200,7 @@
     --UI_Notice-success-bg-color: #AFFFD2;
     --UI_Notice-info-bg-color: #C5E4FF;
     --UI_Notice-process-bg-color: #E8E8E8;
-    --UI_Popup-max-width: 800px;
+    --UI_Popup-max-width: 600px;
     --UI_Popup-font-color: var(--UI_base-font-color);
     --UI_Popup-padding: var(--UI_base-padding);
     --UI_Popup-bg-color: var(--UI_base-body-bg-color);
@@ -1498,33 +1498,13 @@ pre.UI_Hint {
     overflow: hidden;
 }
 
-.UI_Popup-box.UI_Popup-show .UI_Popup {
-    display: block;
-    min-width: 0;
-    max-width: var(--UI_Popup-max-width);
-    padding: var(--UI_Popup-padding);
-    padding-bottom: 0;
-    overflow: auto;
-}
-
-.UI_Popup-box.UI_Popup-show .UI_Popup.popup-full {
-    --UI_Popup-max-width: auto;
-}
-
-.UI_Popup-box.UI_Popup-show .UI_Popup.popup-s {
-    --UI_Popup-max-width: 700px;
-}
-
-.UI_Popup-box.UI_Popup-show .UI_Popup.popup-xs {
-    --UI_Popup-max-width: 500px;
-}
-
 .UI_Popup-body {
     display: flex;
     flex-direction: column;
     max-height: 100%;
     height: auto;
-    width: auto;
+    max-width: var(--UI_Popup-max-width);
+    width: 100%;
     margin: 0 auto auto auto;
     padding-bottom: var(--UI_Popup-padding);
     border: var(--UI_Popup-border-width) solid var(--UI_Popup-border-color);
@@ -1535,16 +1515,22 @@ pre.UI_Hint {
 
 .UI_Popup-control {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    justify-content: end;
+    justify-content: flex-end;
+    flex-shrink: 0;
     gap: var(--UI_Popup-control-gap);
     padding: var(--UI_Popup-padding);
     border-top-left-radius: var(--UI_Popup-border-radius);
     border-top-right-radius: var(--UI_Popup-border-radius);
-    border-bottom: var(--UI_Popup-border-width) solid var(--UI_Popup-border-color);
     background-color: var(--UI_Popup-control-bg-color);
-    position: sticky;
-    top: 0;
+}
+
+.UI_Popup-box.UI_Popup-show .UI_Popup {
+    display: block;
+    min-width: 0;
+    padding: 0 var(--UI_Popup-padding);
+    overflow: auto;
 }
 
 .UI_Popup-box .UI_Popup-control-item {
@@ -1555,6 +1541,50 @@ pre.UI_Hint {
 
 .UI_Popup-box .UI_Popup-control-item:hover {
     color: var(--UI_Popup-control-item-color-hover);
+}
+
+.UI_Popup-box.popup-full {
+    padding: 0;
+    background-color: var(--UI_Popup-bg-color);
+    --UI_Popup-max-width: 100%;
+}
+
+.UI_Popup-box.popup-full .UI_Popup-body  {
+    border: none;
+    margin-bottom: 0;
+    height: 100%;
+}
+
+.UI_Popup-box.popup-control-vertical .UI_Popup-body  {
+    flex-direction: row-reverse;
+}
+
+.UI_Popup-box.popup-control-vertical .UI_Popup-control  {
+    flex-direction: column-reverse;
+}
+
+.UI_Popup-box.popup-control-vertical .UI_Popup {
+    margin-top: var(--UI_Popup-padding);
+}
+
+.UI_Popup-box.popup-xl {
+    --UI_Popup-max-width: 900px;
+}
+
+.UI_Popup-box.popup-l {
+    --UI_Popup-max-width: 750px;
+}
+
+.UI_Popup-box.popup-m {
+    --UI_Popup-max-width: 600px;
+}
+
+.UI_Popup-box.popup-s {
+    --UI_Popup-max-width: 450px;
+}
+
+.UI_Popup-box.popup-xs {
+    --UI_Popup-max-width: 300px;
 }
 
 @media (max-width: 576px) {

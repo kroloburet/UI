@@ -2435,7 +2435,9 @@ UI.GoTo(element);
     <p>Будь-які елементи з CSS-класом <code>UI_Popup</code> та унікальним <code>id</code> UI перетворить на вікна, що
         випливають. Цей елемент може містити що завгодно. Зміст не буде приховано від пошукових ботів. За замовчуванням
         такі вікна приховані на сторінці, а щоб показати вікно, треба викликати метод з переданим <code>id</code>
-        вікна. За замовчуванням елемент вікна має максимальну ширину встановлену в змінній <code>--UI_Popup-max-width</code>, однак ви можете застосовувати класи <code>popup-full</code>, <code>popup-s</code>, <code>popup-xs</code> до елементу вікна, щоб впливати на його максимальну ширину.</p>
+        вікна.
+    <p>Ви можете застосовувати класи <code>popup-xs</code>, <code>popup-s</code>, <code>popup-m</code>, <code>popup-l</code>, <code>popup-xl</code>, <code>popup-full</code> до елементу вікна, щоб впливати на його максимальну ширину. Якщо застосовувати <code>popup-full</code> разом з класом розміру вікна, наприклад <code>popup-s</code>, вікно буде повнорозмірним, але ширина контенту буде обмежена класом <code>popup-s</code>. Якщо не застосовувати жоден з класів розміру вікна, ширина вікна буде обмежена змінною <code>--UI_Popup-max-width</code>.</p>
+    <p>Ви можете додавати свої елементи керування у вікно. Просто розмістіть всередині <code>UI_Popup</code> елементи з <code>UI_Popup-control-item</code>. UI забере їх та розмістить біля кнопки приховування в панелі керування вікном. Якщо елементів керування багато, застосуйте до вікна клас <code>popup-control-vertical</code>, щоб розмістити панель вертикально праворуч змісту вікна.</p>
 
     <dl class="UI_Tabs">
         <dt>Вигляд</dt>
@@ -2449,10 +2451,10 @@ UI.GoTo(element);
             <a onclick="UI.Popup('pop2')">Посилання</a>
             --->
 
-            <div id="pop1" class="UI_Popup popup-xs">
+            <div id="pop1" class="UI_Popup popup-control-vertical popup-full popup-m">
                 <h3>Привіт!</h3>
                 <p>
-                    Вікно активоване кнопкою. Його максимальна ширина зумовлена класом <code>popup-xs</code>. Всі елементи з класом <code>UI_Popup-control-item</code> в цьому вікні були знайдені при активації та переміщені в панель керування цим вікном вгорі. <a data-popup="pop2">Відкрити ще вікно</a>.
+                    Вікно активоване кнопкою. Його вигляд та максимальна ширина зумовлена класами <code>popup-full</code> та <code>popup-m</code>. Всі елементи з класом <code>UI_Popup-control-item</code> в цьому вікні були знайдені при активації та переміщені в панель керування. Панель керування має вертикальний вигляд завдяки застосованому до вікна класу <code>popup-control-vertical</code>. <a data-popup="pop2">Відкрити ще вікно</a>.
                     <i class="fa-solid fa-heart UI_Popup-control-item"></i>
                     <i class="fa-solid fa-share-nodes UI_Popup-control-item"></i>
                 </p>
@@ -2479,7 +2481,8 @@ UI.GoTo(element);
                 </p>
             </div>
             <div id="pop2" class="UI_Popup">
-                Вікно активоване посиланням.
+                <h3>Привіт!</h3>
+                Вікно активоване посиланням. Це вигляд вікна за замовчуванням &mdash; елемент з класом <code>UI_Popup</code>.
             </div>
         </dd>
         <dt>Код</dt>
@@ -2495,10 +2498,11 @@ UI.GoTo(element);
 &lt;a onclick=&quot;UI.Popup('pop2')&quot;&gt;Посилання&lt;/a&gt;
 ---&gt;
 
-&lt;div id=&quot;pop1&quot; class=&quot;UI_Popup popup-xs&quot;&gt;
+&lt;div id=&quot;pop1&quot; class=&quot;popup-control-vertical popup-full popup-m&quot;&gt;
     &lt;h3&gt;Привіт!&lt;/h3&gt;
     &lt;p&gt;
-        Вікно активоване кнопкою. Його максимальна ширина зумовлена класом &lt;code&gt;popup-xs&lt;/code&gt;. Всі елементи з класом &lt;code&gt;UI_Popup-control-item&lt;/code&gt; в цьому вікні були знайдені при активації та переміщені в панель керування цим вікном вгорі. &lt;a data-popup=&quot;pop2&quot;&gt;Відкрити ще вікно&lt;/a&gt;.
+        Вікно активоване кнопкою.
+        &lt;a data-popup=&quot;pop2&quot;&gt;Відкрити ще вікно&lt;/a&gt;.
         &lt;i class=&quot;fa-solid fa-heart UI_Popup-control-item&quot;&gt;&lt;/i&gt;
         &lt;i class=&quot;fa-solid fa-share-nodes UI_Popup-control-item&quot;&gt;&lt;/i&gt;
     &lt;/p&gt;

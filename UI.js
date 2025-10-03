@@ -879,7 +879,7 @@ const UI = new class {
                         pop.UI.control = document.createElement(`div`);
                         pop.UI.body = document.createElement(`div`);
                         pop.UI.closeButton = document.createElement(`i`);
-                        pop.UI.component.classList.add(UI.css.bodyOverlay, css.box);
+                        pop.UI.component.classList.add(UI.css.bodyOverlay, css.box, ...pop.classList);
                         pop.UI.control.classList.add(css.control);
                         pop.UI.body.classList.add(css.body);
                         pop.UI.closeButton.classList.add(css.controlItem, `fa-solid`, `fa-times`);
