@@ -1555,6 +1555,10 @@ pre.UI_Hint {
     height: 100%;
 }
 
+.UI_Popup-box.popup-full .UI_Popup  {
+    height: 100%;
+}
+
 .UI_Popup-box.popup-control-vertical .UI_Popup-body  {
     flex-direction: row-reverse;
 }
