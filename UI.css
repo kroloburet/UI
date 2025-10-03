@@ -1515,7 +1515,6 @@ pre.UI_Hint {
 
 .UI_Popup-control {
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
     justify-content: flex-end;
     flex-shrink: 0;
