@@ -875,6 +875,7 @@ const UI = new class {
                     collection.filter(el => !UI.#isActivate(el, selfName)).forEach(pop => {
                         // Побудувати компонент
                         pop.UI = {};
+                        pop.UI.Builder = this;
                         pop.UI.component = document.createElement(`div`);
                         pop.UI.control = document.createElement(`div`);
                         pop.UI.body = document.createElement(`div`);
