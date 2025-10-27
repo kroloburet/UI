@@ -5,7 +5,7 @@
  * Copyright (c) Serhii Nyzhnyk. Contacts: <kroloburet@gmail.com>
  * License: http://opensource.org/licenses/MIT
  */
-const UI = new class {
+window.UI = new class {
 
     /***************************************
      * Constructor
@@ -268,8 +268,6 @@ const UI = new class {
      * @see https://kroloburet.github.io/UI/#cssSelectorsInJs
      */
     css = {
-        elementsOverlayZIndex: getComputedStyle(document.body).getPropertyValue(`--UI_base-overlay-elements-z-index`),
-        bodyOverlayZIndex: getComputedStyle(document.body).getPropertyValue(`--UI_base-overlay-body-z-index`),
         bodyOverlay: `UI_body-overlay`,
         bodyHideOverflow: `UI_body-hide-overflow`,
         scrollbar: `UI_scrollbar`,
