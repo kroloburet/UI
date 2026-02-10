@@ -849,6 +849,7 @@ li ul, li ol {
  **************************/
 
 .UI_table {
+    margin-bottom: var(--UI_base-gapY);
     border-collapse: collapse;
     display: block;
     color: var(--UI_table-font-color);
