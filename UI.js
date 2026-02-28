@@ -1316,6 +1316,7 @@ window.UI = new class {
         // Конфігурація за замовчуванням
         const defConf = {
             selector: `.UI_${selfName}`,
+            title: `Also change the value with the keyboard arrows`,
         };
 
         // Селектор пошуку елементів для опрацювання
@@ -1349,6 +1350,7 @@ window.UI = new class {
                     input.UI.conf = Object.assign({}, defConf, userConf, UI.#getDatasetConf(input));
                     // Додати елементи, класи та слухачів подій
                     input.UI.component = UI.#formComponent.wrap(input);
+                    input.UI.component.title = input.UI.conf.title;
                     input.UI.infobox = document.createElement(`span`);
                     input.UI.infobox.classList.add(UI.css.formComponentControl, css.infobox);
                     input.UI.infobox.innerText = input.value || `0`;
@@ -1445,7 +1447,7 @@ window.UI = new class {
             selector: `.UI_${selfName}`,
             incIcon: `<i class="fa-solid fa-plus"></i>`,
             decIcon: `<i class="fa-solid fa-minus"></i>`,
-            title: `Put the cursor in the field and scroll it ;)`,
+            title: `Also change the value with the keyboard arrows`,
         };
 
         // Селектор пошуку елементів для опрацювання
