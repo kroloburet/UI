@@ -215,14 +215,16 @@ window.UI = new class {
     #formComponent = {
 
         /**
-         * Обгорнути елемент форми в компонент
-         * та призначити компоненту CSS класи елемента
+         * Обгорнути елемент форми в компонент (елемент-обгортка label).
+         * УВАГА! Всі користувацькі CSS класи (не UI)
+         * видаляються у елемента форми та призначаються
+         * елементу-обгортці!
          *
          * @param {HTMLElement} el Елемент форми
          * @returns {HTMLElement} Компонент
          */
         wrap(el) {
-            const denyClasses = [
+            const UIClasses = [
                 UI.css.InputFile,
                 UI.css.InputRange,
                 UI.css.InputNumber,
@@ -233,8 +235,8 @@ window.UI = new class {
                 UI.css.UI_textarea,
             ];
             const className = el.className;
-            const component = document.createElement('label');
-            const componentClassList = [...el.classList].filter(item => !denyClasses.includes(item));
+            const component = document.createElement(`label`);
+            const componentClassList = [...el.classList].filter(item => !UIClasses.includes(item));
             el.UI ??= {};
             el.UI.oldClasses = className;
             el.classList.remove(...componentClassList);
