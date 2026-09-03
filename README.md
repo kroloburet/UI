@@ -9,6 +9,11 @@
 
 npm install github:kroloburet/UI
 
+<!-- FontAwesome (Dependency) - Asynchronous load to prevent render-blocking -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'">
+
+<!-- UI -->
 <link rel="stylesheet" href="node_modules/kroloburet_ui/UI.css">
 <script src="node_modules/kroloburet_ui/UI.js" defer></script>
 
@@ -16,6 +21,11 @@ npm install github:kroloburet/UI
 # OR From cdn (minified)
 ##############################
 
+<!-- FontAwesome (Dependency) - Asynchronous load to prevent render-blocking -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'">
+
+<!-- UI -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/kroloburet/UI/UI.min.css">
 <script src="https://cdn.jsdelivr.net/gh/kroloburet/UI/UI.min.js" defer></script>
 ```

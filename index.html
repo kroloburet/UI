@@ -14,8 +14,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all">
     <link rel="icon" href="https://kroloburet.github.io/img/myicon_share.jpg">
+
+    <!-- UI -->
     <link href="UI.css" rel="stylesheet">
     <script src="UI.js" defer></script>
+
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'">
+
     <title>UI фреймворк | Kroloburet</title>
 
 
@@ -424,12 +430,16 @@
         <i class="copy-fragment fa-solid fa-copy" title="Копіювати код"></i>
         <pre class="fragment">
 &lt;!DOCTYPE html&gt;
-&lt;html lang=&quot;uk&quot;&gt;
+&lt;html lang=&quot;en&quot;&gt;
 &lt;head&gt;
     &lt;meta charset=&quot;utf-8&quot;&gt;
     &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;
     &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
     &lt;title&gt;Hello, World!&lt;/title&gt;
+
+    &lt;!--- FontAwesome (Dependency) - Asynchronous load to prevent render-blocking ---&gt;
+    &lt;link rel=&quot;preconnect&quot; href=&quot;https://cdn.jsdelivr.net&quot; crossorigin&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css&quot; media=&quot;print&quot; onload=&quot;this.media='all'&quot;&gt;
 
     &lt;!--- From NPM Modules (recommended) ---&gt;
     &lt;link href=&quot;node_modules/kroloburet_ui/UI.css&quot; rel=&quot;stylesheet&quot;&gt;

@@ -9,12 +9,6 @@
  */
 
 /**************************
- * Імпорт залежностей UI
- **************************/
-
-@import url("https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css");
-
-/**************************
  * Технічний клас-мітка для блокування виклику
  * методів UI.js на елементі та всіх дочірніх елементах
  **************************/
@@ -328,9 +322,10 @@ meter {
     -webkit-appearance: button;
 }
 
-/*--- Fix FontAwesome width ---*/
+/*--- Fix FontAwesome width & line-height ---*/
 .fa, .fa-brands, .fa-classic, .fa-regular, .fa-solid, .fab, .far, .fas {
-    width: auto;
+    width: auto !important;
+    line-height: inherit !important;
 }
 
 /**************************
