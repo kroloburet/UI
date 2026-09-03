@@ -322,10 +322,9 @@ meter {
     -webkit-appearance: button;
 }
 
-/*--- Fix FontAwesome width & line-height ---*/
+/*--- Fix FontAwesome width ---*/
 .fa, .fa-brands, .fa-classic, .fa-regular, .fa-solid, .fab, .far, .fas {
     width: auto !important;
-    line-height: inherit !important;
 }
 
 /**************************
