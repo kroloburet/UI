@@ -677,25 +677,33 @@ li ul, li ol {
     display: none;
 }
 
-.UI_process::after {
-    content: "\f110" !important;
-    margin-left: .5em;
+.UI_process,
+.UI_ok,
+.UI_err {
+    display: inline-flex;
+    align-items: center;
+}
+
+.UI_process::before,
+.UI_ok::before,
+.UI_err::before {
     font: var(--fa-font-solid);
+    margin: auto .5em;
+}
+
+.UI_process::before {
+    content: "\f110" !important;
     -webkit-animation: fa-spin 2s linear infinite;
     animation: fa-spin 2s linear infinite;
 }
 
-.UI_ok::after {
+.UI_ok::before {
     content: "\f00c" !important;
-    margin-left: .5em;
-    font: var(--fa-font-solid);
     color: var(--UI_green-color);
 }
 
-.UI_err::after {
+.UI_err::before {
     content: "\f00d" !important;
-    margin-left: .5em;
-    font: var(--fa-font-solid);
     color: var(--UI_red-color);
 }
 
