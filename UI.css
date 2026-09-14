@@ -1077,7 +1077,7 @@ li ul, li ol {
 }
 
 .UI_form-component-control {
-    display: flex;
+    display: flex !important;
     justify-content: center;
     margin: 0;
     color: var(--UI_form-component-control-font-color);
