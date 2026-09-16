@@ -1,8 +1,9 @@
 {
-  "name": "kroloburet_ui",
+  "name": "@kroloburet/ui",
   "version": "1.0.0",
   "description": "Simple vanilla JS/CSS UI framework for web applications.",
   "main": "UI.js",
+  "style": "UI.css",
   "files": [
     "UI.js",
     "UI.css"
