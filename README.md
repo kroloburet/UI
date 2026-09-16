@@ -14,8 +14,8 @@ npm install github:kroloburet/UI
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'">
 
 <!-- UI -->
-<link rel="stylesheet" href="node_modules/kroloburet_ui/UI.css">
-<script src="node_modules/kroloburet_ui/UI.js" defer></script>
+<link rel="stylesheet" href="node_modules/@kroloburet/ui/UI.css">
+<script src="node_modules/@kroloburet/ui/UI.js" defer></script>
 
 ##############################
 # OR From cdn (minified)
